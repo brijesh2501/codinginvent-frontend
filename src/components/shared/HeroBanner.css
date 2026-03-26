@@ -1,0 +1,236 @@
+/* ============================================================
+   HeroBanner — Udemy-style carousel with image backgrounds
+   ============================================================ */
+
+.ci-banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  background: #1e293b;
+}
+
+/* --- Background images --- */
+.ci-banner__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  z-index: 0;
+}
+
+.ci-banner__bg--active {
+  opacity: 1;
+}
+
+/* Dark overlay for text contrast */
+.ci-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  z-index: 1;
+}
+
+/* --- Content container --- */
+.ci-banner__container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 3rem;
+}
+
+/* --- Card (Udemy-style floating card) --- */
+.ci-banner__card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 8px;
+  padding: 2rem 2.25rem;
+  max-width: 440px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: ci-banner-fadeIn 0.5s ease-out;
+}
+
+@keyframes ci-banner-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ci-banner__title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #1e293b;
+  margin: 0 0 0.65rem;
+}
+
+.ci-banner__highlight {
+  color: #6366f1;
+}
+
+.ci-banner__subtitle {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+}
+
+.ci-banner__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* --- Buttons --- */
+.ci-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ci-banner__btn--primary {
+  background: #6366f1;
+  color: #fff;
+}
+
+.ci-banner__btn--primary:hover {
+  background: #4f46e5;
+}
+
+.ci-banner__btn--ghost {
+  background: transparent;
+  color: #6366f1;
+  border: 1.5px solid #6366f1;
+}
+
+.ci-banner__btn--ghost:hover {
+  background: #eef2ff;
+}
+
+/* --- Navigation arrows --- */
+.ci-banner__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1e293b;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s, background 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.ci-banner:hover .ci-banner__arrow {
+  opacity: 1;
+}
+
+.ci-banner__arrow:hover {
+  background: #fff;
+}
+
+.ci-banner__arrow--left {
+  left: 1rem;
+}
+
+.ci-banner__arrow--right {
+  right: 1rem;
+}
+
+/* --- Dot indicators --- */
+.ci-banner__dots {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ci-banner__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s;
+}
+
+.ci-banner__dot--active {
+  background: #fff;
+  border-color: #fff;
+  transform: scale(1.2);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .ci-banner {
+    height: 480px;
+  }
+
+  .ci-banner__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+
+  .ci-banner__container {
+    padding: 1.5rem;
+    align-items: flex-end;
+    padding-bottom: 3.5rem;
+  }
+
+  .ci-banner__card {
+    max-width: 100%;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .ci-banner__title {
+    font-size: 1.35rem;
+  }
+
+  .ci-banner__arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+}

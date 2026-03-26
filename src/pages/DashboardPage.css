@@ -1,0 +1,137 @@
+/* ============================================================
+   DashboardPage styles
+   ============================================================ */
+.ci-dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* Profile */
+.ci-dashboard__profile {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.ci-dashboard__avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ci-dashboard__name {
+  margin: 0 0 0.15rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.ci-dashboard__email {
+  margin: 0 0 0.25rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.ci-dashboard__role {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+/* Enrollments */
+.ci-dashboard__enrollments h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.ci-dashboard__empty {
+  color: #94a3b8;
+}
+
+.ci-dashboard__empty a {
+  color: #6366f1;
+  text-decoration: none;
+}
+
+.ci-dashboard__enroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ci-dashboard__enroll-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+}
+
+.ci-dashboard__enroll-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.ci-dashboard__enroll-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.ci-dashboard__status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ci-dashboard__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ci-dashboard__progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ci-dashboard__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.ci-dashboard__progress-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  min-width: 36px;
+  text-align: right;
+}

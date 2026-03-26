@@ -1,0 +1,49 @@
+/* ============================================================
+   InterviewQuestionsPage styles
+   ============================================================ */
+.ci-iq-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.ci-iq-page__header {
+  margin-bottom: 1.5rem;
+}
+
+.ci-iq-page__header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.ci-iq-page__header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.ci-iq-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.ci-iq-page__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ci-iq-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ci-iq-page__empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 3rem 0;
+}

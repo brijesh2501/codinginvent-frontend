@@ -1,0 +1,386 @@
+/* ============================================================
+   CourseDetailPage — GFG-style structured layout
+   ============================================================ */
+
+/* --- Hero strip --- */
+.ci-detail__hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #fff;
+  padding: 2.5rem 0;
+}
+
+.ci-detail__hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.ci-detail__back {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+.ci-detail__back:hover {
+  color: #fff;
+}
+
+.ci-detail__badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.2);
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.ci-detail__title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.4rem 0 0.75rem;
+  line-height: 1.2;
+  max-width: 700px;
+}
+
+.ci-detail__desc {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+  max-width: 620px;
+  font-size: 0.95rem;
+}
+
+.ci-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+/* CTA buttons in hero */
+.ci-detail__cta-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.ci-detail__cta {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+
+.ci-detail__cta--primary {
+  background: #6366f1;
+  color: #fff;
+}
+.ci-detail__cta--primary:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.ci-detail__cta--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.ci-detail__cta--ghost:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Empty / not found --- */
+.ci-detail--empty {
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+.ci-detail--empty a {
+  color: #6366f1;
+  text-decoration: none;
+}
+
+/* --- Body: two-column --- */
+.ci-detail__body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.ci-detail__main {
+  min-width: 0;
+}
+
+/* --- Section titles --- */
+.ci-detail__section {
+  margin-bottom: 2.5rem;
+}
+
+.ci-detail__section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.6rem;
+}
+
+.ci-detail__section-count {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+/* --- Highlights grid --- */
+.ci-detail__highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.ci-detail__highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.ci-detail__highlight-item svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* --- Curriculum accordion --- */
+.ci-detail__curriculum {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ci-detail__curriculum-section {
+  border-bottom: 1px solid #e2e8f0;
+}
+.ci-detail__curriculum-section:last-child {
+  border-bottom: none;
+}
+
+.ci-detail__curriculum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: #f8fafc;
+  list-style: none;
+  user-select: none;
+}
+.ci-detail__curriculum-header::-webkit-details-marker {
+  display: none;
+}
+.ci-detail__curriculum-header::before {
+  content: "▶";
+  font-size: 0.65rem;
+  margin-right: 0.6rem;
+  transition: transform 0.2s;
+  color: #6366f1;
+}
+details[open] > .ci-detail__curriculum-header::before {
+  transform: rotate(90deg);
+}
+
+.ci-detail__curriculum-count {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.ci-detail__curriculum-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ci-detail__curriculum-lesson {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.25rem 0.6rem 2.4rem;
+  font-size: 0.88rem;
+  color: #475569;
+  border-top: 1px solid #f1f5f9;
+}
+
+.ci-detail__lesson-icon {
+  font-size: 0.85rem;
+}
+
+/* --- Topic chips --- */
+.ci-detail__topics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ci-detail__topic-chip {
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+}
+
+/* --- Sidebar --- */
+.ci-detail__sidebar-card {
+  position: sticky;
+  top: 5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.ci-detail__sidebar-img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.ci-detail__sidebar-body {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.ci-detail__sidebar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  color: #0f172a;
+}
+
+.ci-detail__sidebar-text {
+  font-size: 0.85rem;
+  color: #475569;
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.ci-detail__sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ci-detail__sidebar-btn:hover {
+  background: #4f46e5;
+}
+
+/* Quick facts */
+.ci-detail__sidebar-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ci-detail__sidebar-facts li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+.ci-detail__sidebar-facts li:last-child {
+  border-bottom: none;
+}
+
+.ci-detail__sidebar-facts strong {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Prerequisites */
+.ci-detail__sidebar-prereqs {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ci-detail__sidebar-prereqs h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: #0f172a;
+}
+
+.ci-detail__sidebar-prereqs ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.ci-detail__sidebar-prereqs li {
+  font-size: 0.83rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .ci-detail__body {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .ci-detail__sidebar-card {
+    position: static;
+  }
+
+  .ci-detail__hero-inner {
+    padding: 0 1.5rem;
+  }
+
+  .ci-detail__title {
+    font-size: 1.5rem;
+  }
+}

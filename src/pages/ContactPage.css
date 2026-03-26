@@ -1,0 +1,318 @@
+/* ============================================================
+   ContactPage styles
+   ============================================================ */
+
+/* ---- Full-width hero banner ---- */
+.ci-contact__hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.ci-contact__hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.ci-contact__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.85) 0%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+  z-index: 1;
+}
+
+.ci-contact__hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  max-width: 680px;
+  padding: 2.5rem 1.5rem;
+}
+
+.ci-contact__hero-content h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.ci-contact__hero-content p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.ci-contact__trust {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.ci-contact__trust-item {
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ---- Page body ---- */
+.ci-contact {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* --- Two-column layout --- */
+.ci-contact__container {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* --- Left info panel --- */
+.ci-contact__info-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ci-contact__info h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.5rem;
+}
+
+.ci-contact__info p {
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 2rem;
+}
+
+.ci-contact__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ci-contact__detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.ci-contact__detail-icon {
+  font-size: 1.25rem;
+}
+
+/* --- Form card --- */
+.ci-contact__form {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.ci-contact__form-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #1e293b;
+}
+
+.ci-contact__label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ci-contact__label-text {
+  display: inline;
+}
+
+.ci-contact__required {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.ci-contact__input {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: #0f172a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.ci-contact__input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.ci-contact__select {
+  cursor: pointer;
+  appearance: none;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.ci-contact__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.ci-contact__error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.ci-contact__submit {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+
+.ci-contact__submit:hover:not(:disabled) {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.ci-contact__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Success state --- */
+.ci-contact--success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.ci-contact__success-card {
+  text-align: center;
+  max-width: 420px;
+}
+
+.ci-contact__success-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.ci-contact__success-card h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.5rem;
+}
+
+.ci-contact__success-card p {
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.ci-contact__success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.ci-contact__btn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+  font-family: inherit;
+}
+
+.ci-contact__btn--primary {
+  background: #6366f1;
+  color: #fff;
+}
+
+.ci-contact__btn--primary:hover {
+  background: #4f46e5;
+}
+
+.ci-contact__btn--ghost {
+  background: transparent;
+  color: #6366f1;
+  border: 1px solid #6366f1;
+}
+
+.ci-contact__btn--ghost:hover {
+  background: #f1f0ff;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .ci-contact__container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .ci-contact__hero {
+    min-height: 260px;
+  }
+
+  .ci-contact__hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .ci-contact__trust {
+    gap: 0.75rem;
+  }
+}

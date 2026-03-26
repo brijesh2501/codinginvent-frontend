@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#b91c1c"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#bg)"/>
+  <circle cx="340" cy="50" r="80" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="70" cy="200" r="65" fill="rgba(255,255,255,0.04)"/>
+  <!-- MEAN stack blocks -->
+  <g transform="translate(110, 35)">
+    <!-- M - MongoDB -->
+    <rect x="0" y="0" width="80" height="50" rx="8" fill="#7f1d1d" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="40" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#4ade80">M</text>
+    <text x="40" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">MongoDB</text>
+    <!-- E - Express -->
+    <rect x="90" y="0" width="80" height="50" rx="8" fill="#7f1d1d" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="130" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#fbbf24">E</text>
+    <text x="130" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">Express</text>
+    <!-- A - Angular -->
+    <rect x="0" y="60" width="80" height="50" rx="8" fill="#7f1d1d" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="40" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ff6b6b">A</text>
+    <text x="40" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">Angular</text>
+    <!-- N - Node -->
+    <rect x="90" y="60" width="80" height="50" rx="8" fill="#7f1d1d" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+    <text x="130" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#68a063">N</text>
+    <text x="130" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">Node.js</text>
+  </g>
+  <text x="200" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#fff" opacity="0.9">MEAN Stack</text>
+  <!-- Tech tags -->
+  <g font-size="12" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="30" y="170" width="75" height="24" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <text x="68" y="186">Angular</text>
+    <rect x="115" y="170" width="60" height="24" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <text x="145" y="186">RxJS</text>
+    <rect x="185" y="170" width="70" height="24" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <text x="220" y="186">Node.js</text>
+    <rect x="265" y="170" width="62" height="24" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <text x="296" y="186">CI/CD</text>
+    <rect x="337" y="170" width="48" height="24" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <text x="361" y="186">API</text>
+  </g>
+  <text x="200" y="224" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="rgba(255,255,255,0.4)" letter-spacing="2">FULL STACK DEVELOPMENT</text>
+</svg>

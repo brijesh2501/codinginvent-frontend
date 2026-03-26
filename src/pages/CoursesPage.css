@@ -1,0 +1,69 @@
+/* ============================================================
+   CoursesPage styles
+   ============================================================ */
+.ci-courses-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.ci-courses-page__header {
+  margin-bottom: 1.5rem;
+}
+
+.ci-courses-page__header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.ci-courses-page__header p {
+  color: #64748b;
+  margin: 0;
+}
+
+.ci-courses-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.ci-courses-page__filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ci-filter-btn {
+  background: #f1f5f9;
+  border: 1px solid transparent;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #475569;
+}
+
+.ci-filter-btn:hover {
+  background: #e0e7ff;
+}
+
+.ci-filter-btn--active {
+  background: #6366f1;
+  color: #fff;
+}
+
+.ci-courses-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.ci-courses-page__empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 3rem 0;
+}

@@ -1,0 +1,67 @@
+.ci-header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #f8fafc;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ci-header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.ci-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.ci-header__logo-icon {
+  font-size: 1.5rem;
+}
+
+.ci-header__nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.ci-header__link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ci-header__link:hover {
+  color: #e2e8f0;
+}
+
+.ci-header__link--active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+}
+
+.ci-header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.ci-header__avatar {
+  font-size: 1.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}

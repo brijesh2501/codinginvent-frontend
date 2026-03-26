@@ -1,0 +1,225 @@
+// ============================================================
+// Mock Data: Courses
+// TODO: Replace JSON with API call when backend is ready
+// ============================================================
+import type { Course } from "../types";
+
+export const courses: Course[] = [
+  {
+    id: "c1",
+    title: "PHP Full Stack Development",
+    slug: "php-full-stack",
+    description:
+      "Master PHP from basics to building full-stack web applications with Laravel, MySQL, and modern front-end integration.",
+    category: "Backend",
+    thumbnail:
+      "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?auto=format&fit=crop&w=800&q=80",
+    instructor: "Rahul Sharma",
+    duration: "40 hours",
+    level: "Beginner",
+    rating: 4.5,
+    enrolledCount: 1240,
+    topics: ["PHP Basics", "OOP in PHP", "Laravel", "MySQL", "REST APIs"],
+    highlights: [
+      "Build production-ready web apps with Laravel",
+      "Master OOP concepts in PHP",
+      "Design and query relational databases with MySQL",
+      "Create RESTful APIs consumed by any frontend",
+    ],
+    curriculum: [
+      { section: "PHP Fundamentals", lessons: ["Variables & Data Types", "Control Flow", "Functions & Scope", "File Handling"] },
+      { section: "Object-Oriented PHP", lessons: ["Classes & Objects", "Inheritance & Interfaces", "Namespaces & Autoloading"] },
+      { section: "Laravel Framework", lessons: ["Routing & Middleware", "Eloquent ORM", "Blade Templates", "Authentication"] },
+      { section: "Database & APIs", lessons: ["MySQL Fundamentals", "Migrations & Seeders", "REST API with Laravel", "Deployment"] },
+    ],
+    prerequisites: ["Basic HTML/CSS knowledge", "Any text editor or IDE"],
+    createdAt: "2025-01-15",
+  },
+  {
+    id: "c2",
+    title: "Java Enterprise Development",
+    slug: "java-enterprise",
+    description:
+      "Learn Java from core concepts through Spring Boot, Hibernate, and enterprise-grade microservices architecture.",
+    category: "Backend",
+    thumbnail:
+      "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=800&q=80",
+    instructor: "Priya Patel",
+    duration: "60 hours",
+    level: "Intermediate",
+    rating: 4.7,
+    enrolledCount: 2100,
+    topics: ["Core Java", "Spring Boot", "Hibernate", "Microservices", "JUnit"],
+    highlights: [
+      "Deep-dive into Core Java and OOP fundamentals",
+      "Build REST microservices with Spring Boot",
+      "Persist data using Hibernate & JPA",
+      "Write reliable tests with JUnit 5",
+    ],
+    curriculum: [
+      { section: "Core Java", lessons: ["Data Types & Operators", "OOP Pillars", "Collections Framework", "Exception Handling"] },
+      { section: "Spring Boot", lessons: ["Spring IoC & DI", "REST Controllers", "Spring Security & JWT", "Actuator & Monitoring"] },
+      { section: "Data Layer", lessons: ["JDBC Basics", "Hibernate ORM", "JPA Repositories", "Database Migrations"] },
+      { section: "Microservices", lessons: ["Service Discovery", "API Gateway", "Circuit Breaker", "Docker & Kubernetes Intro"] },
+    ],
+    prerequisites: ["Basic programming knowledge", "Familiarity with any OOP language"],
+    createdAt: "2025-02-10",
+  },
+  {
+    id: "c3",
+    title: ".NET Full Stack with C#",
+    slug: "dotnet-fullstack",
+    description:
+      "Build enterprise applications using C#, ASP.NET Core, Entity Framework, and Azure cloud deployment.",
+    category: "Backend",
+    thumbnail:
+      "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?auto=format&fit=crop&w=800&q=80",
+    instructor: "Amit Verma",
+    duration: "55 hours",
+    level: "Intermediate",
+    rating: 4.6,
+    enrolledCount: 980,
+    topics: ["C# Fundamentals", "ASP.NET Core", "Entity Framework", "Azure", "Blazor"],
+    highlights: [
+      "Master C# language features including async/await",
+      "Build APIs and web apps with ASP.NET Core",
+      "Use Entity Framework Core for data access",
+      "Deploy to Azure App Service & Azure Functions",
+    ],
+    curriculum: [
+      { section: "C# Essentials", lessons: ["Syntax & Types", "LINQ", "Async/Await", "Generics & Collections"] },
+      { section: "ASP.NET Core", lessons: ["MVC Pattern", "Web API", "Middleware & Filters", "Authentication"] },
+      { section: "Data & ORM", lessons: ["EF Core Basics", "Migrations", "Repository Pattern", "Unit of Work"] },
+      { section: "Cloud & Blazor", lessons: ["Azure Deployment", "Azure Functions", "Blazor Fundamentals", "SignalR Real-time"] },
+    ],
+    prerequisites: ["Basic programming knowledge", "Understanding of web concepts (HTTP, REST)"],
+    createdAt: "2025-03-01",
+  },
+  {
+    id: "c4",
+    title: "MERN Stack Mastery",
+    slug: "mern-stack",
+    description:
+      "Complete MERN stack bootcamp — MongoDB, Express.js, React, and Node.js with real-world projects.",
+    category: "Full Stack",
+    thumbnail:
+      "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&w=800&q=80",
+    instructor: "Sneha Gupta",
+    duration: "70 hours",
+    level: "Intermediate",
+    rating: 4.8,
+    enrolledCount: 3200,
+    topics: ["MongoDB", "Express.js", "React", "Node.js", "JWT Auth", "Deployment"],
+    highlights: [
+      "Build full-stack apps from scratch with MERN",
+      "Master React hooks, routing, and state management",
+      "Implement secure JWT authentication",
+      "Deploy to production with CI/CD pipelines",
+    ],
+    curriculum: [
+      { section: "Node.js & Express", lessons: ["Node Fundamentals", "Express Routing", "Middleware", "Error Handling"] },
+      { section: "MongoDB", lessons: ["Document Model", "Mongoose ODM", "Aggregation", "Indexing"] },
+      { section: "React Frontend", lessons: ["Hooks Deep-dive", "React Router", "State Management", "API Integration"] },
+      { section: "Full Stack Project", lessons: ["Auth Flow", "CRUD Dashboard", "File Uploads", "Deployment on Render/Vercel"] },
+    ],
+    prerequisites: ["JavaScript fundamentals", "Basic HTML/CSS"],
+    createdAt: "2025-01-20",
+  },
+  {
+    id: "c5",
+    title: "MEAN Stack Development",
+    slug: "mean-stack",
+    description:
+      "End-to-end MEAN stack training — MongoDB, Express.js, Angular, and Node.js with CI/CD pipelines.",
+    category: "Full Stack",
+    thumbnail:
+      "https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&w=800&q=80",
+    instructor: "Vikram Singh",
+    duration: "65 hours",
+    level: "Intermediate",
+    rating: 4.4,
+    enrolledCount: 1500,
+    topics: ["MongoDB", "Express.js", "Angular", "Node.js", "RxJS", "CI/CD"],
+    highlights: [
+      "Build single-page applications with Angular",
+      "Create scalable REST APIs with Node & Express",
+      "Master RxJS for reactive programming",
+      "Set up CI/CD pipelines with GitHub Actions",
+    ],
+    curriculum: [
+      { section: "Angular Fundamentals", lessons: ["Components & Modules", "Services & DI", "Routing", "Forms & Validation"] },
+      { section: "Backend with Node", lessons: ["Express Setup", "REST Design", "MongoDB & Mongoose", "Authentication"] },
+      { section: "RxJS & State", lessons: ["Observables", "Operators", "NgRx Basics", "Error Handling"] },
+      { section: "DevOps & Deploy", lessons: ["Docker", "GitHub Actions CI/CD", "Nginx Config", "Cloud Hosting"] },
+    ],
+    prerequisites: ["TypeScript basics", "Understanding of HTML/CSS/JS"],
+    createdAt: "2025-04-05",
+  },
+  {
+    id: "c6",
+    title: "Generative AI Full-Stack Developer",
+    slug: "generative-ai",
+    description:
+      "Dive into Generative AI — learn prompt engineering, LangChain, OpenAI APIs, RAG patterns, and building AI-powered full-stack apps.",
+    category: "AI / ML",
+    thumbnail:
+      "https://images.unsplash.com/photo-1684369176170-463e84248b70?auto=format&fit=crop&w=800&q=80",
+    instructor: "Dr. Neha Joshi",
+    duration: "50 hours",
+    level: "Advanced",
+    rating: 4.9,
+    enrolledCount: 4500,
+    topics: ["Prompt Engineering", "OpenAI API", "LangChain", "RAG", "Vector Databases", "Fine-tuning"],
+    highlights: [
+      "Master prompt engineering techniques",
+      "Build RAG pipelines with LangChain & vector databases",
+      "Integrate OpenAI, Azure OpenAI & Hugging Face models",
+      "Deploy production AI applications end-to-end",
+    ],
+    curriculum: [
+      { section: "AI Fundamentals", lessons: ["LLM Architecture", "Tokenization", "Prompt Engineering", "Few-shot & CoT"] },
+      { section: "LangChain & Tools", lessons: ["Chains & Agents", "Memory & Callbacks", "Tool Integration", "Output Parsers"] },
+      { section: "RAG Pipeline", lessons: ["Document Loaders", "Text Splitting", "Embeddings", "Vector Stores (Pinecone, ChromaDB)"] },
+      { section: "Production AI Apps", lessons: ["Streaming Responses", "Fine-tuning Basics", "Guardrails & Safety", "Deployment & Monitoring"] },
+    ],
+    prerequisites: ["Python basics", "Familiarity with REST APIs", "Basic ML concepts helpful"],
+    createdAt: "2025-06-01",
+  },
+  {
+    id: "c7",
+    title: "React Native Mobile App Development",
+    slug: "react-native",
+    description:
+      "Build cross-platform iOS & Android apps with React Native — from setup to App Store deployment, using real-world projects.",
+    category: "Mobile",
+    thumbnail:
+      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+    instructor: "Karan Malhotra",
+    duration: "55 hours",
+    level: "Intermediate",
+    rating: 4.7,
+    enrolledCount: 1850,
+    topics: [
+      "React Native CLI & Expo",
+      "Navigation",
+      "State Management",
+      "Native Modules",
+      "Animations",
+      "App Store Deployment",
+    ],
+    highlights: [
+      "Build production-grade iOS & Android apps from one codebase",
+      "Master React Navigation for multi-screen flows",
+      "Integrate REST APIs, Firebase & push notifications",
+      "Publish to Google Play Store and Apple App Store",
+    ],
+    curriculum: [
+      { section: "Getting Started", lessons: ["Environment Setup (CLI & Expo)", "Core Components", "Styling & Flexbox", "Platform-specific Code"] },
+      { section: "Navigation & State", lessons: ["Stack & Tab Navigation", "Drawer Navigation", "Context API", "Redux Toolkit"] },
+      { section: "Data & Native", lessons: ["REST API Integration", "AsyncStorage & SQLite", "Camera & Image Picker", "Push Notifications (Firebase)"] },
+      { section: "Polish & Deploy", lessons: ["Animations (Reanimated)", "Performance Optimization", "App Signing & Build", "Play Store & App Store Submission"] },
+    ],
+    prerequisites: ["React fundamentals (hooks, JSX)", "JavaScript ES6+", "Basic understanding of mobile UX"],
+    createdAt: "2025-08-15",
+  },
+];
