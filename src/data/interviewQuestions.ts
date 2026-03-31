@@ -17,6 +17,14 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "The Call Stack executes synchronous code (LIFO). When async operations (timers, I/O) are encountered, they're handed off to the Thread Pool (libuv) or OS kernel. On completion, callbacks go to the Task Queue (macrotasks like setTimeout) or Microtask Queue (Promises, process.nextTick). The Event Loop continuously checks: if the Call Stack is empty, it first drains the Microtask Queue, then picks one task from the Task Queue and pushes it onto the Call Stack. Web APIs (in browsers) or C++ bindings (in Node) handle the actual async work.",
     difficulty: "Medium",
     tags: ["nodejs", "event-loop", "architecture"],
+    diagram: `flowchart LR
+  Code["Call Stack"] -->|async ops| API["Web APIs / C++ Bindings"]
+  API -->|callback ready| TQ["Task Queue - Macrotasks"]
+  API -->|promise resolved| MQ["Microtask Queue"]
+  EL{{"Event Loop"}} -->|1. drain all| MQ
+  EL -->|2. pick one| TQ
+  MQ -->|push| Code
+  TQ -->|push| Code`,
   },
   {
     id: "node-2",
@@ -33,6 +41,16 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Buffers are fixed-size chunks of raw binary data in memory (useful for handling binary data like files, network packets). Streams are abstract interfaces for reading/writing data piece by piece instead of loading everything into memory. There are 4 types: Readable (fs.createReadStream), Writable (fs.createWriteStream), Duplex (TCP sockets), and Transform (zlib compression). Streams use events like 'data', 'end', 'error' and can be piped together.",
     difficulty: "Medium",
     tags: ["nodejs", "streams", "buffers"],
+    diagram: `flowchart LR
+  R["Readable Stream"] -->|pipe| T["Transform Stream"]
+  T -->|pipe| W["Writable Stream"]
+  subgraph Types
+    direction TB
+    R1["fs.createReadStream"]
+    W1["fs.createWriteStream"]
+    D1["Duplex: TCP Socket"]
+    T1["Transform: zlib"]
+  end`,
   },
   {
     id: "node-4",
@@ -49,6 +67,18 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Since Node.js is single-threaded, CPU-heavy tasks block the event loop. Solutions: 1) Worker Threads (worker_threads module) for parallel JS execution, 2) Child Processes (child_process.fork) to spawn separate Node processes, 3) Offload to a job queue (Bull/BullMQ with Redis) processed by separate workers, 4) Use native C++ addons via N-API for compute-heavy algorithms, 5) Use a microservice in a language better suited for CPU work (Go, Rust).",
     difficulty: "Hard",
     tags: ["nodejs", "performance", "worker-threads"],
+    diagram: `flowchart TB
+  Main["Main Thread - Event Loop"] -->|heavy task| Dec{"CPU Intensive?"}
+  Dec -->|Yes| WT["Worker Threads"]
+  Dec -->|Yes| CP["Child Process - fork"]
+  Dec -->|Yes| JQ["Job Queue - Bull + Redis"]
+  Dec -->|Yes| NA["Native Addon - N-API"]
+  Dec -->|Yes| MS["Microservice - Go/Rust"]
+  WT -->|result| Main
+  CP -->|IPC message| Main
+  JQ -->|job complete| Main
+  NA -->|return| Main
+  MS -->|HTTP/gRPC| Main`,
   },
   {
     id: "node-6",
@@ -113,6 +143,18 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Vertical Scaling (Scale Up): Add more CPU, RAM, storage to existing server. Simpler but has hardware limits and a single point of failure. Horizontal Scaling (Scale Out): Add more server instances behind a load balancer. More complex (needs stateless design, shared sessions, distributed caching) but offers near-unlimited scaling, fault tolerance, and no single point of failure. Node.js cluster module is vertical; Kubernetes pods are horizontal.",
     difficulty: "Easy",
     tags: ["nodejs", "scaling", "architecture"],
+    diagram: `flowchart TB
+  subgraph VS["Vertical Scaling (Scale Up)"]
+    direction TB
+    S1["Server"] -->|"+ CPU, RAM"| S2["Bigger Server"]
+  end
+  subgraph HS["Horizontal Scaling (Scale Out)"]
+    direction TB
+    LB["Load Balancer"] --> N1["Node 1"]
+    LB --> N2["Node 2"]
+    LB --> N3["Node 3"]
+    LB --> N4["Node N..."]
+  end`,
   },
   {
     id: "node-14",
@@ -129,6 +171,24 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Singleton: Ensures only one instance exists (e.g., database connection pool). In Node, modules are cached so `module.exports = new DbPool()` is effectively a singleton. Factory: Creates objects without specifying exact class. A function returns different objects based on input: `createUser(type)` returns Admin or Student. Observer: Subjects notify observers on state changes. Node's EventEmitter is the built-in observer pattern — `emitter.on('event', handler)` and `emitter.emit('event', data)`.",
     difficulty: "Medium",
     tags: ["nodejs", "design-patterns"],
+    diagram: `flowchart TB
+  subgraph Singleton
+    direction LR
+    A1["Module"] -->|exports one instance| I1(("Instance"))
+    A2["Consumer A"] --> I1
+    A3["Consumer B"] --> I1
+  end
+  subgraph Factory
+    direction LR
+    F1["createUser(type)"] -->|Admin| FA["AdminUser"]
+    F1 -->|Student| FS["StudentUser"]
+  end
+  subgraph Observer
+    direction LR
+    E1["EventEmitter"] -->|emit| H1["Handler A"]
+    E1 -->|emit| H2["Handler B"]
+    E1 -->|emit| H3["Handler C"]
+  end`,
   },
   {
     id: "node-16",
@@ -165,6 +225,13 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Local state: useState/useReducer for component-level state. Lifted state: share state via closest common parent. Context API: for global state without prop drilling (theme, auth, locale). External libraries: Redux/Zustand/Jotai for complex app-wide state with middleware, devtools, persistence. Server state: React Query/TanStack Query for caching, synchronization, and deduplication of API data. URL state: useSearchParams for filter/pagination state.",
     difficulty: "Medium",
     tags: ["react", "state-management"],
+    diagram: `flowchart TB
+  S["State Management"] --> LS["Local State\nuseState / useReducer"]
+  S --> LF["Lifted State\nClosest Parent"]
+  S --> CTX["Context API\nTheme / Auth"]
+  S --> EXT["External Store\nRedux / Zustand"]
+  S --> SRV["Server State\nTanStack Query"]
+  S --> URL["URL State\nuseSearchParams"]`,
   },
   {
     id: "react-4",
@@ -181,6 +248,20 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Context API: Any change to context value re-renders ALL consumers, even if they only use a subset of the value. Split contexts or memoize to mitigate. Redux: Components subscribe to specific slices via selectors (`useSelector`). Only re-renders when the selected slice changes. Redux also offers middleware (thunk/saga), devtools time-travel, and predictable state updates via reducers. Use Context for simple/infrequent state (theme, auth); Redux for complex, frequently-changing app state.",
     difficulty: "Medium",
     tags: ["react", "redux", "context-api"],
+    diagram: `flowchart TB
+  subgraph CTX["Context API"]
+    direction TB
+    P1["Provider value={...}"]
+    P1 -->|re-renders ALL| C1["Consumer A"]
+    P1 -->|re-renders ALL| C2["Consumer B"]
+    P1 -->|re-renders ALL| C3["Consumer C"]
+  end
+  subgraph RDX["Redux"]
+    direction TB
+    ST["Store"] -->|selector A| R1["Component A\n(only re-renders\nif slice A changes)"]
+    ST -->|selector B| R2["Component B"]
+    ST -->|selector C| R3["Component C"]
+  end`,
   },
   {
     id: "react-6",
@@ -197,6 +278,18 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "useEffect runs asynchronously AFTER the browser paints the screen. Good for data fetching, subscriptions, logging. useLayoutEffect runs synchronously AFTER DOM mutations but BEFORE the browser paints. Good for measuring DOM elements (getBoundingClientRect), adjusting layout, or preventing visual flicker. useLayoutEffect blocks painting, so overuse causes jank. 99% of the time useEffect is correct.",
     difficulty: "Medium",
     tags: ["react", "hooks", "lifecycle"],
+    diagram: `sequenceDiagram
+  participant R as React
+  participant D as DOM
+  participant B as Browser
+  Note over R,B: useEffect
+  R->>D: Commit DOM mutations
+  D->>B: Paint screen
+  B-->>R: useEffect runs (async)
+  Note over R,B: useLayoutEffect
+  R->>D: Commit DOM mutations
+  D-->>R: useLayoutEffect runs (sync)
+  R->>B: Paint screen`,
   },
   {
     id: "react-8",
@@ -245,6 +338,13 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "React maintains TWO virtual DOM trees: 1) The current tree (represents what's currently rendered on screen), 2) The work-in-progress tree (represents the next render). When state changes, React builds the new tree, diffs it against the current tree (reconciliation), calculates the minimal set of DOM operations needed, and batch-applies them to the real DOM. This is called the Fiber reconciliation algorithm (React 16+).",
     difficulty: "Medium",
     tags: ["react", "virtual-dom", "internals"],
+    diagram: `flowchart LR
+  subgraph VDOM["React Virtual DOM"]
+    direction TB
+    CT["Current Tree\n(on screen)"] ---|diff| WT["Work-in-Progress Tree\n(next render)"]
+  end
+  WT -->|minimal changes| RD["Real DOM"]
+  RD --> Screen["Browser Screen"]`,
   },
   {
     id: "react-14",
@@ -369,6 +469,17 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "A closure is created when an inner function retains access to variables from its outer (enclosing) function's scope, even after the outer function has returned. Example: `function counter() { let count = 0; return () => ++count; } const inc = counter(); inc(); // 1, inc(); // 2`. The inner function 'closes over' the `count` variable. Used for data privacy, factory functions, partial application, and maintaining state in callbacks.",
     difficulty: "Medium",
     tags: ["javascript", "closures", "scope"],
+    diagram: `flowchart TB
+  subgraph Outer["counter - Outer Scope"]
+    V["let count = 0"]
+    subgraph Inner["Returned Function - Closure"]
+      F["fn: ++count"]
+    end
+    F -.->|closes over| V
+  end
+  C1["inc = 1"] --> F
+  C2["inc = 2"] --> F
+  C3["inc = 3"] --> F`,
   },
   {
     id: "js-3",
@@ -377,6 +488,14 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Hoisting moves declarations to the top of their scope during compilation. `var` is hoisted and initialized to `undefined` — accessible before declaration. `let`/`const` are hoisted but NOT initialized — accessing before declaration throws ReferenceError ('Temporal Dead Zone'). Function declarations are fully hoisted (name + body). Function expressions (`var fn = function(){}`) only hoist the variable (as undefined), not the function body.",
     difficulty: "Easy",
     tags: ["javascript", "hoisting", "scope"],
+    diagram: `flowchart TB
+  subgraph Hoisting["JavaScript Hoisting"]
+    direction TB
+    V["var x"] -->|hoisted + initialized| U["undefined"]
+    L["let/const y"] -->|hoisted NOT initialized| TDZ["Temporal Dead Zone"]
+    FD["function declaration"] -->|fully hoisted| OK["name + body available"]
+    FE["var fn = expression"] -->|only var hoisted| U2["undefined - no body"]
+  end`,
   },
   {
     id: "js-4",
@@ -465,6 +584,15 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "The Event Loop enables non-blocking I/O in JavaScript's single-threaded runtime. Process: 1) Execute synchronous code on the Call Stack, 2) Async operations (timers, I/O) are handled by browser/Node APIs, 3) Completed callbacks enter Microtask Queue (Promises, queueMicrotask) or Macrotask Queue (setTimeout, setInterval, I/O), 4) Event Loop: When Call Stack is empty, drain ALL microtasks first, then pick ONE macrotask, repeat. Microtasks always run before macrotasks.",
     difficulty: "Hard",
     tags: ["javascript", "event-loop", "async"],
+    diagram: `flowchart TB
+  CS["Call Stack"] -->|async op| WA["Web APIs\n(timers, I/O, fetch)"]
+  WA -->|Promise| MIC["Microtask Queue\n(Promises, queueMicrotask)"]
+  WA -->|setTimeout etc| MAC["Macrotask Queue\n(timers, I/O)"]
+  EL{{"Event Loop"}} -->|"1. Stack empty?"| CHK{" "}
+  CHK -->|"2. Drain ALL"| MIC
+  CHK -->|"3. Pick ONE"| MAC
+  MIC -->|execute| CS
+  MAC -->|execute| CS`,
   },
   {
     id: "js-15",
@@ -513,6 +641,10 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Atomicity: Transaction is all-or-nothing. If any part fails, the entire transaction rolls back. Consistency: Transaction moves database from one valid state to another, maintaining all constraints. Isolation: Concurrent transactions don't interfere with each other (levels: Read Uncommitted, Read Committed, Repeatable Read, Serializable). Durability: Once committed, data survives crashes (written to non-volatile storage). ACID ensures data integrity in relational databases.",
     difficulty: "Medium",
     tags: ["sql", "acid", "transactions"],
+    diagram: `flowchart LR
+  A["Atomicity - All or Nothing"] --- C["Consistency - Valid to Valid State"]
+  C --- I["Isolation - Concurrent txns independent"]
+  I --- D["Durability - Committed = Permanent"]`,
   },
   {
     id: "sql-2",
@@ -553,6 +685,16 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "INNER JOIN: Returns only matching rows from both tables. LEFT JOIN: All rows from left + matched from right (NULLs for no match). RIGHT JOIN: All rows from right + matched from left. FULL OUTER JOIN: All rows from both (NULLs where no match). CROSS JOIN: Cartesian product (every row × every row). SELF JOIN: Table joined with itself (e.g., employee-manager). NATURAL JOIN: Auto-joins on common column names (avoid — fragile).",
     difficulty: "Easy",
     tags: ["sql", "joins", "fundamentals"],
+    diagram: `flowchart TB
+  subgraph Joins["SQL JOIN Types"]
+    direction TB
+    IJ["INNER JOIN - matching rows only"]
+    LJ["LEFT JOIN - all left + matched right"]
+    RJ["RIGHT JOIN - all right + matched left"]
+    FJ["FULL OUTER JOIN - all from both"]
+    CJ["CROSS JOIN - cartesian product"]
+    SJ["SELF JOIN - table with itself"]
+  end`,
   },
   {
     id: "sql-7",
@@ -645,6 +787,19 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "JVM (Java Virtual Machine): Runtime engine that executes bytecode. Platform-specific. Handles memory management, garbage collection, security. JRE (Java Runtime Environment): JVM + core libraries (java.lang, java.util, etc.) needed to RUN Java programs. JDK (Java Development Kit): JRE + development tools (javac compiler, debugger, jar, javadoc). JDK ⊃ JRE ⊃ JVM. To develop: install JDK. To run: install JRE.",
     difficulty: "Easy",
     tags: ["java", "jdk", "jvm", "fundamentals"],
+    diagram: `flowchart TB
+  subgraph JDK["JDK (Development Kit)"]
+    direction TB
+    Tools["javac, jar, javadoc..."]
+    subgraph JRE["JRE (Runtime Environment)"]
+      Libs["Core Libraries\njava.lang, java.util..."]
+      subgraph JVM["JVM (Virtual Machine)"]
+        GC["Garbage Collector"]
+        JIT["JIT Compiler"]
+        CL["Class Loader"]
+      end
+    end
+  end`,
   },
   {
     id: "java-2",
@@ -677,6 +832,25 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Stack: Method frames, local variables, references. Thread-specific, LIFO, auto-freed when method returns. Heap: Objects and instance variables. Shared across threads. Divided into Young Gen (Eden + Survivor spaces) and Old Gen. Garbage Collection: JVM automatically reclaims unreachable objects. Young Gen uses minor GC (fast, frequent). Old Gen uses major GC (slower). Collectors: Serial, Parallel, G1 (default), ZGC (low-latency). No manual memory management (no free/delete).",
     difficulty: "Hard",
     tags: ["java", "memory", "gc"],
+    diagram: `flowchart TB
+  subgraph Stack["Stack (per thread)"]
+    MF["Method Frames"]
+    LV["Local Variables"]
+    REF["Object References"]
+  end
+  subgraph Heap["Heap (shared)"]
+    subgraph YG["Young Generation"]
+      E["Eden"]
+      S1["Survivor 0"]
+      S2["Survivor 1"]
+    end
+    OG["Old Generation"]
+  end
+  REF -.->|points to| Heap
+  E -->|minor GC| S1
+  S1 -->|survive| S2
+  S2 -->|promoted| OG
+  OG -->|major GC| GC["Reclaimed"]`,
   },
   {
     id: "java-6",
@@ -717,6 +891,17 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "NEW: Thread created but not started. RUNNABLE: After start() — ready to run or running (OS decides). BLOCKED: Waiting to acquire a monitor lock (enter synchronized block). WAITING: Indefinitely waiting (Object.wait(), Thread.join(), LockSupport.park()). TIMED_WAITING: Waiting with timeout (Thread.sleep(ms), Object.wait(ms)). TERMINATED: Execution completed or exception thrown. Use Thread.getState() to check. A terminated thread cannot be restarted.",
     difficulty: "Medium",
     tags: ["java", "threads", "lifecycle"],
+    diagram: `stateDiagram-v2
+  [*] --> NEW : Thread created
+  NEW --> RUNNABLE : start()
+  RUNNABLE --> BLOCKED : waiting for lock
+  BLOCKED --> RUNNABLE : lock acquired
+  RUNNABLE --> WAITING : wait() / join()
+  WAITING --> RUNNABLE : notify() / join returns
+  RUNNABLE --> TIMED_WAITING : sleep(ms) / wait(ms)
+  TIMED_WAITING --> RUNNABLE : timeout / notify
+  RUNNABLE --> TERMINATED : run() completes
+  TERMINATED --> [*]`,
   },
   {
     id: "java-11",
@@ -849,6 +1034,15 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "RAG combines a retrieval system with a generative LLM. Process: 1) Index documents by splitting into chunks and creating vector embeddings (stored in a vector DB like Pinecone, Weaviate, ChromaDB), 2) At query time, embed the user's question, 3) Retrieve top-K similar chunks via similarity search (cosine/dot product), 4) Inject retrieved context into the LLM prompt, 5) LLM generates a grounded answer. Benefits: Reduces hallucination, uses private/current data without fine-tuning, verifiable sources.",
     difficulty: "Hard",
     tags: ["python", "rag", "genai"],
+    diagram: `flowchart LR
+  D["Documents"] -->|split| CH["Chunks"]
+  CH -->|embed| VDB[("Vector DB")]
+  Q["User Query"] -->|embed| QE["Query Embedding"]
+  QE -->|similarity search| VDB
+  VDB -->|top-K chunks| CTX["Retrieved Context"]
+  CTX --> P["Prompt + Context"]
+  P --> LLM["LLM"]
+  LLM --> ANS["Grounded Answer"]`,
   },
   {
     id: "py-8",
@@ -1037,6 +1231,18 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "Monolithic: Single deployable unit. All features in one codebase. Simple to develop, test, deploy initially. Downsides: scaling is all-or-nothing, one bug can take down everything, tech stack locked, slow CI/CD as it grows. Microservices: Each feature is an independent service with its own database, deployed separately. Benefits: independent scaling, tech diversity, team autonomy, fault isolation. Challenges: distributed system complexity (networking, data consistency, debugging, service discovery, API gateway).",
     difficulty: "Medium",
     tags: ["architecture", "microservices", "monolith"],
+    diagram: `flowchart TB
+  subgraph Mono["Monolithic"]
+    direction TB
+    MB["Single Deployable\nUI + API + DB Logic"]
+  end
+  subgraph Micro["Microservices"]
+    direction TB
+    GW["API Gateway"] --> US["User Service\n+ DB"]
+    GW --> OS["Order Service\n+ DB"]
+    GW --> PS["Payment Service\n+ DB"]
+    GW --> NS["Notification\nService"]
+  end`,
   },
   {
     id: "arch-2",
@@ -1069,6 +1275,13 @@ export const interviewQuestions: InterviewQuestion[] = [
     answer: "S — Single Responsibility: A class should have one reason to change. O — Open/Closed: Open for extension, closed for modification (use interfaces/inheritance). L — Liskov Substitution: Subtypes must be substitutable for their base types without breaking behavior. I — Interface Segregation: Many specific interfaces are better than one general one. D — Dependency Inversion: Depend on abstractions (interfaces) not concretions (classes). SOLID produces maintainable, testable, flexible codebases.",
     difficulty: "Medium",
     tags: ["system-design", "solid", "principles"],
+    diagram: `flowchart TB
+  S["S — Single Responsibility\nOne class, one reason to change"]
+  O["O — Open/Closed\nOpen for extension,\nclosed for modification"]
+  L["L — Liskov Substitution\nSubtypes replaceable\nfor base types"]
+  I["I — Interface Segregation\nMany small interfaces\n> one large"]
+  D["D — Dependency Inversion\nDepend on abstractions,\nnot concretions"]
+  S --> O --> L --> I --> D`,
   },
   {
     id: "arch-6",

@@ -132,3 +132,39 @@
   color: #6366f1;
   font-weight: 700;
 }
+
+/* ---- Mermaid Diagram ---- */
+.ci-qa__diagram-wrapper {
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #0f172a;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.ci-qa__diagram-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #818cf8;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.ci-qa__diagram {
+  display: flex;
+  justify-content: center;
+  min-height: 80px;
+}
+
+.ci-qa__diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.ci-qa__diagram-loading {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  padding: 1.5rem;
+}

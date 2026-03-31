@@ -2,7 +2,7 @@
 // QuestionAccordion — expandable interview question item
 // Uses React Syntax Highlighter + Prism.js for code snippets
 // ============================================================
-import { useState, type ReactNode } from "react";
+import { useState, lazy, Suspense, type ReactNode } from "react";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
 import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
@@ -17,6 +17,9 @@ import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import type { InterviewQuestion } from "../../types";
 import "./QuestionAccordion.css";
+
+// Lazy-load MermaidDiagram (mermaid.js is heavy)
+const MermaidDiagram = lazy(() => import("./MermaidDiagram"));
 
 // Register only the languages we need (PrismLight is tree-shakable)
 SyntaxHighlighter.registerLanguage("javascript", javascript);
@@ -190,6 +193,17 @@ export default function QuestionAccordion({
       {open && (
         <div className="ci-qa__body">
           <div className="ci-qa__answer">{renderAnswer()}</div>
+
+          {/* Graphical diagram (if available) */}
+          {question.diagram && (
+            <Suspense fallback={<div className="ci-qa__diagram-loading">Loading diagram…</div>}>
+              <div className="ci-qa__diagram-wrapper">
+                <div className="ci-qa__diagram-label">📊 Visual Representation</div>
+                <MermaidDiagram chart={question.diagram} />
+              </div>
+            </Suspense>
+          )}
+
           <div className="ci-qa__tags">
             <span
               className={`ci-qa__difficulty ci-qa__difficulty--${question.difficulty.toLowerCase()}`}

@@ -30,6 +30,8 @@ export interface InterviewQuestion {
   answer: string;
   difficulty: "Easy" | "Medium" | "Hard";
   tags: string[];
+  /** Optional Mermaid diagram string for graphical representation */
+  diagram?: string;
 }
 
 export interface User {
