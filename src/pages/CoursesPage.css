@@ -1,25 +1,52 @@
 /* ============================================================
-   CoursesPage styles
+   CoursesPage — AI-native dark theme styles
    ============================================================ */
 .ci-courses-page {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1.5rem 3rem;
+  min-height: 80vh;
+  background: #0b1120;
+  color: #f8fafc;
 }
 
 .ci-courses-page__header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.ci-courses-page__badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75rem;
+  animation: ci-sparkle-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ci-sparkle-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.03); }
 }
 
 .ci-courses-page__header h1 {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0 0 0.25rem;
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(135deg, #38bdf8, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .ci-courses-page__header p {
-  color: #64748b;
+  color: #94a3b8;
   margin: 0;
+  font-size: 1rem;
 }
 
 .ci-courses-page__toolbar {
@@ -27,6 +54,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
   margin-bottom: 2rem;
 }
 
@@ -36,29 +64,31 @@
 }
 
 .ci-filter-btn {
-  background: #f1f5f9;
-  border: 1px solid transparent;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   padding: 0.4rem 1rem;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  color: #475569;
+  color: #94a3b8;
 }
 
 .ci-filter-btn:hover {
-  background: #e0e7ff;
+  background: rgba(56, 189, 248, 0.15);
+  color: #e2e8f0;
 }
 
 .ci-filter-btn--active {
-  background: #6366f1;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  border-color: transparent;
   color: #fff;
 }
 
 .ci-courses-page__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
@@ -66,4 +96,23 @@
   text-align: center;
   color: #94a3b8;
   padding: 3rem 0;
+}
+
+@media (max-width: 640px) {
+  .ci-courses-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ci-courses-page__header h1 {
+    font-size: 1.5rem;
+  }
+
+  .ci-courses-page__toolbar {
+    flex-direction: column;
+  }
+
+  .ci-courses-page__filters {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

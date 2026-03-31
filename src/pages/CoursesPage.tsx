@@ -26,8 +26,9 @@ export default function CoursesPage() {
   return (
     <div className="ci-courses-page">
       <div className="ci-courses-page__header">
+        <span className="ci-courses-page__badge">✦ AI-Powered Learning</span>
         <h1>All Courses</h1>
-        <p>Browse our curated collection of industry-ready tech courses.</p>
+        <p>Browse our curated collection of AI-native, industry-ready tech courses.</p>
       </div>
 
       <div className="ci-courses-page__toolbar">

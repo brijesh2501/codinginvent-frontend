@@ -19,6 +19,7 @@ export interface Course {
   highlights: string[];
   curriculum: { section: string; lessons: string[] }[];
   prerequisites: string[];
+  aiFeatures: string[];
   createdAt: string;
 }
 

@@ -51,20 +51,69 @@ function detectLanguage(code: string): string {
 }
 
 // ---- Parse answer text into rich segments (text + code) --------
-type Segment = { type: "text"; value: string } | { type: "code"; value: string; lang: string };
+type Segment =
+  | { type: "text"; value: string }
+  | { type: "code"; value: string; lang: string }
+  | { type: "list"; intro: string; items: string[]; ordered: boolean };
+
+/**
+ * Detect numbered-list patterns like:
+ *   "Lead-in text: 1) item, 2) item, 3) item."
+ *   "Lead-in text: 1. item, 2. item"
+ * Also handles bullet-style: "- item, - item"
+ */
+function splitNumberedList(text: string): Segment[] {
+  // Pattern: optional intro text, then a sequence of  N) ...  or  N. ...
+  const numberedRe = /(?:^|(?<=\s))(\d+)[).]\s/g;
+  const matches = [...text.matchAll(numberedRe)];
+
+  // Need at least 2 numbered items to treat as a list
+  if (matches.length >= 2) {
+    const firstIdx = matches[0].index!;
+    const intro = text.slice(0, firstIdx).replace(/[:,]\s*$/, "").trim();
+    const items: string[] = [];
+
+    for (let i = 0; i < matches.length; i++) {
+      const start = matches[i].index! + matches[i][0].length;
+      const end = i + 1 < matches.length ? matches[i + 1].index! : text.length;
+      items.push(
+        text
+          .slice(start, end)
+          .replace(/[,;.]\s*$/, "")
+          .trim()
+      );
+    }
+
+    return [{ type: "list", intro, items, ordered: true }];
+  }
+
+  // Bullet-style: "- item, - item"
+  const bulletParts = text.split(/(?:^|,\s*)-\s+/);
+  if (bulletParts.length >= 3) {
+    const intro = bulletParts[0].replace(/[:,]\s*$/, "").trim();
+    const items = bulletParts.slice(1).map((s) => s.replace(/[,;.]\s*$/, "").trim()).filter(Boolean);
+    return [{ type: "list", intro, items, ordered: false }];
+  }
+
+  return [{ type: "text", value: text }];
+}
 
 function parseAnswer(raw: string): Segment[] {
   // Match backtick-delimited code: `code here`
   const parts = raw.split(/(`[^`]+`)/g);
-  return parts
-    .filter(Boolean)
-    .map((part): Segment => {
-      if (part.startsWith("`") && part.endsWith("`")) {
-        const code = part.slice(1, -1);
-        return { type: "code", value: code, lang: detectLanguage(code) };
-      }
-      return { type: "text", value: part };
-    });
+  const segments: Segment[] = [];
+
+  for (const part of parts) {
+    if (!part) continue;
+    if (part.startsWith("`") && part.endsWith("`")) {
+      const code = part.slice(1, -1);
+      segments.push({ type: "code", value: code, lang: detectLanguage(code) });
+    } else {
+      segments.push(...splitNumberedList(part));
+    }
+  }
+
+  return segments;
 }
 
 // ---- Component ---------------------------------------------------
@@ -108,6 +157,21 @@ export default function QuestionAccordion({
             </SyntaxHighlighter>
         );
       }
+
+      if (seg.type === "list") {
+        const ListTag = seg.ordered ? "ol" : "ul";
+        return (
+          <div key={i} className="ci-qa__list-block">
+            {seg.intro && <p className="ci-qa__list-intro">{seg.intro}</p>}
+            <ListTag className="ci-qa__list">
+              {seg.items.map((item, j) => (
+                <li key={j} className="ci-qa__list-item">{item}</li>
+              ))}
+            </ListTag>
+          </div>
+        );
+      }
+
       return <span key={i}>{seg.value}</span>;
     });
   };

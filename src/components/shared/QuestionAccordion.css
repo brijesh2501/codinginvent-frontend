@@ -103,3 +103,32 @@
   line-height: 1.65;
   margin: 0.75rem 0;
 }
+
+/* ---- Formatted lists inside answers ---- */
+.ci-qa__list-block {
+  margin: 0.5rem 0;
+}
+
+.ci-qa__list-intro {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ci-qa__list {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ci-qa__list-item {
+  line-height: 1.6;
+  color: #475569;
+}
+
+.ci-qa__list-item::marker {
+  color: #6366f1;
+  font-weight: 700;
+}

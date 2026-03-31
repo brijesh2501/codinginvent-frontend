@@ -33,6 +33,7 @@ export const courses: Course[] = [
       { section: "Database & APIs", lessons: ["MySQL Fundamentals", "Migrations & Seeders", "REST API with Laravel", "Deployment"] },
     ],
     prerequisites: ["Basic HTML/CSS knowledge", "Any text editor or IDE"],
+    aiFeatures: ["AI Code Review", "Smart Hints", "Adaptive Quizzes"],
     createdAt: "2025-01-15",
   },
   {
@@ -63,6 +64,7 @@ export const courses: Course[] = [
       { section: "Microservices", lessons: ["Service Discovery", "API Gateway", "Circuit Breaker", "Docker & Kubernetes Intro"] },
     ],
     prerequisites: ["Basic programming knowledge", "Familiarity with any OOP language"],
+    aiFeatures: ["AI Code Review", "Adaptive Learning Path", "Smart Debugging"],
     createdAt: "2025-02-10",
   },
   {
@@ -93,6 +95,7 @@ export const courses: Course[] = [
       { section: "Cloud & Blazor", lessons: ["Azure Deployment", "Azure Functions", "Blazor Fundamentals", "SignalR Real-time"] },
     ],
     prerequisites: ["Basic programming knowledge", "Understanding of web concepts (HTTP, REST)"],
+    aiFeatures: ["AI Code Review", "Smart Hints", "Personalized Feedback"],
     createdAt: "2025-03-01",
   },
   {
@@ -123,6 +126,7 @@ export const courses: Course[] = [
       { section: "Full Stack Project", lessons: ["Auth Flow", "CRUD Dashboard", "File Uploads", "Deployment on Render/Vercel"] },
     ],
     prerequisites: ["JavaScript fundamentals", "Basic HTML/CSS"],
+    aiFeatures: ["AI Code Review", "Adaptive Quizzes", "Smart Project Hints"],
     createdAt: "2025-01-20",
   },
   {
@@ -153,6 +157,7 @@ export const courses: Course[] = [
       { section: "DevOps & Deploy", lessons: ["Docker", "GitHub Actions CI/CD", "Nginx Config", "Cloud Hosting"] },
     ],
     prerequisites: ["TypeScript basics", "Understanding of HTML/CSS/JS"],
+    aiFeatures: ["AI Code Review", "Adaptive Learning Path", "Smart Debugging"],
     createdAt: "2025-04-05",
   },
   {
@@ -183,6 +188,7 @@ export const courses: Course[] = [
       { section: "Production AI Apps", lessons: ["Streaming Responses", "Fine-tuning Basics", "Guardrails & Safety", "Deployment & Monitoring"] },
     ],
     prerequisites: ["Python basics", "Familiarity with REST APIs", "Basic ML concepts helpful"],
+    aiFeatures: ["AI Pair Programming", "RAG Playground", "LLM Sandbox", "Smart Hints"],
     createdAt: "2025-06-01",
   },
   {
@@ -220,6 +226,7 @@ export const courses: Course[] = [
       { section: "Polish & Deploy", lessons: ["Animations (Reanimated)", "Performance Optimization", "App Signing & Build", "Play Store & App Store Submission"] },
     ],
     prerequisites: ["React fundamentals (hooks, JSX)", "JavaScript ES6+", "Basic understanding of mobile UX"],
+    aiFeatures: ["AI Code Review", "Smart Hints", "Adaptive Quizzes"],
     createdAt: "2025-08-15",
   },
 ];
