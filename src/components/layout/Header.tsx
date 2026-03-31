@@ -10,6 +10,7 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/courses", label: "Courses" },
   { to: "/interview-questions", label: "Interview Prep" },
+  { to: "/blogs", label: "Blogs" },
   { to: "/contact", label: "Contact" },
   { to: "/dashboard", label: "Dashboard" },
 ];

@@ -8,6 +8,8 @@ import {
   CoursesPage,
   CourseDetailPage,
   InterviewQuestionsPage,
+  BlogsPage,
+  BlogDetailPage,
   ContactPage,
   DashboardPage,
 } from "./pages";
@@ -27,6 +29,8 @@ function App() {
               path="/interview-questions"
               element={<InterviewQuestionsPage />}
             />
+            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/blogs/:slug" element={<BlogDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>

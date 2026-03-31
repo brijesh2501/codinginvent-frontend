@@ -70,3 +70,32 @@ export interface ApiResponse<T> {
   success: boolean;
   message?: string;
 }
+
+// ── Blog ──
+export interface BlogComparison {
+  title: string;
+  headers: [string, string];
+  rows: [string, string, string][];
+}
+
+export interface BlogSection {
+  heading: string;
+  content: string;
+  diagram?: string;
+  comparison?: BlogComparison;
+  codeSnippet?: { language: string; code: string };
+}
+
+export interface Blog {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  thumbnail: string;
+  category: string;
+  tags: string[];
+  author: string;
+  publishedAt: string;
+  readTime: string;
+  sections: BlogSection[];
+}

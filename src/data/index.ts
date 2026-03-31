@@ -4,3 +4,4 @@ export { interviewQuestions, questionCategories } from "./interviewQuestions";
 export { users, currentUser } from "./users";
 export { enrollments } from "./enrollments";
 export { leads } from "./leads";
+export { blogs, blogCategories } from "./blogs";
