@@ -141,6 +141,35 @@
   margin: 0;
 }
 
+.ci-blog-detail__section-text p {
+  margin: 0 0 0.5rem;
+}
+
+.ci-blog-detail__section-text p:last-child {
+  margin-bottom: 0;
+}
+
+.ci-blog-detail__list {
+  margin: 0.75rem 0 0.5rem 1.25rem;
+  padding: 0;
+  list-style: decimal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ci-blog-detail__list li {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  padding-left: 0.25rem;
+}
+
+.ci-blog-detail__list li::marker {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
 /* Diagram */
 .ci-blog-detail__diagram {
   margin-top: 1.5rem;

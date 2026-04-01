@@ -409,6 +409,333 @@ export const blogs: Blog[] = [
       },
     ],
   },
+  // ── 7. Generic Accordion Component ────────────────────────
+  {
+    id: "7",
+    slug: "generic-accordion-react",
+    title: "Build a Generic Accordion in React — Interview Question Explained",
+    description:
+      "Learn how to build a reusable accordion component where each item works independently. A common frontend interview question with full code walkthrough and visual diagrams.",
+    thumbnail: "🪗",
+    category: "Frontend",
+    tags: ["React", "JavaScript", "Interview", "Components", "useState"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "6 min",
+    sections: [
+      {
+        heading: "The Interview Question",
+        content:
+          "A very popular React interview question asks: 'Write a generic accordion component that supports multiple accordion items. Each accordion should toggle independently — collapsing one should NOT affect any other.' This tests your understanding of component composition, isolated state management, and the children prop pattern.",
+        diagram: `graph TD
+  A["Interview Question"] --> B["Generic Accordion"]
+  B --> C["Multiple Items"]
+  B --> D["Independent Toggle"]
+  B --> E["Reusable Pattern"]
+  C --> F["Each item has<br/>its own state"]
+  D --> G["Opening one does NOT<br/>close others"]
+  E --> H["Works with any<br/>content via children"]`,
+      },
+      {
+        heading: "Component Architecture",
+        content:
+          "The key insight is to create an AccordionItem component that manages its own open/closed state internally via useState. Because each instance of AccordionItem has its own state, toggling one item has zero effect on siblings. The parent simply renders multiple AccordionItem components — no shared state, no lifting state up, no context needed.",
+        diagram: `graph TD
+  App["App Component"] --> A1["AccordionItem 1<br/>useState: isOpen"]
+  App --> A2["AccordionItem 2<br/>useState: isOpen"]
+  App --> A3["AccordionItem 3<br/>useState: isOpen"]
+  A1 --> S1["State: independent"]
+  A2 --> S2["State: independent"]
+  A3 --> S3["State: independent"]
+  style S1 fill:#22c55e,color:#fff
+  style S2 fill:#22c55e,color:#fff
+  style S3 fill:#22c55e,color:#fff`,
+      },
+      {
+        heading: "How State Isolation Works",
+        content:
+          "In React, every component instance has its own isolated state. When you call useState inside AccordionItem, React creates a separate state slot for each rendered instance. Clicking the button in AccordionItem 1 calls setIsOpen for that instance only — React does not re-render AccordionItem 2 or 3 because their state has not changed. This is core React behavior and is what makes this pattern so clean.",
+        diagram: `sequenceDiagram
+  participant User
+  participant Item1 as AccordionItem 1
+  participant Item2 as AccordionItem 2
+  participant Item3 as AccordionItem 3
+  User->>Item1: Click toggle
+  Item1->>Item1: setIsOpen(!isOpen)
+  Item1->>Item1: Re-render only this item
+  Note over Item2: No re-render
+  Note over Item3: No re-render
+  User->>Item3: Click toggle
+  Item3->>Item3: setIsOpen(!isOpen)
+  Item3->>Item3: Re-render only this item
+  Note over Item1: No re-render
+  Note over Item2: No re-render`,
+      },
+      {
+        heading: "Project Structure",
+        content:
+          "When you create a React app (e.g. via create-react-app or Vite), you will need these four files. Below is the folder structure so you know exactly where each file goes.",
+        diagram: `graph TD
+  Root["my-accordion-app/"] --> Pkg["package.json"]
+  Root --> Src["src/"]
+  Src --> AppFile["App.jsx"]
+  Src --> IndexFile["index.jsx"]
+  Src --> StylesFile["styles.css"]
+  style Pkg fill:#f59e0b,color:#000
+  style AppFile fill:#38bdf8,color:#000
+  style IndexFile fill:#a78bfa,color:#000
+  style StylesFile fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "File 1 — package.json",
+        content:
+          "This is your project configuration file at the root of the project. It defines the project name, dependencies (react, react-dom, react-scripts), and available scripts. Run 'npx create-react-app my-accordion-app' to generate this automatically, or create it manually and run 'npm install'.",
+        codeSnippet: {
+          language: "json",
+          code: `{
+  "name": "my-accordion-app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version"]
+  }
+}`,
+        },
+      },
+      {
+        heading: "File 2 — src/index.jsx",
+        content:
+          "This is the entry point of your React application. It sits inside the src/ folder. It imports React, ReactDOM, the root App component, and renders it into the DOM element with id 'root' in your public/index.html file.",
+        codeSnippet: {
+          language: "jsx",
+          code: `import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root')
+);
+
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);`,
+        },
+      },
+      {
+        heading: "File 3 — src/App.jsx",
+        content:
+          "This is the main component file inside the src/ folder. It contains the reusable AccordionItem component and the App component that renders multiple accordion instances. Each AccordionItem manages its own isOpen state via useState, so toggling one does not affect others. The children prop makes it generic — you can pass any JSX as accordion content.",
+        codeSnippet: {
+          language: "jsx",
+          code: `import React, { useState } from 'react';
+import './styles.css';
+
+// Reusable AccordionItem — each instance has its own state
+function AccordionItem({ title, children }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="accordion-item">
+      <button
+        className="accordion-title"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        {title}
+        <span className="accordion-icon">
+          {isOpen ? '−' : '+'}
+        </span>
+      </button>
+      {isOpen && (
+        <div className="accordion-content">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// App — renders multiple independent accordions
+export default function App() {
+  return (
+    <div className="main">
+      <h1 className="title">Multiple Accordions</h1>
+      <AccordionItem title="Section 1">
+        <p>This is content for Section 1.</p>
+      </AccordionItem>
+      <AccordionItem title="Section 2">
+        <p>This is content for Section 2.</p>
+      </AccordionItem>
+      <AccordionItem title="Section 3">
+        <p>This is content for Section 3.</p>
+      </AccordionItem>
+    </div>
+  );
+}`,
+        },
+      },
+      {
+        heading: "File 4 — src/styles.css",
+        content:
+          "This is the stylesheet inside the src/ folder, imported by App.jsx. It styles the accordion with a clean, modern look — rounded corners, hover effects, smooth transitions, and proper spacing.",
+        codeSnippet: {
+          language: "css",
+          code: `/* src/styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  color: #1e293b;
+}
+
+.main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #0f172a;
+}
+
+.accordion-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.accordion-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1e293b;
+  transition: background 0.2s;
+}
+
+.accordion-title:hover {
+  background: #f1f5f9;
+}
+
+.accordion-icon {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.accordion-content {
+  padding: 0.75rem 1.25rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #475569;
+  border-top: 1px solid #e2e8f0;
+}`,
+        },
+      },
+      {
+        heading: "Final Output — What It Looks Like",
+        content:
+          "Here is a visual representation of the final rendered output. Section 1 is collapsed, Section 2 is open showing its content, and Section 3 is collapsed. Notice how each accordion works independently — only Section 2 is expanded while the others remain closed.",
+        diagram: `block-beta
+  columns 1
+  block:header
+    title["Multiple Accordions"]
+  end
+  space
+  block:s1:1
+    s1btn["Section 1                                                    +"]
+  end
+  space
+  block:s2:1
+    s2btn["Section 2                                                    -"]
+  end
+  block:s2content:1
+    s2text["This is content for Section 2."]
+  end
+  space
+  block:s3:1
+    s3btn["Section 3                                                    +"]
+  end
+
+  style header fill:transparent,stroke:none,color:#f1f5f9
+  style title fill:transparent,stroke:none,color:#f1f5f9
+  style s1 fill:#1e293b,stroke:#334155,color:#f1f5f9
+  style s1btn fill:#1e293b,stroke:none,color:#f1f5f9
+  style s2 fill:#1e293b,stroke:#38bdf8,color:#f1f5f9
+  style s2btn fill:#1e293b,stroke:none,color:#38bdf8
+  style s2content fill:#0f172a,stroke:#334155,color:#94a3b8
+  style s2text fill:#0f172a,stroke:none,color:#94a3b8
+  style s3 fill:#1e293b,stroke:#334155,color:#f1f5f9
+  style s3btn fill:#1e293b,stroke:none,color:#f1f5f9`,
+      },
+      {
+        heading: "Key Concepts Explained",
+        content:
+          "This pattern relies on several important React concepts: (1) Component-level state — each AccordionItem instance owns its isOpen state. (2) The children prop — allows any JSX to be passed as accordion content, making it truly generic. (3) Conditional rendering — {isOpen && ...} shows/hides content without unmounting the parent. (4) Accessibility — aria-expanded communicates the toggle state to screen readers.",
+        comparison: {
+          title: "Independent vs Controlled Accordion",
+          headers: ["Aspect", "Independent (This Pattern)"],
+          rows: [
+            ["State Location", "Inside each AccordionItem", "Parent component"],
+            ["Toggle Behavior", "Each item independent", "Parent controls which is open"],
+            ["Use Case", "FAQ, settings panels", "Single-open panels, wizard steps"],
+            ["Complexity", "Very simple", "More complex, needs index tracking"],
+            ["Shared State?", "No", "Yes, via array or single index"],
+            ["Code", "useState per item", "useState in parent + props down"],
+          ],
+        },
+      },
+      {
+        heading: "Rendering Flow",
+        content:
+          "Let's trace exactly what happens when the user clicks an accordion. The button's onClick fires setIsOpen(!isOpen). React schedules a re-render for only that AccordionItem. During re-render, isOpen is now true, so the accordion-content div is rendered. Other AccordionItem instances are untouched — their state hasn't changed, so React skips their re-render entirely.",
+        diagram: `flowchart LR
+  A["User clicks<br/>Section 2 button"] --> B["setIsOpen(!isOpen)<br/>called in Item 2"]
+  B --> C["React re-renders<br/>AccordionItem 2"]
+  C --> D{"isOpen === true?"}
+  D -- Yes --> E["Render content div"]
+  D -- No --> F["Hide content div"]
+  G["AccordionItem 1"] -.- H["No state change<br/>No re-render"]
+  I["AccordionItem 3"] -.- J["No state change<br/>No re-render"]
+  style H fill:#64748b,color:#fff
+  style J fill:#64748b,color:#fff
+  style E fill:#22c55e,color:#fff`,
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When presenting this solution in an interview, emphasize these points:\n1) Explain WHY each item is independent — because useState creates isolated state per component instance.\n2) Mention the children prop as the key to making it generic — it accepts any JSX content.\n3) Point out the aria-expanded attribute for accessibility.\n4) If asked about a 'single-open' variant, explain you would lift state to the parent and track the active index.\n5) Mention you could add CSS transitions for a polished UX.\n\nThis demonstrates strong fundamentals in React composition, state management, and accessibility.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [

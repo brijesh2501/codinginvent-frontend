@@ -11,6 +11,42 @@ const MermaidDiagram = lazy(
   () => import("../components/shared/MermaidDiagram"),
 );
 
+/** Splits section content into paragraphs and detects numbered lists (e.g. "1) …") */
+function renderSectionContent(text: string) {
+  const lines = text.split("\n");
+  const elements: React.ReactNode[] = [];
+  let listItems: string[] = [];
+
+  const flushList = () => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ol key={`ol-${elements.length}`} className="ci-blog-detail__list">
+          {listItems.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ol>,
+      );
+      listItems = [];
+    }
+  };
+
+  for (const line of lines) {
+    const match = line.match(/^\d+\)\s*(.*)/);
+    if (match) {
+      listItems.push(match[1]);
+    } else {
+      flushList();
+      const trimmed = line.trim();
+      if (trimmed) {
+        elements.push(<p key={`p-${elements.length}`}>{trimmed}</p>);
+      }
+    }
+  }
+  flushList();
+
+  return elements;
+}
+
 export default function BlogDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const blog = blogs.find((b) => b.slug === slug);
@@ -64,7 +100,9 @@ export default function BlogDetailPage() {
                 {section.heading}
               </h2>
 
-              <p className="ci-blog-detail__section-text">{section.content}</p>
+              <div className="ci-blog-detail__section-text">
+                {renderSectionContent(section.content)}
+              </div>
 
               {/* Diagram */}
               {section.diagram && (
