@@ -736,6 +736,202 @@ body {
       },
     ],
   },
+  // ── 8. Flatten Array — Recursive, Iterative & Built-in ────
+  {
+    id: "8",
+    slug: "flatten-array-javascript",
+    title: "Flatten a Nested Array in JavaScript — Recursive, Iterative & Built-in Methods",
+    description:
+      "A complete guide to flattening deeply nested arrays in JavaScript using three approaches: recursion, iteration with a stack, and built-in Array.flat(). Includes visual diagrams, code for every method, and a side-by-side comparison.",
+    thumbnail: "📦",
+    category: "JavaScript",
+    tags: ["JavaScript", "Arrays", "Recursion", "Interview", "DSA"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "7 min",
+    sections: [
+      {
+        heading: "The Problem",
+        content:
+          "Given a nested array like [1, [2, [3, [4]], 5]] you need to return a flat single-level array [1, 2, 3, 4, 5]. This is one of the most frequently asked JavaScript interview questions. There are three common approaches — let's visualise the input and output first.",
+        diagram: `graph LR
+  A["Input: [1, [2, [3, [4]], 5]]"] --> B["Flatten"]
+  B --> C["Output: [1, 2, 3, 4, 5]"]
+  style A fill:#f59e0b,color:#000
+  style B fill:#7c3aed,color:#fff
+  style C fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Approach Overview",
+        content:
+          "There are three main ways to flatten a nested array in JavaScript:\n1) Recursive — the function calls itself for every nested array.\n2) Iterative — uses a stack (or queue) to avoid recursion.\n3) Built-in — uses Array.prototype.flat() or Array.prototype.toString() + split.\n\nLet's look at how each approach processes the input step by step.",
+        diagram: `graph TD
+  Start["Nested Array"] --> R["Method 1: Recursive"]
+  Start --> I["Method 2: Iterative Stack"]
+  Start --> B["Method 3: Built-in flat()"]
+  R --> Out["Flat Array"]
+  I --> Out
+  B --> Out
+  style R fill:#38bdf8,color:#000
+  style I fill:#a78bfa,color:#000
+  style B fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Method 1 — Recursive Approach",
+        content:
+          "The recursive approach checks each item: if it's an array, call flatten() on it and concatenate the result; otherwise push it directly. This naturally handles any depth of nesting because each recursive call peels off one level.",
+        codeSnippet: {
+          language: "javascript",
+          code: `function flatten(arr) {
+  let result = [];
+  for (let item of arr) {
+    if (Array.isArray(item)) {
+      result = result.concat(flatten(item));
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
+}
+
+// Usage
+console.log(flatten([1, [2, [3, [4]], 5]]));
+// Output: [1, 2, 3, 4, 5]`,
+        },
+        diagram: `graph TD
+  A["flatten([1, [2, [3, [4]], 5]])"] --> B["1 is not array, push 1"]
+  A --> C["[2, [3, [4]], 5] is array, recurse"]
+  C --> D["flatten([2, [3, [4]], 5])"]
+  D --> E["2 is not array, push 2"]
+  D --> F["[3, [4]] is array, recurse"]
+  F --> G["flatten([3, [4]])"]
+  G --> H["3 is not array, push 3"]
+  G --> I["[4] is array, recurse"]
+  I --> J["flatten([4])"]
+  J --> K["4 is not array, push 4"]
+  D --> L["5 is not array, push 5"]
+  style K fill:#22c55e,color:#000
+  style H fill:#22c55e,color:#000
+  style E fill:#22c55e,color:#000
+  style B fill:#22c55e,color:#000
+  style L fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Method 2 — Iterative Approach (Stack)",
+        content:
+          "The iterative approach avoids recursion by using a stack. We push items onto the stack and pop them off one by one. If a popped item is an array, we push its elements back onto the stack; otherwise we add it to the result. We reverse at the end because the stack processes in LIFO order.",
+        codeSnippet: {
+          language: "javascript",
+          code: `function flattenIterative(arr) {
+  const stack = [...arr];
+  const result = [];
+
+  while (stack.length) {
+    const item = stack.pop();
+    if (Array.isArray(item)) {
+      stack.push(...item);
+    } else {
+      result.push(item);
+    }
+  }
+
+  return result.reverse();
+}
+
+// Usage
+console.log(flattenIterative([1, [2, [3, [4]], 5]]));
+// Output: [1, 2, 3, 4, 5]`,
+        },
+        diagram: `sequenceDiagram
+  participant Stack
+  participant Result
+
+  Note over Stack: [1, [2, [3, [4]], 5]]
+  Stack->>Result: pop 5 -> push to result
+  Stack->>Stack: pop [2,[3,[4]]] -> push 2,[3,[4]]
+  Stack->>Stack: pop [3,[4]] -> push 3,[4]
+  Stack->>Stack: pop [4] -> push 4
+  Stack->>Result: pop 4 -> push to result
+  Stack->>Result: pop 3 -> push to result
+  Stack->>Result: pop 2 -> push to result
+  Stack->>Result: pop 1 -> push to result
+  Note over Result: reverse -> [1,2,3,4,5]`,
+      },
+      {
+        heading: "Method 3 — Built-in Methods",
+        content:
+          "JavaScript provides built-in ways to flatten arrays. Array.flat(depth) is the cleanest — pass Infinity to flatten any depth. You can also use toString() + split() as a quick trick, or reduce() + concat for a functional style. Here are all three built-in variations:",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ✅ Method 3a: Array.flat(Infinity) — recommended
+const arr = [1, [2, [3, [4]], 5]];
+console.log(arr.flat(Infinity));
+// Output: [1, 2, 3, 4, 5]
+
+// ✅ Method 3b: flat(1) — flattens only ONE level
+console.log(arr.flat(1));
+// Output: [1, 2, [3, [4]], 5]
+
+// ✅ Method 3c: toString() + split() — works for numbers
+console.log(arr.toString().split(",").map(Number));
+// Output: [1, 2, 3, 4, 5]
+
+// ✅ Method 3d: reduce + concat (one level)
+function flatOne(arr) {
+  return arr.reduce((acc, val) =>
+    Array.isArray(val) ? acc.concat(flatOne(val)) : acc.concat(val)
+  , []);
+}
+console.log(flatOne([1, [2, [3, [4]], 5]]));
+// Output: [1, 2, 3, 4, 5]`,
+        },
+      },
+      {
+        heading: "Comparison of All Methods",
+        content:
+          "Each approach has trade-offs in readability, performance, and browser support. Here is a side-by-side comparison to help you choose the right one for your use case.",
+        comparison: {
+          title: "Recursive vs Iterative vs Built-in",
+          headers: ["Aspect", "Recursive / Iterative / Built-in"],
+          rows: [
+            ["Code Complexity", "Medium", "Medium / Very Simple"],
+            ["Readability", "High", "Medium / Very High"],
+            ["Max Depth", "Limited by call stack", "Unlimited / Unlimited"],
+            ["Performance", "Good for small arrays", "Better for large / Best"],
+            ["Browser Support", "All browsers", "All / ES2019+ for flat()"],
+            ["Stack Overflow Risk", "Yes, for very deep nesting", "No / No"],
+            ["Interview Value", "Most commonly expected", "Shows extra knowledge"],
+          ],
+        },
+      },
+      {
+        heading: "How flat(depth) Works Internally",
+        content:
+          "Array.flat(depth) works by iterating over each element. If the element is an array and depth > 0, it recursively flattens with depth - 1. Otherwise it keeps the element as-is. Passing Infinity means it keeps going until no nested arrays remain.",
+        diagram: `flowchart TD
+  A["arr.flat(Infinity)"] --> B{"For each element"}
+  B --> C{"Is it an array?"}
+  C -- Yes --> D["Recurse: element.flat(depth - 1)"]
+  D --> B
+  C -- No --> E["Keep element as-is"]
+  E --> F["Add to result"]
+  B --> G["Return flat result"]
+  style A fill:#22c55e,color:#000
+  style D fill:#38bdf8,color:#000
+  style G fill:#a78bfa,color:#fff`,
+      },
+      {
+        heading: "Edge Cases to Remember",
+        content:
+          "When implementing or discussing array flattening in an interview, mention these edge cases:\n1) Empty arrays — flatten([]) should return [].\n2) Already flat arrays — flatten([1, 2, 3]) should return [1, 2, 3] unchanged.\n3) Mixed types — arrays can contain strings, objects, null, undefined — only arrays should be unpacked.\n4) Sparse arrays — Array.flat() removes empty slots (holes), but custom implementations may not.\n5) Very deep nesting — recursive approach may hit stack overflow; iterative or flat(Infinity) is safer.",
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When answering this question in an interview:\n1) Start with the recursive solution — it's the most commonly expected answer.\n2) Explain the base case: if the item is not an array, push it directly.\n3) Then offer the iterative stack-based version to show you understand stack overflow risks.\n4) Mention Array.flat(Infinity) as the production-ready approach.\n5) Discuss trade-offs: recursion depth limits vs readability vs browser support.\n6) Handle follow-ups like 'flatten only N levels deep' by adding a depth parameter.\n\nThis shows strong fundamentals in recursion, iteration, and awareness of built-in APIs.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
