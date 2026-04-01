@@ -932,6 +932,1409 @@ console.log(flatOne([1, [2, [3, [4]], 5]]));
       },
     ],
   },
+  // ── 9. React Context Provider — Complete Guide ────────────
+  {
+    id: "9",
+    slug: "react-context-provider",
+    title: "React Context API & Provider — Complete Guide with Real-World Examples",
+    description:
+      "Master React Context: understand the problem it solves, how createContext + Provider + useContext work, when to use it vs props vs state management libraries, and build a real Theme + Auth context from scratch.",
+    thumbnail: "🌐",
+    category: "React",
+    tags: ["React", "Context API", "useContext", "State Management", "Interview"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "10 min",
+    sections: [
+      {
+        heading: "The Problem — Prop Drilling",
+        content:
+          "In React, data flows top-down via props. When deeply nested components need the same data, you end up passing props through many intermediate components that don't even use them. This is called prop drilling — it makes code hard to maintain, read, and refactor. Context solves this by providing a way to share values across the component tree without explicitly passing props at every level.",
+        diagram: `graph TD
+  A["App"] -->|"theme prop"| B["Layout"]
+  B -->|"theme prop"| C["Sidebar"]
+  C -->|"theme prop"| D["SidebarItem"]
+  D -->|"theme prop"| E["Icon"]
+
+  A2["App with Context"] --> B2["Layout"]
+  B2 --> C2["Sidebar"]
+  C2 --> D2["SidebarItem"]
+  D2 --> E2["Icon"]
+  A2 -.->|"Context Provider"| E2
+
+  style A fill:#ef4444,color:#fff
+  style B fill:#ef4444,color:#fff
+  style C fill:#ef4444,color:#fff
+  style D fill:#ef4444,color:#fff
+  style E fill:#ef4444,color:#fff
+  style A2 fill:#22c55e,color:#000
+  style E2 fill:#22c55e,color:#000
+  style B2 fill:#1e293b,color:#f1f5f9
+  style C2 fill:#1e293b,color:#f1f5f9
+  style D2 fill:#1e293b,color:#f1f5f9`,
+      },
+      {
+        heading: "How Context Works — The 3-Step Pattern",
+        content:
+          "Every Context implementation follows three steps:\n1) Create — call React.createContext(defaultValue) to create a Context object.\n2) Provide — wrap a part of your component tree with <Context.Provider value={...}>.\n3) Consume — any descendant calls useContext(Context) to read the value.\n\nThe Provider acts like a broadcast tower — any component inside it can tune in without props.",
+        diagram: `graph TD
+  Step1["Step 1: Create Context<br/>const ThemeCtx = createContext('light')"] --> Step2["Step 2: Provide Value<br/>ThemeCtx.Provider value='dark'"]
+  Step2 --> Step3["Step 3: Consume<br/>const theme = useContext(ThemeCtx)"]
+
+  Step2 --> C1["Child A<br/>useContext = 'dark'"]
+  Step2 --> C2["Child B<br/>useContext = 'dark'"]
+  Step2 --> C3["Nested Child C<br/>useContext = 'dark'"]
+
+  style Step1 fill:#f59e0b,color:#000
+  style Step2 fill:#7c3aed,color:#fff
+  style Step3 fill:#38bdf8,color:#000
+  style C1 fill:#22c55e,color:#000
+  style C2 fill:#22c55e,color:#000
+  style C3 fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Project Structure",
+        content:
+          "A clean way to organise Context in a real project. Each context gets its own file with the provider, hook, and types co-located.",
+        diagram: `graph TD
+  Root["src/"] --> Ctx["context/"]
+  Ctx --> TC["ThemeContext.tsx"]
+  Ctx --> AC["AuthContext.tsx"]
+  Root --> Comp["components/"]
+  Comp --> Header["Header.tsx — uses useTheme"]
+  Comp --> Profile["Profile.tsx — uses useAuth"]
+  Root --> AppFile["App.tsx — wraps providers"]
+  style TC fill:#38bdf8,color:#000
+  style AC fill:#a78bfa,color:#000
+  style AppFile fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "File 1 — src/context/ThemeContext.tsx",
+        content:
+          "This file creates a Theme context with a toggle function. It exports both the provider component and a custom useTheme hook. The provider manages state internally and exposes the theme value + toggleTheme function to all descendants.",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { createContext, useContext, useState, ReactNode } from "react";
+
+// 1. Define types
+type Theme = "light" | "dark";
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+// 2. Create Context with undefined default
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// 3. Provider component — manages state
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>("light");
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// 4. Custom hook — safe consumption with error boundary
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+}`,
+        },
+      },
+      {
+        heading: "File 2 — src/context/AuthContext.tsx",
+        content:
+          "A real-world Auth context that stores user data and provides login/logout functions. This pattern is used in production apps to share authentication state across the entire app — navigation, protected routes, profile pages, etc.",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { createContext, useContext, useState, ReactNode } from "react";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface AuthContextType {
+  user: User | null;
+  isLoggedIn: boolean;
+  login: (user: User) => void;
+  logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+
+  const login = (userData: User) => setUser(userData);
+  const logout = () => setUser(null);
+
+  return (
+    <AuthContext.Provider
+      value={{ user, isLoggedIn: !!user, login, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+}`,
+        },
+      },
+      {
+        heading: "File 3 — src/App.tsx (Wrapping Providers)",
+        content:
+          "The App component wraps the entire tree with providers. Order matters when providers depend on each other — here ThemeProvider is outermost and AuthProvider is inside it. Any component anywhere in the tree can now call useTheme() or useAuth().",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
+import Header from "./components/Header";
+import Profile from "./components/Profile";
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <Header />
+        <Profile />
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}`,
+        },
+      },
+      {
+        heading: "File 4 — Consuming Context in Components",
+        content:
+          "Components consume context via the custom hooks. No props needed — they just call useTheme() or useAuth() and get the values directly. Here is a Header that shows the theme toggle and a Profile that shows user info.",
+        codeSnippet: {
+          language: "tsx",
+          code: `// src/components/Header.tsx
+import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
+
+export default function Header() {
+  const { theme, toggleTheme } = useTheme();
+  const { isLoggedIn, user, logout } = useAuth();
+
+  return (
+    <header style={{ background: theme === "dark" ? "#1e293b" : "#fff" }}>
+      <h1>My App</h1>
+      <button onClick={toggleTheme}>
+        {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+      </button>
+      {isLoggedIn ? (
+        <>
+          <span>Hello, {user?.name}</span>
+          <button onClick={logout}>Logout</button>
+        </>
+      ) : (
+        <span>Please log in</span>
+      )}
+    </header>
+  );
+}
+
+// src/components/Profile.tsx
+import { useAuth } from "../context/AuthContext";
+
+export default function Profile() {
+  const { user, isLoggedIn, login } = useAuth();
+
+  if (!isLoggedIn) {
+    return (
+      <button onClick={() => login({ id: "1", name: "John", email: "john@example.com" })}>
+        Login as John
+      </button>
+    );
+  }
+
+  return (
+    <div>
+      <h2>{user?.name}</h2>
+      <p>{user?.email}</p>
+    </div>
+  );
+}`,
+        },
+      },
+      {
+        heading: "Data Flow Visualisation",
+        content:
+          "Here is exactly how data flows through the Context system at runtime. The Provider stores the value in React's internal fiber tree — when the value changes, React finds all consumers subscribed to that context and re-renders only them.",
+        diagram: `sequenceDiagram
+  participant App
+  participant ThemeProvider
+  participant ReactFiber as React Fiber Tree
+  participant Header
+  participant Profile
+
+  App->>ThemeProvider: Render with children
+  ThemeProvider->>ReactFiber: Store value: theme + toggleTheme
+  Header->>ReactFiber: useContext(ThemeContext)
+  ReactFiber-->>Header: Return theme = "light"
+
+  Note over Header: User clicks toggle
+  Header->>ThemeProvider: toggleTheme()
+  ThemeProvider->>ThemeProvider: setState: "dark"
+  ThemeProvider->>ReactFiber: Update value: theme = "dark"
+  ReactFiber-->>Header: Re-render with "dark"
+  Note over Profile: NOT re-rendered (not subscribed to ThemeContext)`,
+      },
+      {
+        heading: "Context vs Props vs Redux vs Zustand",
+        content:
+          "Context is not a replacement for all state management. It is best for low-frequency global data like themes, auth, locale. For high-frequency updates like form inputs or animations, use local state or specialised libraries. Here is how they compare:",
+        comparison: {
+          title: "Context vs Props vs Redux vs Zustand",
+          headers: ["Aspect", "Context / Props / Redux / Zustand"],
+          rows: [
+            ["Setup", "Minimal (built-in)", "None / Heavy boilerplate / Lightweight"],
+            ["Best For", "Theme, auth, locale", "Direct parent-child / Complex global / Medium global"],
+            ["Re-render Scope", "All consumers re-render", "Only receiving component / Selective / Selective"],
+            ["Middleware", "None", "None / Thunk, Saga / Built-in"],
+            ["DevTools", "React DevTools", "Props tab / Redux DevTools / Zustand DevTools"],
+            ["Bundle Size", "0 KB (built-in)", "0 KB / ~7 KB / ~1 KB"],
+            ["Learning Curve", "Easy", "None / Steep / Easy"],
+            ["Performance", "Good for low-frequency", "Best / Good with selectors / Great"],
+          ],
+        },
+      },
+      {
+        heading: "Common Mistakes to Avoid",
+        content:
+          "These are the most common pitfalls when using Context:\n1) Not wrapping with Provider — calling useContext without a Provider ancestor returns the default value (often undefined), leading to runtime errors.\n2) Putting too much in one context — combining unrelated state causes unnecessary re-renders. Split into separate contexts (ThemeContext, AuthContext, etc.).\n3) Using context for high-frequency updates — context re-renders ALL consumers on every change. For rapidly changing values (mouse position, timers), use local state or refs.\n4) Missing the custom hook pattern — always create a useTheme() / useAuth() wrapper that throws if used outside the provider. This catches bugs early.\n5) Forgetting memoisation — if the provider value is a new object on every render, all consumers re-render. Use useMemo for the value object.",
+      },
+      {
+        heading: "Performance Optimisation — useMemo",
+        content:
+          "A very common mistake is creating a new value object on every render, which forces all consumers to re-render even if nothing changed. The fix is to wrap the value in useMemo so React reuses the same object reference when dependencies haven't changed.",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { createContext, useState, useMemo, ReactNode } from "react";
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  const toggleTheme = () => setTheme((p) => (p === "light" ? "dark" : "light"));
+
+  // ✅ Memoize the value — consumers only re-render when theme changes
+  const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
+
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+// ❌ BAD — new object every render, all consumers re-render
+// <ThemeContext.Provider value={{ theme, toggleTheme }}>`,
+        },
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When asked about Context in an interview:\n1) Start by explaining the problem — prop drilling makes deeply nested data passing painful.\n2) Walk through the 3 steps: createContext, Provider, useContext.\n3) Show the custom hook pattern with the error throw guard.\n4) Explain when NOT to use context — high-frequency updates, or when a simple prop will do.\n5) Mention useMemo for the provider value to avoid unnecessary re-renders.\n6) Compare with Redux/Zustand — context for simple global state, Redux for complex state with middleware.\n7) Mention you can nest multiple providers and they can override each other.\n\nThis demonstrates deep understanding of React's component model, state management trade-offs, and performance awareness.",
+      },
+    ],
+  },
+  // ── 10. Test Cases Deep Dive ──────────────────────────────
+  {
+    id: "10",
+    slug: "javascript-testing-deep-dive",
+    title: "JavaScript Testing Deep Dive — Every Function You Need to Know (Jest & React Testing Library)",
+    description:
+      "A comprehensive guide to writing test cases in JavaScript & React. Covers every Jest matcher, mock function, RTL query, async testing pattern, and the most common interview mistakes — with real code examples and visual diagrams.",
+    thumbnail: "🧪",
+    category: "Testing",
+    tags: ["Jest", "React Testing Library", "Unit Testing", "TDD", "Interview"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "15 min",
+    sections: [
+      {
+        heading: "Why Testing Matters",
+        content:
+          "Testing gives you confidence that your code works correctly today and continues to work after future changes. It catches bugs early, serves as living documentation, and is a core skill asked in every senior-level frontend interview. There are three main levels of testing:",
+        diagram: `graph TD
+  A["Testing Pyramid"] --> B["Unit Tests<br/>Fast, isolated, many"]
+  A --> C["Integration Tests<br/>Components together"]
+  A --> D["E2E Tests<br/>Full user flows, few"]
+  B --> B1["Jest matchers<br/>Mock functions"]
+  C --> C1["React Testing Library<br/>render + queries"]
+  D --> D1["Cypress / Playwright"]
+  style B fill:#22c55e,color:#000
+  style C fill:#38bdf8,color:#000
+  style D fill:#a78bfa,color:#fff`,
+      },
+      {
+        heading: "Jest Setup & Test Structure",
+        content:
+          "Every test file follows the same structure: describe() groups related tests, it() or test() defines individual test cases, and expect() makes assertions. beforeEach/afterEach run setup/teardown before each test. Here is the anatomy of a test file:",
+        codeSnippet: {
+          language: "javascript",
+          code: `// sum.test.js
+const { sum, multiply } = require("./math");
+
+describe("Math utilities", () => {
+  // Runs before EACH test in this describe block
+  beforeEach(() => {
+    console.log("Setting up...");
+  });
+
+  // Runs after EACH test
+  afterEach(() => {
+    console.log("Cleaning up...");
+  });
+
+  // Runs ONCE before all tests in this block
+  beforeAll(() => {
+    console.log("One-time setup");
+  });
+
+  // Runs ONCE after all tests
+  afterAll(() => {
+    console.log("One-time teardown");
+  });
+
+  it("should add two numbers", () => {
+    expect(sum(2, 3)).toBe(5);
+  });
+
+  test("should multiply two numbers", () => {
+    expect(multiply(2, 3)).toBe(6);
+  });
+});`,
+        },
+        diagram: `graph TD
+  describe["describe('Math utilities')"] --> beforeAll["beforeAll()"]
+  beforeAll --> loop["For each test:"]
+  loop --> beforeEach["beforeEach()"]
+  beforeEach --> test1["it('should add')"]
+  test1 --> afterEach["afterEach()"]
+  afterEach --> loop
+  loop --> afterAll["afterAll()"]
+  style describe fill:#7c3aed,color:#fff
+  style test1 fill:#22c55e,color:#000
+  style beforeEach fill:#f59e0b,color:#000
+  style afterEach fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "All Jest Matchers — Cheat Sheet",
+        content:
+          "Matchers are the functions you chain after expect(). They check if the received value matches your expectation. Here are all the essential matchers grouped by category:",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ EQUALITY ═══
+expect(2 + 2).toBe(4);                    // Strict equality (===)
+expect({ a: 1 }).toEqual({ a: 1 });       // Deep equality (objects/arrays)
+expect(obj).toStrictEqual(expected);       // Deep + checks undefined properties
+
+// ═══ TRUTHINESS ═══
+expect(null).toBeNull();
+expect(undefined).toBeUndefined();
+expect(value).toBeDefined();
+expect(true).toBeTruthy();
+expect(0).toBeFalsy();
+
+// ═══ NUMBERS ═══
+expect(10).toBeGreaterThan(5);
+expect(10).toBeGreaterThanOrEqual(10);
+expect(5).toBeLessThan(10);
+expect(5).toBeLessThanOrEqual(5);
+expect(0.1 + 0.2).toBeCloseTo(0.3);       // Floating point safe!
+
+// ═══ STRINGS ═══
+expect("Hello World").toMatch(/World/);
+expect("Hello").toContain("ell");
+
+// ═══ ARRAYS ═══
+expect([1, 2, 3]).toContain(2);
+expect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 });
+expect([1, 2, 3]).toHaveLength(3);
+
+// ═══ OBJECTS ═══
+expect({ a: 1, b: 2 }).toHaveProperty("a");
+expect({ a: 1, b: 2 }).toHaveProperty("a", 1);
+expect({ a: 1 }).toMatchObject({ a: 1 });  // Partial match
+
+// ═══ EXCEPTIONS ═══
+expect(() => { throw new Error("fail"); }).toThrow();
+expect(() => { throw new Error("fail"); }).toThrow("fail");
+expect(() => { throw new Error("fail"); }).toThrow(/fail/);
+
+// ═══ NEGATION ═══
+expect(5).not.toBe(3);
+expect([1, 2]).not.toContain(5);`,
+        },
+      },
+      {
+        heading: "toBe vs toEqual vs toStrictEqual",
+        content:
+          "This is the most commonly confused trio in interviews. toBe uses Object.is (reference equality), toEqual does deep value equality (ignoring undefined properties), and toStrictEqual does deep equality but also checks for undefined properties and array holes.",
+        codeSnippet: {
+          language: "javascript",
+          code: `const obj1 = { a: 1, b: undefined };
+const obj2 = { a: 1 };
+
+// toBe — checks REFERENCE (same object in memory)
+expect(obj1).not.toBe(obj2);           // Different references!
+expect(obj1).toBe(obj1);               // Same reference ✅
+
+// toEqual — checks VALUE (ignores undefined props)
+expect(obj1).toEqual(obj2);            // ✅ Passes! b: undefined ignored
+
+// toStrictEqual — checks VALUE + undefined props
+expect(obj1).not.toStrictEqual(obj2);  // ❌ Fails! b: undefined matters`,
+        },
+        comparison: {
+          title: "toBe vs toEqual vs toStrictEqual",
+          headers: ["Aspect", "toBe / toEqual / toStrictEqual"],
+          rows: [
+            ["Check Type", "Reference (===)", "Deep value / Deep value + strict"],
+            ["Primitives", "Works perfectly", "Same result / Same result"],
+            ["Objects", "Must be same ref", "Deep compare / Deep + undefined check"],
+            ["undefined props", "N/A", "Ignored / Checked"],
+            ["Array holes", "N/A", "Ignored / Checked"],
+            ["Use When", "Primitives, same ref", "Object values / Exact shape match"],
+          ],
+        },
+      },
+      {
+        heading: "Mock Functions — jest.fn() & jest.mock()",
+        content:
+          "Mocking lets you replace real implementations with controlled fakes. jest.fn() creates a mock function that records calls, arguments, and return values. jest.mock() replaces an entire module. jest.spyOn() wraps an existing method to track calls while keeping the original behavior (unless overridden).",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ jest.fn() — create a mock function ═══
+const mockCallback = jest.fn();
+mockCallback("hello");
+mockCallback("world");
+
+expect(mockCallback).toHaveBeenCalled();
+expect(mockCallback).toHaveBeenCalledTimes(2);
+expect(mockCallback).toHaveBeenCalledWith("hello");
+expect(mockCallback).toHaveBeenLastCalledWith("world");
+
+// Mock return values
+const mockFn = jest.fn()
+  .mockReturnValue(10)               // Always returns 10
+  .mockReturnValueOnce(42)           // First call returns 42
+  .mockImplementation((x) => x * 2); // Custom implementation
+
+// ═══ jest.mock() — mock entire module ═══
+jest.mock("./api", () => ({
+  fetchUser: jest.fn().mockResolvedValue({ name: "John" }),
+}));
+
+// ═══ jest.spyOn() — spy on existing method ═══
+const spy = jest.spyOn(console, "log");
+console.log("test");
+expect(spy).toHaveBeenCalledWith("test");
+spy.mockRestore(); // Restore original`,
+        },
+        diagram: `graph TD
+  A["Mocking in Jest"] --> B["jest.fn()"]
+  A --> C["jest.mock()"]
+  A --> D["jest.spyOn()"]
+  B --> B1["Create empty mock<br/>Track calls & args"]
+  B --> B2["mockReturnValue<br/>mockImplementation"]
+  C --> C1["Replace entire module<br/>Auto-mock or manual"]
+  D --> D1["Wrap real method<br/>Track + keep original"]
+  D --> D2["mockRestore() to undo"]
+  style B fill:#38bdf8,color:#000
+  style C fill:#a78bfa,color:#000
+  style D fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "React Testing Library — Queries",
+        content:
+          "React Testing Library (RTL) tests components the way users interact with them — by visible text, labels, and roles, NOT by class names or IDs. There are three priority levels for queries:\n1) Accessible queries (BEST): getByRole, getByLabelText, getByPlaceholderText, getByText, getByDisplayValue.\n2) Semantic queries: getByAltText, getByTitle.\n3) Test IDs (LAST RESORT): getByTestId.\n\nEach query comes in three variants: getBy (throws if missing), queryBy (returns null if missing), findBy (async, waits for element).",
+        codeSnippet: {
+          language: "jsx",
+          code: `import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import Counter from "./Counter";
+
+describe("Counter component", () => {
+  it("renders initial count", () => {
+    render(<Counter />);
+
+    // ✅ BEST — query by role
+    expect(screen.getByRole("button", { name: /increment/i })).toBeInTheDocument();
+
+    // ✅ GOOD — query by text
+    expect(screen.getByText("Count: 0")).toBeInTheDocument();
+
+    // ✅ query by label (for form inputs)
+    // screen.getByLabelText("Email");
+
+    // ❌ AVOID — query by test id (last resort)
+    // screen.getByTestId("counter-value");
+  });
+
+  it("increments on click", async () => {
+    const user = userEvent.setup();
+    render(<Counter />);
+
+    const button = screen.getByRole("button", { name: /increment/i });
+    await user.click(button);
+
+    expect(screen.getByText("Count: 1")).toBeInTheDocument();
+  });
+});`,
+        },
+        comparison: {
+          title: "getBy vs queryBy vs findBy",
+          headers: ["Variant", "getBy / queryBy / findBy"],
+          rows: [
+            ["Returns", "Element", "Element or null / Promise<Element>"],
+            ["Throws if missing", "Yes", "No / Yes (after timeout)"],
+            ["Async", "No", "No / Yes (uses waitFor)"],
+            ["Use When", "Element must exist", "Checking absence / Waiting for appearance"],
+            ["Example", "getByText('Hello')", "queryByText('Hello') / findByText('Hello')"],
+          ],
+        },
+      },
+      {
+        heading: "Async Testing — waitFor, findBy, act()",
+        content:
+          "Testing async behavior (API calls, timers, state updates) is where most people struggle. Use findBy queries to wait for elements, waitFor to poll for assertions, and act() to flush pending state updates.",
+        codeSnippet: {
+          language: "jsx",
+          code: `import { render, screen, waitFor, act } from "@testing-library/react";
+import UserProfile from "./UserProfile";
+
+// Mock the API
+jest.mock("./api", () => ({
+  fetchUser: jest.fn().mockResolvedValue({ name: "John Doe" }),
+}));
+
+describe("UserProfile (async)", () => {
+  // ✅ findBy — waits for element to appear
+  it("shows user name after loading", async () => {
+    render(<UserProfile userId="1" />);
+    const name = await screen.findByText("John Doe");
+    expect(name).toBeInTheDocument();
+  });
+
+  // ✅ waitFor — polls until assertion passes
+  it("hides loading spinner", async () => {
+    render(<UserProfile userId="1" />);
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
+  });
+
+  // ✅ Testing rejected promises
+  it("shows error on API failure", async () => {
+    const { fetchUser } = require("./api");
+    fetchUser.mockRejectedValueOnce(new Error("Network error"));
+
+    render(<UserProfile userId="1" />);
+    expect(await screen.findByText(/error/i)).toBeInTheDocument();
+  });
+
+  // ✅ Fake timers
+  it("auto-refreshes after 5 seconds", async () => {
+    jest.useFakeTimers();
+    render(<UserProfile userId="1" />);
+
+    act(() => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    await waitFor(() => {
+      expect(fetchUser).toHaveBeenCalledTimes(2);
+    });
+
+    jest.useRealTimers();
+  });
+});`,
+        },
+      },
+      {
+        heading: "Testing Flow — What Happens Under the Hood",
+        content:
+          "Understanding the internal flow helps you debug failing tests. When you call render(), RTL creates a DOM, mounts your component, and returns query helpers bound to that DOM. State updates are batched inside act(). Async queries use polling with a timeout.",
+        diagram: `sequenceDiagram
+  participant Test as Test File
+  participant RTL as React Testing Library
+  participant DOM as jsdom
+  participant React
+
+  Test->>RTL: render(<Component />)
+  RTL->>DOM: Create container div
+  RTL->>React: ReactDOM.render() inside act()
+  React->>DOM: Mount component, run effects
+  RTL-->>Test: Return screen queries
+
+  Test->>RTL: screen.getByText("Hello")
+  RTL->>DOM: querySelector + text matching
+  DOM-->>RTL: Return element
+  RTL-->>Test: Element or throw
+
+  Test->>RTL: await findByText("Loaded")
+  RTL->>DOM: Poll every 50ms
+  Note over DOM: Component fetches data...
+  React->>DOM: Re-render with data
+  RTL->>DOM: Found "Loaded"!
+  RTL-->>Test: Return element`,
+      },
+      {
+        heading: "Common Mistakes in Interviews",
+        content:
+          "These are the mistakes interviewers catch most often:\n1) Using getByTestId as first choice — always prefer getByRole, getByText, getByLabelText. TestIDs are a last resort.\n2) Not wrapping state updates in act() — if a test triggers a state update outside of RTL helpers, you need act(). But RTL's render, fireEvent, and userEvent already wrap in act.\n3) Using fireEvent instead of userEvent — fireEvent dispatches raw DOM events. userEvent simulates real user behavior (focus, keydown, input, blur). Always prefer userEvent.\n4) Testing implementation details — don't test state variables, internal methods, or class names. Test what the USER sees and does.\n5) Forgetting to await async operations — findBy, waitFor, and user.click all return Promises. Missing await causes tests to pass falsely.\n6) Not cleaning up mocks — always call jest.restoreAllMocks() in afterEach, or mocks leak between tests.\n7) Testing too much in one test — each it() should test ONE behavior. Split assertions into separate tests for clarity.",
+      },
+      {
+        heading: "Pros & Cons of Different Testing Approaches",
+        content:
+          "Each testing tool and strategy has trade-offs. Understanding these helps you choose the right approach for your project.",
+        comparison: {
+          title: "Unit vs Integration vs E2E Testing",
+          headers: ["Aspect", "Unit / Integration / E2E"],
+          rows: [
+            ["Speed", "Very fast (ms)", "Fast (100ms) / Slow (seconds)"],
+            ["Confidence", "Low — tests in isolation", "Medium / High — real browser"],
+            ["Maintenance", "Easy", "Medium / Hard (brittle selectors)"],
+            ["Cost to Write", "Low", "Medium / High"],
+            ["Catches Bugs", "Logic bugs", "Wiring bugs / Full-flow bugs"],
+            ["Tools", "Jest", "Jest + RTL / Cypress, Playwright"],
+            ["How Many", "Many (70%)", "Some (20%) / Few (10%)"],
+          ],
+        },
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When asked about testing in an interview:\n1) Explain the testing pyramid — many unit tests, fewer integration, fewest E2E.\n2) Show you know the difference between toBe, toEqual, and toStrictEqual.\n3) Demonstrate mock functions: jest.fn(), jest.mock(), jest.spyOn() with mockResolvedValue for async.\n4) Use RTL's query priority: getByRole > getByText > getByLabelText > getByTestId.\n5) Show async testing with findBy and waitFor — this separates juniors from seniors.\n6) Mention the common mistake of testing implementation details vs user behavior.\n7) Talk about code coverage but explain it's not the only metric — meaningful tests matter more than 100% coverage.\n\nThis demonstrates professional testing practices and real-world experience.",
+      },
+    ],
+  },
+  // ── 11. TypeScript Knowledge Check ────────────────────────
+  {
+    id: "11",
+    slug: "typescript-knowledge-check",
+    title: "TypeScript Knowledge Check — Types, Generics, Utility Types & Interview Traps",
+    description:
+      "A deep-dive into TypeScript covering type vs interface, generics, utility types, type narrowing, discriminated unions, and the most common interview mistakes — with code examples, visual diagrams, and comparison tables.",
+    thumbnail: "🔷",
+    category: "TypeScript",
+    tags: ["TypeScript", "Generics", "Utility Types", "Type Guard", "Interview"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "12 min",
+    sections: [
+      {
+        heading: "Why TypeScript?",
+        content:
+          "TypeScript adds static types to JavaScript. It catches bugs at compile time, provides IntelliSense in editors, makes refactoring safe, and serves as self-documenting code. In interviews, TypeScript questions test your depth beyond just adding ': string' to variables.",
+        diagram: `graph LR
+  JS["JavaScript"] -->|"Add types"| TS["TypeScript"]
+  TS --> A["Catch bugs at compile time"]
+  TS --> B["IntelliSense & autocomplete"]
+  TS --> C["Safe refactoring"]
+  TS --> D["Self-documenting code"]
+  TS --> E["Better team collaboration"]
+  style JS fill:#f59e0b,color:#000
+  style TS fill:#3178c6,color:#fff`,
+      },
+      {
+        heading: "type vs interface — The REAL Difference",
+        content:
+          "Both can describe object shapes, but they have key differences. The rule of thumb: use interface for object shapes (it supports declaration merging and extends), use type for unions, intersections, mapped types, and primitives.",
+        codeSnippet: {
+          language: "typescript",
+          code: `// ═══ INTERFACE — for object shapes ═══
+interface User {
+  name: string;
+  age: number;
+}
+
+// ✅ Declaration merging (interface only!)
+interface User {
+  email: string;  // merged with above — User now has name, age, email
+}
+
+// ✅ Extends
+interface Admin extends User {
+  role: "admin";
+}
+
+// ═══ TYPE — for everything else ═══
+type ID = string | number;                    // Union
+type Response = User & { token: string };     // Intersection
+type Status = "active" | "inactive";          // Literal union
+type Callback = (data: User) => void;         // Function signature
+
+// ❌ Type CANNOT do declaration merging
+// type User = { phone: string };  // Error: Duplicate identifier
+
+// ✅ Type can do mapped types, conditional types
+type Readonly<T> = { readonly [K in keyof T]: T[K] };`,
+        },
+        comparison: {
+          title: "type vs interface",
+          headers: ["Feature", "interface / type"],
+          rows: [
+            ["Object Shape", "Yes", "Yes"],
+            ["Declaration Merging", "Yes", "No"],
+            ["Extends/Implements", "Yes (extends)", "Yes (intersections &)"],
+            ["Union Types", "No", "Yes"],
+            ["Mapped Types", "No", "Yes"],
+            ["Primitive Aliases", "No", "Yes (type ID = string)"],
+            ["Computed Properties", "No", "Yes"],
+            ["Best For", "Objects, classes", "Unions, complex types"],
+          ],
+        },
+      },
+      {
+        heading: "Generics — Write Once, Use for Any Type",
+        content:
+          "Generics let you write reusable code that works with any type while keeping type safety. Think of them as type parameters — just like function parameters accept values, generics accept types. This is one of the most important TypeScript interview topics.",
+        codeSnippet: {
+          language: "typescript",
+          code: `// ═══ Generic Function ═══
+function identity<T>(value: T): T {
+  return value;
+}
+identity<string>("hello");  // T = string
+identity(42);               // T inferred as number
+
+// ═══ Generic Interface ═══
+interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+const userRes: ApiResponse<User> = {
+  data: { name: "John", age: 30, email: "john@test.com" },
+  status: 200,
+  message: "OK",
+};
+
+// ═══ Generic Constraints ═══
+function getLength<T extends { length: number }>(item: T): number {
+  return item.length;
+}
+getLength("hello");    // ✅ string has length
+getLength([1, 2, 3]);  // ✅ array has length
+// getLength(123);     // ❌ number has no length
+
+// ═══ keyof Constraint ═══
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+getProperty({ name: "John", age: 30 }, "name");  // returns string
+// getProperty({ name: "John" }, "foo");          // ❌ "foo" not in keyof`,
+        },
+        diagram: `graph TD
+  G["Generics T"] --> F["Functions<br/>identity T, arg: T"]
+  G --> I["Interfaces<br/>ApiResponse T"]
+  G --> C["Classes<br/>Stack T"]
+  G --> Con["Constraints<br/>T extends HasLength"]
+  Con --> K["keyof<br/>K extends keyof T"]
+  style G fill:#3178c6,color:#fff
+  style F fill:#22c55e,color:#000
+  style I fill:#38bdf8,color:#000
+  style C fill:#a78bfa,color:#fff
+  style Con fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "Utility Types — Built-in Type Transformers",
+        content:
+          "TypeScript provides built-in utility types that transform existing types. These are heavily tested in interviews. Master these and you'll handle any type manipulation question.",
+        codeSnippet: {
+          language: "typescript",
+          code: `interface User {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+}
+
+// Partial<T> — all properties optional
+type PartialUser = Partial<User>;
+// { id?: number; name?: string; email?: string; age?: number }
+
+// Required<T> — all properties required
+type RequiredUser = Required<PartialUser>;
+
+// Pick<T, K> — select specific properties
+type UserPreview = Pick<User, "id" | "name">;
+// { id: number; name: string }
+
+// Omit<T, K> — remove specific properties
+type UserWithoutEmail = Omit<User, "email">;
+// { id: number; name: string; age: number }
+
+// Readonly<T> — all properties readonly
+type FrozenUser = Readonly<User>;
+// const user: FrozenUser = { ... };
+// user.name = "x"; // ❌ Error!
+
+// Record<K, V> — create object type from keys and values
+type Roles = "admin" | "user" | "guest";
+type RolePermissions = Record<Roles, string[]>;
+// { admin: string[]; user: string[]; guest: string[] }
+
+// ReturnType<T> — extract return type of a function
+function getUser() { return { name: "John", age: 30 }; }
+type UserReturn = ReturnType<typeof getUser>;
+// { name: string; age: number }
+
+// Parameters<T> — extract parameter types as tuple
+type GetUserParams = Parameters<typeof getUser>;
+// []
+
+// Extract & Exclude — filter union types
+type Status = "active" | "inactive" | "banned";
+type Active = Extract<Status, "active" | "inactive">;  // "active" | "inactive"
+type NotActive = Exclude<Status, "active">;             // "inactive" | "banned"
+
+// NonNullable<T> — remove null and undefined
+type MaybeString = string | null | undefined;
+type DefiniteString = NonNullable<MaybeString>;         // string`,
+        },
+      },
+      {
+        heading: "Utility Types — Visual Map",
+        content:
+          "Here is a visual overview of how utility types transform the original type. Think of them as functions that take a type and return a new type.",
+        diagram: `graph TD
+  U["User type<br/>{id, name, email, age}"] --> P["Partial<br/>All optional"]
+  U --> R["Required<br/>All required"]
+  U --> Pick["Pick<br/>Select: id, name"]
+  U --> Omit["Omit<br/>Remove: email"]
+  U --> RO["Readonly<br/>All readonly"]
+  U --> Rec["Record<br/>Map keys to values"]
+  U --> RT["ReturnType<br/>Function return type"]
+
+  style U fill:#3178c6,color:#fff
+  style P fill:#22c55e,color:#000
+  style R fill:#ef4444,color:#fff
+  style Pick fill:#38bdf8,color:#000
+  style Omit fill:#f59e0b,color:#000
+  style RO fill:#a78bfa,color:#fff
+  style Rec fill:#ec4899,color:#fff
+  style RT fill:#6366f1,color:#fff`,
+      },
+      {
+        heading: "Type Narrowing & Type Guards",
+        content:
+          "Type narrowing is how TypeScript figures out a more specific type within a code block. This is essential for handling unions safely. There are several ways to narrow types:",
+        codeSnippet: {
+          language: "typescript",
+          code: `// ═══ typeof guard ═══
+function format(value: string | number): string {
+  if (typeof value === "string") {
+    return value.toUpperCase();   // TS knows it's string here
+  }
+  return value.toFixed(2);        // TS knows it's number here
+}
+
+// ═══ instanceof guard ═══
+function logError(error: Error | string) {
+  if (error instanceof Error) {
+    console.log(error.message);   // TS knows Error
+  } else {
+    console.log(error);           // TS knows string
+  }
+}
+
+// ═══ in operator guard ═══
+interface Dog { bark: () => void; }
+interface Cat { meow: () => void; }
+
+function speak(pet: Dog | Cat) {
+  if ("bark" in pet) {
+    pet.bark();                   // TS knows Dog
+  } else {
+    pet.meow();                   // TS knows Cat
+  }
+}
+
+// ═══ Discriminated Union (BEST for complex unions) ═══
+interface Circle { kind: "circle"; radius: number; }
+interface Square { kind: "square"; side: number; }
+type Shape = Circle | Square;
+
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle": return Math.PI * shape.radius ** 2;
+    case "square": return shape.side ** 2;
+  }
+}
+
+// ═══ Custom Type Guard ═══
+function isString(val: unknown): val is string {
+  return typeof val === "string";
+}`,
+        },
+      },
+      {
+        heading: "never, unknown, any — The Tricky Trio",
+        content:
+          "These three types confuse most developers and are favourite interview questions. Understanding them deeply will set you apart.",
+        comparison: {
+          title: "any vs unknown vs never",
+          headers: ["Aspect", "any / unknown / never"],
+          rows: [
+            ["Assignability", "Accepts anything, assigns to anything", "Accepts anything, must narrow to use / Accepts nothing"],
+            ["Type Safety", "None (opt-out of TS)", "Safe (must check before use) / Maximum safety"],
+            ["Use Case", "Migration from JS, escape hatch", "Safe catch-all / Exhaustive checks, unreachable code"],
+            ["Function Return", "Can return any value", "Can return any value / Function never returns"],
+            ["Example", "let x: any = 5; x.foo()", "let x: unknown = 5; if (typeof x === 'number') {} / function fail(): never { throw new Error() }"],
+            ["Interview Rule", "Avoid in production", "Prefer over any / Use for exhaustive switches"],
+          ],
+        },
+        codeSnippet: {
+          language: "typescript",
+          code: `// any — disables type checking ❌
+let a: any = "hello";
+a.nonExistent();      // No error! Runtime crash 💥
+
+// unknown — safe version of any ✅
+let u: unknown = "hello";
+// u.toUpperCase();   // ❌ Error! Must narrow first
+if (typeof u === "string") {
+  u.toUpperCase();    // ✅ Now safe
+}
+
+// never — for impossible states
+function throwError(msg: string): never {
+  throw new Error(msg);  // Never returns
+}
+
+// Exhaustive check with never
+type Color = "red" | "blue" | "green";
+function getHex(color: Color): string {
+  switch (color) {
+    case "red": return "#ff0000";
+    case "blue": return "#0000ff";
+    case "green": return "#00ff00";
+    default:
+      const _exhaustive: never = color;  // Error if a case is missed!
+      return _exhaustive;
+  }
+}`,
+        },
+      },
+      {
+        heading: "Common Interview Mistakes",
+        content:
+          "These are the TypeScript mistakes interviewers catch most often:\n1) Using 'any' everywhere — it defeats the purpose of TypeScript. Use 'unknown' and narrow, or use proper generics.\n2) Not understanding the difference between type and interface — saying 'they are the same' is wrong. Know declaration merging and when to use each.\n3) Confusing Partial with optional properties — Partial<T> makes ALL properties optional, not just some. Use Pick + Partial for selective optionality.\n4) Forgetting that readonly is shallow — Readonly<User> prevents reassignment of top-level properties, but nested objects are still mutable.\n5) Using type assertions (as) instead of type narrowing — 'value as string' tells TS to trust you. typeof/instanceof type guards prove it at runtime.\n6) Not using discriminated unions — using if/else chains with typeof for complex unions is messy. Add a 'kind' or 'type' property for clean switches.\n7) Ignoring strict mode — tsconfig.json should have 'strict: true'. Without it, you miss null checks, implicit any, and other safety nets.",
+      },
+      {
+        heading: "Advanced — Conditional & Mapped Types",
+        content:
+          "These are senior-level topics that come up in advanced interviews. Conditional types let you create types that depend on conditions (like if/else for types). Mapped types let you transform all properties of a type.",
+        codeSnippet: {
+          language: "typescript",
+          code: `// ═══ Conditional Type ═══
+type IsString<T> = T extends string ? "yes" : "no";
+
+type A = IsString<string>;    // "yes"
+type B = IsString<number>;    // "no"
+
+// Built-in Extract uses this pattern:
+// type Extract<T, U> = T extends U ? T : never;
+
+// ═══ Mapped Type ═══
+type Optional<T> = {
+  [K in keyof T]?: T[K];
+};
+
+// Same as Partial<T>!
+
+// ═══ Template Literal Type ═══
+type EventName = "click" | "scroll" | "keypress";
+type Handler = \`on\${Capitalize<EventName>}\`;
+// "onClick" | "onScroll" | "onKeypress"
+
+// ═══ infer keyword ═══
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+type Result = UnwrapPromise<Promise<string>>;  // string
+type Plain = UnwrapPromise<number>;            // number`,
+        },
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When answering TypeScript questions in interviews:\n1) Always explain WHY — don't just show syntax. Explain why Generics exist (reusability + type safety), why utility types matter (DRY types), why 'unknown' is better than 'any'.\n2) Write the type FIRST, then the implementation — this shows you think in types.\n3) Know the top 5 utility types cold: Partial, Pick, Omit, Record, ReturnType.\n4) Demonstrate discriminated unions for complex state — it's the most elegant pattern.\n5) Show you understand 'never' — use it for exhaustive switches and impossible states.\n6) If asked to 'make this function generic', start with the return type and work backwards.\n7) Mention strict mode — say your projects always use strict: true in tsconfig.\n\nThis shows production-level TypeScript skill, not just tutorial-level knowledge.",
+      },
+    ],
+  },
+  // ── 12. useEffect vs useLayoutEffect ──────────────────────
+  {
+    id: "12",
+    slug: "useeffect-vs-uselayouteffect",
+    title: "useEffect vs useLayoutEffect — When to Use Which (with Real Examples & Visual Timeline)",
+    description:
+      "Understand the exact difference between useEffect and useLayoutEffect, when each fires in the React lifecycle, real-world use cases for each, common interview mistakes, and a visual timeline of the render + commit + paint cycle.",
+    thumbnail: "⚡",
+    category: "React",
+    tags: ["React", "Hooks", "useEffect", "useLayoutEffect", "Interview", "Performance"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "10 min",
+    sections: [
+      {
+        heading: "The Core Difference in One Sentence",
+        content:
+          "useEffect runs AFTER the browser paints the screen. useLayoutEffect runs BEFORE the browser paints the screen (but after DOM mutations). This single timing difference determines when you should use each one.",
+        diagram: `graph LR
+  A["React renders<br/>(virtual DOM)"] --> B["DOM updated<br/>(real DOM mutated)"]
+  B --> C["useLayoutEffect<br/>fires HERE"]
+  C --> D["Browser paints<br/>(user sees pixels)"]
+  D --> E["useEffect<br/>fires HERE"]
+  style C fill:#ef4444,color:#fff
+  style E fill:#22c55e,color:#000
+  style D fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "React Render Lifecycle — Full Timeline",
+        content:
+          "Understanding when each hook fires requires knowing the full React render cycle. Here is the exact sequence of events from state change to pixels on screen:",
+        diagram: `sequenceDiagram
+  participant State as State Change
+  participant React as React (Virtual DOM)
+  participant DOM as Real DOM
+  participant Layout as useLayoutEffect
+  participant Browser as Browser Paint
+  participant Effect as useEffect
+
+  State->>React: setState triggers re-render
+  React->>React: Reconcile virtual DOM (diffing)
+  React->>DOM: Apply DOM mutations (commit phase)
+  DOM->>Layout: useLayoutEffect fires (synchronous!)
+  Layout->>Layout: Read/write DOM safely
+  Layout->>Browser: Unblocks browser paint
+  Browser->>Browser: Paint pixels to screen
+  Browser->>Effect: useEffect fires (asynchronous)
+  Effect->>Effect: API calls, subscriptions, logging
+
+  Note over Layout: User does NOT see screen yet
+  Note over Effect: User already sees the screen`,
+      },
+      {
+        heading: "useEffect — The Default Choice",
+        content:
+          "useEffect is the hook you should use 95% of the time. It runs asynchronously AFTER paint, so it doesn't block the browser from showing the UI. It's perfect for side effects that don't need to measure or manipulate the DOM before the user sees it.",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { useState, useEffect } from "react";
+
+function UserProfile({ userId }: { userId: string }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ useEffect — runs AFTER paint, does not block UI
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchUser() {
+      setLoading(true);
+      const res = await fetch(\`/api/users/\${userId}\`);
+      const data = await res.json();
+      if (!cancelled) {
+        setUser(data);
+        setLoading(false);
+      }
+    }
+
+    fetchUser();
+
+    // Cleanup — runs when userId changes or component unmounts
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]); // Dependency array — re-run when userId changes
+
+  if (loading) return <p>Loading...</p>;
+  return <h1>{user?.name}</h1>;
+}`,
+        },
+      },
+      {
+        heading: "useEffect — All Dependency Patterns",
+        content:
+          "The dependency array controls WHEN the effect re-runs. This is the most common source of bugs. Here are all the patterns:",
+        codeSnippet: {
+          language: "tsx",
+          code: `// 1️⃣ No dependency array — runs after EVERY render
+useEffect(() => {
+  console.log("Runs every render");
+});
+
+// 2️⃣ Empty array — runs ONCE on mount, cleanup on unmount
+useEffect(() => {
+  console.log("Mount");
+  return () => console.log("Unmount");
+}, []);
+
+// 3️⃣ With dependencies — runs when dependencies change
+useEffect(() => {
+  console.log("userId changed:", userId);
+  return () => console.log("Cleanup for previous userId");
+}, [userId]);
+
+// 4️⃣ Multiple dependencies
+useEffect(() => {
+  console.log("Either changed");
+}, [userId, searchTerm]);`,
+        },
+        diagram: `graph TD
+  A["useEffect dependency array"] --> B["No array<br/>Every render"]
+  A --> C["Empty []<br/>Mount only"]
+  A --> D["[dep1, dep2]<br/>When deps change"]
+  B --> B1["Use case: Logging,<br/>debugging"]
+  C --> C1["Use case: Init once,<br/>event listeners"]
+  D --> D1["Use case: Fetch data<br/>when ID changes"]
+  style B fill:#ef4444,color:#fff
+  style C fill:#22c55e,color:#000
+  style D fill:#38bdf8,color:#000`,
+      },
+      {
+        heading: "useLayoutEffect — When You MUST Use It",
+        content:
+          "useLayoutEffect runs synchronously BEFORE the browser paints. Use it ONLY when you need to read or write the DOM and the user would see a visual flicker with useEffect. The three real-world use cases:\n1) Measuring DOM elements (getBoundingClientRect, offsetWidth) and updating state based on measurements.\n2) Preventing visual flicker — when you need to set position/size before the user sees the element.\n3) Synchronising DOM mutations — setting scroll position, focus, or animation start values.",
+        codeSnippet: {
+          language: "tsx",
+          code: `import { useState, useLayoutEffect, useRef } from "react";
+
+// ✅ USE CASE 1: Measure DOM before paint
+function Tooltip({ text, targetRef }) {
+  const tooltipRef = useRef(null);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+
+  // useLayoutEffect because we need to measure + position BEFORE paint
+  // Using useEffect here would cause a visible jump/flicker!
+  useLayoutEffect(() => {
+    if (targetRef.current && tooltipRef.current) {
+      const rect = targetRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + 8,
+        left: rect.left,
+      });
+    }
+  }, [targetRef]);
+
+  return (
+    <div
+      ref={tooltipRef}
+      style={{ position: "fixed", top: position.top, left: position.left }}
+    >
+      {text}
+    </div>
+  );
+}
+
+// ✅ USE CASE 2: Prevent flicker on theme change
+function ThemeSwitcher() {
+  const [theme, setTheme] = useState("light");
+
+  useLayoutEffect(() => {
+    // Set CSS variable BEFORE paint so user never sees the old theme
+    document.documentElement.style.setProperty(
+      "--bg-color",
+      theme === "dark" ? "#0b1120" : "#ffffff"
+    );
+  }, [theme]);
+
+  return <button onClick={() => setTheme(t => t === "light" ? "dark" : "light")}>Toggle</button>;
+}
+
+// ✅ USE CASE 3: Scroll restoration
+function ChatMessages({ messages }) {
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    // Scroll to bottom BEFORE paint — user never sees old scroll position
+    const el = containerRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [messages]);
+
+  return (
+    <div ref={containerRef} style={{ overflow: "auto", height: 400 }}>
+      {messages.map((m) => <p key={m.id}>{m.text}</p>)}
+    </div>
+  );
+}`,
+        },
+      },
+      {
+        heading: "Visual Flicker Problem — useEffect vs useLayoutEffect",
+        content:
+          "This diagram shows why useEffect causes flicker for DOM measurements. With useEffect, the browser paints the initial position first, THEN the effect runs and moves the element — the user sees a jump. With useLayoutEffect, the position is calculated BEFORE paint, so the user only sees the final position.",
+        diagram: `graph TD
+  subgraph useEffect_path["useEffect Path (FLICKER)"]
+    E1["Render: position = 0,0"] --> E2["DOM updated"]
+    E2 --> E3["Browser paints at 0,0"]
+    E3 --> E4["useEffect: measure + set 100,50"]
+    E4 --> E5["Browser paints AGAIN at 100,50"]
+    E5 --> E6["User sees JUMP from 0,0 to 100,50"]
+  end
+
+  subgraph useLayoutEffect_path["useLayoutEffect Path (SMOOTH)"]
+    L1["Render: position = 0,0"] --> L2["DOM updated"]
+    L2 --> L3["useLayoutEffect: measure + set 100,50"]
+    L3 --> L4["Browser paints at 100,50"]
+    L4 --> L5["User only sees final position"]
+  end
+
+  style E6 fill:#ef4444,color:#fff
+  style L5 fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Side-by-Side Comparison",
+        content:
+          "Here is a complete comparison between the two hooks covering timing, use cases, performance impact, and when to choose each.",
+        comparison: {
+          title: "useEffect vs useLayoutEffect",
+          headers: ["Aspect", "useEffect / useLayoutEffect"],
+          rows: [
+            ["Timing", "After browser paint (async)", "Before browser paint (sync)"],
+            ["Blocks Paint?", "No — UI appears immediately", "Yes — delays paint until done"],
+            ["Performance", "Better — non-blocking", "Can cause jank if slow"],
+            ["Use Frequency", "95% of the time", "5% — only when needed"],
+            ["API Calls", "Yes — perfect fit", "No — would block paint"],
+            ["DOM Measurement", "Possible but may flicker", "Yes — no flicker"],
+            ["Event Listeners", "Yes", "Yes (but overkill)"],
+            ["Scroll Position", "May cause jump", "Smooth — set before paint"],
+            ["SSR Behavior", "Works fine", "Warning in SSR (no DOM)"],
+            ["Cleanup Timing", "Async before next effect", "Sync before next layout effect"],
+          ],
+        },
+      },
+      {
+        heading: "The Cleanup Function — How It Really Works",
+        content:
+          "Both hooks support a cleanup function returned from the callback. The cleanup runs BEFORE the next effect execution and on unmount. This prevents memory leaks from subscriptions, timers, and event listeners.",
+        codeSnippet: {
+          language: "tsx",
+          code: `useEffect(() => {
+  // ═══ Setup (runs on mount + when deps change) ═══
+  const handler = (e: MouseEvent) => {
+    console.log(e.clientX, e.clientY);
+  };
+  window.addEventListener("mousemove", handler);
+
+  // ═══ Cleanup (runs before next effect + on unmount) ═══
+  return () => {
+    window.removeEventListener("mousemove", handler);
+  };
+}, []); // Empty deps: setup once, cleanup on unmount
+
+// Timeline of cleanup:
+// Mount:       Setup runs
+// Deps change: Cleanup runs (old) → Setup runs (new)
+// Unmount:     Cleanup runs`,
+        },
+        diagram: `sequenceDiagram
+  participant Mount
+  participant Effect as Effect Callback
+  participant Cleanup
+
+  Mount->>Effect: Component mounts — run setup
+  Note over Effect: addEventListener
+
+  Note over Mount: userId changes (re-render)
+  Effect->>Cleanup: Run cleanup for OLD effect
+  Note over Cleanup: removeEventListener (old)
+  Mount->>Effect: Run setup for NEW effect
+  Note over Effect: addEventListener (new)
+
+  Note over Mount: Component unmounts
+  Effect->>Cleanup: Run cleanup
+  Note over Cleanup: removeEventListener`,
+      },
+      {
+        heading: "Common Mistakes in Interviews",
+        content:
+          "These mistakes come up in almost every React interview:\n1) Using useLayoutEffect for API calls — this blocks painting! API calls should ALWAYS use useEffect. useLayoutEffect is only for DOM measurement.\n2) Missing dependencies in the array — forgetting to include a variable used inside the effect causes stale closures. Use the eslint-plugin-react-hooks exhaustive-deps rule.\n3) Not providing a cleanup function — forgetting cleanup causes memory leaks. Every addEventListener needs removeEventListener. Every setInterval needs clearInterval.\n4) Using an empty dependency array when deps exist — this causes the effect to use stale values from the first render forever.\n5) Creating infinite loops — setting state inside useEffect without proper dependencies causes render → effect → setState → render → effect... forever.\n6) Not understanding that useEffect runs AFTER paint — saying 'useEffect runs after render' is imprecise. It runs after PAINT, not after the render phase.\n7) Using useLayoutEffect on the server (SSR) — there is no DOM on the server. useLayoutEffect logs a warning in SSR. Use useEffect or conditionally check typeof window.",
+      },
+      {
+        heading: "Decision Flowchart — Which Hook to Use",
+        content:
+          "Use this flowchart when deciding between useEffect and useLayoutEffect. The answer is almost always useEffect — only switch to useLayoutEffect when you can demonstrate a visual flicker problem.",
+        diagram: `flowchart TD
+  A["Need a side effect?"] --> B{"Does it read/write DOM<br/>and user would see flicker?"}
+  B -- Yes --> C{"Is it measuring<br/>DOM layout?"}
+  C -- Yes --> D["useLayoutEffect"]
+  C -- No --> E{"Setting scroll position<br/>or preventing flash?"}
+  E -- Yes --> D
+  E -- No --> F["useEffect"]
+  B -- No --> G{"API call, subscription,<br/>logging, timer?"}
+  G -- Yes --> F
+  G -- No --> F
+
+  style D fill:#ef4444,color:#fff
+  style F fill:#22c55e,color:#000
+  style A fill:#38bdf8,color:#000`,
+      },
+      {
+        heading: "Bonus — useInsertionEffect (React 18+)",
+        content:
+          "React 18 introduced a third effect hook: useInsertionEffect. It runs BEFORE useLayoutEffect and is designed exclusively for CSS-in-JS libraries to inject styles before DOM reads. You should almost never use it directly — it exists for library authors (Styled Components, Emotion, etc.).",
+        codeSnippet: {
+          language: "tsx",
+          code: `// Timing order:
+// 1. useInsertionEffect  — inject <style> tags (CSS-in-JS libraries)
+// 2. useLayoutEffect     — read/write DOM, measure layout
+// 3. useEffect           — API calls, subscriptions, logging
+
+import { useInsertionEffect } from "react";
+
+function useCSS(rule: string) {
+  useInsertionEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = rule;
+    document.head.appendChild(style);
+    return () => style.remove();
+  }, [rule]);
+}
+
+// ⚠️ Don't use this directly — it's for library authors only!`,
+        },
+        diagram: `graph LR
+  A["DOM Mutated"] --> B["useInsertionEffect<br/>Inject styles"]
+  B --> C["useLayoutEffect<br/>Measure DOM"]
+  C --> D["Browser Paint"]
+  D --> E["useEffect<br/>Side effects"]
+  style B fill:#ec4899,color:#fff
+  style C fill:#ef4444,color:#fff
+  style D fill:#f59e0b,color:#000
+  style E fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When asked about useEffect vs useLayoutEffect:\n1) Start with the timing — useEffect is async AFTER paint, useLayoutEffect is sync BEFORE paint.\n2) Give a concrete flicker example — tooltip positioning or scroll restoration.\n3) Emphasize that useEffect is the default — useLayoutEffect is the exception for DOM measurement.\n4) Explain cleanup functions and why they prevent memory leaks.\n5) Mention the dependency array patterns: no array, empty array, with deps.\n6) Show you know about stale closures — the #1 useEffect bug.\n7) Bonus: mention useInsertionEffect for CSS-in-JS to show advanced knowledge.\n\nThis demonstrates you understand React's commit and paint phases at a deep level, not just surface-level hook usage.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
