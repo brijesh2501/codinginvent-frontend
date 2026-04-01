@@ -2335,6 +2335,762 @@ function useCSS(rule: string) {
       },
     ],
   },
+  // ── 13. Hoisting in JavaScript ────────────────────────────
+  {
+    id: "13",
+    slug: "javascript-hoisting",
+    title: "JavaScript Hoisting — var, let, const, Functions & Classes Explained with Visual Diagrams",
+    description:
+      "Understand exactly what JavaScript hoists and what it doesn't. Visual execution diagrams, the Temporal Dead Zone, real interview traps, and the difference between var/let/const hoisting — all with code examples.",
+    thumbnail: "🏗️",
+    category: "JavaScript",
+    tags: ["JavaScript", "Hoisting", "var", "let", "const", "Interview", "ES6"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "9 min",
+    sections: [
+      {
+        heading: "What is Hoisting?",
+        content:
+          "Hoisting is JavaScript's default behavior of moving declarations to the top of their scope during the compilation phase — BEFORE any code executes. But here's the key: only the DECLARATION is hoisted, NOT the assignment. And different declaration types are hoisted differently.",
+        diagram: `graph TD
+  A["Your Code"] --> B["Compilation Phase"]
+  B --> C["Execution Phase"]
+  B --> D["Declarations moved to<br/>top of scope"]
+  D --> D1["var: hoisted +<br/>initialized as undefined"]
+  D --> D2["let/const: hoisted but<br/>NOT initialized (TDZ)"]
+  D --> D3["function declaration:<br/>hoisted entirely"]
+  D --> D4["function expression:<br/>variable hoisted only"]
+  C --> E["Code runs line by line"]
+  style D1 fill:#f59e0b,color:#000
+  style D2 fill:#ef4444,color:#fff
+  style D3 fill:#22c55e,color:#000
+  style D4 fill:#38bdf8,color:#000`,
+      },
+      {
+        heading: "var Hoisting — Initialized as undefined",
+        content:
+          "Variables declared with var are hoisted to the top of their function scope and initialized with undefined. This means you can access them before the declaration line — but the value will be undefined, not the assigned value.",
+        codeSnippet: {
+          language: "javascript",
+          code: `console.log(name);  // undefined (NOT ReferenceError!)
+var name = "John";
+console.log(name);  // "John"
+
+// What JavaScript actually does under the hood:
+// var name = undefined;    ← hoisted declaration + initialization
+// console.log(name);       → undefined
+// name = "John";           ← assignment stays in place
+// console.log(name);       → "John"
+
+// Another example:
+console.log(x);     // undefined
+var x = 10;
+console.log(x);     // 10
+
+// var is FUNCTION-scoped, not block-scoped!
+if (true) {
+  var leaked = "I escaped the block!";
+}
+console.log(leaked); // "I escaped the block!" — var ignores blocks`,
+        },
+        diagram: `sequenceDiagram
+  participant Compiler
+  participant Memory
+  participant Execution
+
+  Compiler->>Memory: var name = undefined (hoist)
+  Note over Memory: name: undefined
+  Execution->>Memory: console.log(name)
+  Memory-->>Execution: undefined
+  Execution->>Memory: name = "John" (assign)
+  Note over Memory: name: "John"
+  Execution->>Memory: console.log(name)
+  Memory-->>Execution: "John"`,
+      },
+      {
+        heading: "let & const Hoisting — The Temporal Dead Zone",
+        content:
+          "let and const ARE hoisted — but they are NOT initialized. They exist in a 'Temporal Dead Zone' (TDZ) from the start of the block until the declaration line. Accessing them in the TDZ throws a ReferenceError. This is a critical interview question.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ let — hoisted but NOT initialized ═══
+console.log(age);    // ❌ ReferenceError: Cannot access 'age' before initialization
+let age = 25;
+
+// ═══ const — same as let, plus must be initialized ═══
+console.log(PI);     // ❌ ReferenceError: Cannot access 'PI' before initialization
+const PI = 3.14;
+
+// const must be initialized at declaration
+// const x;           // ❌ SyntaxError: Missing initializer
+
+// ═══ Temporal Dead Zone visualized ═══
+{
+  // ──── TDZ for 'name' starts here ────
+  // name exists but CANNOT be accessed
+  console.log(name);  // ❌ ReferenceError
+  // ──── TDZ for 'name' ends here ──────
+  let name = "John";  // Now it's safe to use
+  console.log(name);  // ✅ "John"
+}
+
+// ═══ TDZ with typeof (tricky!) ═══
+console.log(typeof undeclared);  // "undefined" (no error!)
+console.log(typeof myLet);      // ❌ ReferenceError (TDZ!)
+let myLet = 10;`,
+        },
+        diagram: `graph TD
+  subgraph Block_Scope["Block Scope { }"]
+    TDZ_Start["Block starts<br/>let x is hoisted but NOT initialized"] --> TDZ["TEMPORAL DEAD ZONE<br/>Accessing x = ReferenceError"]
+    TDZ --> Declaration["let x = 10;<br/>TDZ ends, x is initialized"]
+    Declaration --> Safe["x is accessible<br/>console.log(x) = 10"]
+  end
+  style TDZ fill:#ef4444,color:#fff
+  style Declaration fill:#22c55e,color:#000
+  style Safe fill:#22c55e,color:#000
+  style TDZ_Start fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "Function Hoisting — Fully Hoisted",
+        content:
+          "Function declarations are hoisted ENTIRELY — both the name and the body. You can call them before they appear in the code. But function expressions (assigned to variables) follow the hoisting rules of their variable keyword (var/let/const).",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Function Declaration — FULLY hoisted ═══
+greet();  // ✅ "Hello!" — works before declaration!
+
+function greet() {
+  console.log("Hello!");
+}
+
+// ═══ Function Expression with var — PARTIALLY hoisted ═══
+sayHi();  // ❌ TypeError: sayHi is not a function
+          // (sayHi is undefined at this point, not a function)
+
+var sayHi = function() {
+  console.log("Hi!");
+};
+
+// ═══ Function Expression with let/const — NOT accessible ═══
+sayBye();  // ❌ ReferenceError: Cannot access 'sayBye' before initialization
+
+const sayBye = function() {
+  console.log("Bye!");
+};
+
+// ═══ Arrow Function — same as function expression ═══
+add(2, 3);  // ❌ ReferenceError (or TypeError if var)
+
+const add = (a, b) => a + b;
+
+// ═══ Named vs Anonymous Expression ═══
+var myFunc = function namedFunc() {
+  console.log(typeof namedFunc);  // "function" — accessible inside
+};
+// console.log(namedFunc);        // ❌ ReferenceError — NOT accessible outside`,
+        },
+        comparison: {
+          title: "Function Declaration vs Expression Hoisting",
+          headers: ["Aspect", "Declaration / Expression"],
+          rows: [
+            ["Syntax", "function greet() {}", "const greet = function() {} or () => {}"],
+            ["What's Hoisted", "Entire function (name + body)", "Only the variable (var=undefined, let/const=TDZ)"],
+            ["Call Before Declaration", "Yes", "No — TypeError or ReferenceError"],
+            ["Scope", "Function or global", "Depends on var/let/const"],
+            ["Interview Importance", "High — classic trick question", "High — tests deep understanding"],
+          ],
+        },
+      },
+      {
+        heading: "Class Hoisting — Like let (TDZ)",
+        content:
+          "Class declarations are hoisted but NOT initialized — they behave like let/const and live in the Temporal Dead Zone. You cannot instantiate a class before its declaration.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Class Declaration — hoisted but in TDZ ═══
+const p = new Person();  // ❌ ReferenceError: Cannot access 'Person' before initialization
+
+class Person {
+  constructor() {
+    this.name = "John";
+  }
+}
+
+// ═══ Class Expression — same as function expression ═══
+const q = new Animal();  // ❌ ReferenceError
+
+const Animal = class {
+  constructor() {
+    this.species = "Dog";
+  }
+};
+
+// ✅ After declaration — works fine
+const r = new Person();  // { name: "John" }`,
+        },
+      },
+      {
+        heading: "Hoisting Summary — Complete Cheat Sheet",
+        content:
+          "Here is the definitive summary of how every JavaScript declaration type is hoisted. Memorize this table for interviews.",
+        comparison: {
+          title: "Hoisting Behavior by Declaration Type",
+          headers: ["Declaration", "Hoisted? / Initialized? / Accessible Before?"],
+          rows: [
+            ["var x = 10", "Yes", "Yes (undefined) / Yes (as undefined)"],
+            ["let x = 10", "Yes", "No (TDZ) / No — ReferenceError"],
+            ["const x = 10", "Yes", "No (TDZ) / No — ReferenceError"],
+            ["function foo() {}", "Yes (entirely)", "Yes (full function) / Yes — callable"],
+            ["var foo = function() {}", "Yes (var only)", "Yes (undefined) / No — TypeError"],
+            ["const foo = () => {}", "Yes (TDZ)", "No (TDZ) / No — ReferenceError"],
+            ["class Foo {}", "Yes", "No (TDZ) / No — ReferenceError"],
+            ["import x from 'y'", "Yes (entirely)", "Yes / Yes — always available"],
+          ],
+        },
+        diagram: `graph TD
+  H["Hoisting Summary"] --> V["var<br/>Hoisted + undefined"]
+  H --> L["let/const<br/>Hoisted + TDZ"]
+  H --> FD["function declaration<br/>Fully hoisted"]
+  H --> FE["function expression<br/>Follows var/let/const rules"]
+  H --> CL["class<br/>Hoisted + TDZ"]
+  H --> IM["import<br/>Fully hoisted"]
+
+  style V fill:#f59e0b,color:#000
+  style L fill:#ef4444,color:#fff
+  style FD fill:#22c55e,color:#000
+  style FE fill:#38bdf8,color:#000
+  style CL fill:#ef4444,color:#fff
+  style IM fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Tricky Interview Questions",
+        content:
+          "These are the exact hoisting traps that appear in interviews. Try to predict the output before reading the answer:",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Trap 1: var vs function with same name ═══
+var foo = 10;
+function foo() { return 20; }
+console.log(typeof foo);  // ❓
+// Answer: "number"
+// Function hoisted first, then var assignment overwrites
+
+// ═══ Trap 2: Multiple var declarations ═══
+var x = 1;
+var x = 2;
+console.log(x);  // ❓
+// Answer: 2 (var allows re-declaration)
+
+// ═══ Trap 3: Hoisting inside functions ═══
+var a = 1;
+function test() {
+  console.log(a);  // ❓
+  var a = 2;
+}
+test();
+// Answer: undefined (local 'a' is hoisted inside test())
+
+// ═══ Trap 4: let in for loop ═══
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Answer: 0, 1, 2 (let creates new binding per iteration)
+
+for (var j = 0; j < 3; j++) {
+  setTimeout(() => console.log(j), 100);
+}
+// Answer: 3, 3, 3 (var shares one binding)
+
+// ═══ Trap 5: Function in block (non-strict) ═══
+console.log(bar);      // undefined (hoisted as var)
+if (true) {
+  function bar() { return 1; }
+}
+console.log(bar());    // 1`,
+        },
+      },
+      {
+        heading: "Execution Context — How Hoisting Really Works",
+        content:
+          "Hoisting isn't actually 'moving' code. What really happens is: JavaScript creates an Execution Context in two phases — the Creation Phase (allocates memory for declarations) and the Execution Phase (runs code line by line). Understanding this model gives you the deepest interview answer.",
+        diagram: `sequenceDiagram
+  participant Code as Source Code
+  participant Create as Creation Phase
+  participant Exec as Execution Phase
+
+  Code->>Create: JavaScript engine reads entire code
+  Create->>Create: Global Execution Context created
+  Create->>Create: var declarations -> memory (undefined)
+  Create->>Create: let/const declarations -> memory (uninitialized - TDZ)
+  Create->>Create: function declarations -> memory (full function)
+  Create->>Create: this = window/global
+
+  Create->>Exec: Execution Phase starts
+  Exec->>Exec: Execute line 1
+  Exec->>Exec: Execute line 2
+  Exec->>Exec: Assignments happen now
+  Exec->>Exec: let/const TDZ ends at declaration line
+  Note over Exec: Each function call creates<br/>a NEW execution context`,
+      },
+      {
+        heading: "Common Interview Mistakes",
+        content:
+          "These are the hoisting mistakes that cost candidates the offer:\n1) Saying 'let and const are not hoisted' — WRONG. They ARE hoisted but live in the TDZ. The proof: typeof on an undeclared variable returns 'undefined', but typeof on a let variable in TDZ throws ReferenceError.\n2) Confusing 'not initialized' with 'not hoisted' — var is hoisted AND initialized (as undefined). let/const are hoisted but NOT initialized.\n3) Saying 'hoisting moves code to the top' — it doesn't move anything. The engine creates memory for declarations during the creation phase.\n4) Not knowing function expressions follow variable rules — const greet = function() {} is NOT fully hoisted. Only the const variable is hoisted.\n5) Forgetting var is function-scoped — var inside a for loop or if block leaks out to the enclosing function.\n6) Not mentioning the Temporal Dead Zone by name — interviewers specifically want to hear 'TDZ' when discussing let/const.",
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When asked about hoisting in an interview:\n1) Define it precisely: 'During the creation phase, JavaScript allocates memory for declarations before executing any code.'\n2) Immediately distinguish var (hoisted + undefined) from let/const (hoisted + TDZ).\n3) Explain function declarations are fully hoisted but function expressions are not.\n4) Use the term 'Temporal Dead Zone' — it shows depth.\n5) Give the classic trap: var a = 1; function test() { console.log(a); var a = 2; } — output is undefined.\n6) Mention that classes are hoisted like let/const (TDZ).\n7) End with the execution context model: creation phase vs execution phase.\n\nThis shows you understand the JavaScript engine at the specification level, not just surface behavior.",
+      },
+    ],
+  },
+  // ── 14. Object Creation in JavaScript ─────────────────────
+  {
+    id: "14",
+    slug: "javascript-object-creation",
+    title: "JavaScript Object Creation — Every Method Explained (Literal, Constructor, Class, Prototype & More)",
+    description:
+      "Master all the ways to create objects in JavaScript: object literals, constructor functions, Object.create(), ES6 classes, factory functions, and the prototype chain. With visual inheritance diagrams, comparison tables, and interview tips.",
+    thumbnail: "🧱",
+    category: "JavaScript",
+    tags: ["JavaScript", "Objects", "Prototype", "Classes", "OOP", "Interview"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-01",
+    readTime: "11 min",
+    sections: [
+      {
+        heading: "Why So Many Ways?",
+        content:
+          "JavaScript is a prototype-based language, not a classical OOP language. Over the years (ES3 → ES5 → ES6), different patterns emerged for creating objects. Understanding all of them — and knowing when to use each — is a core interview skill.",
+        diagram: `graph TD
+  A["Object Creation Methods"] --> B["1. Object Literal {}"]
+  A --> C["2. new Object()"]
+  A --> D["3. Constructor Function"]
+  A --> E["4. Object.create()"]
+  A --> F["5. ES6 Class"]
+  A --> G["6. Factory Function"]
+  A --> H["7. Object.assign()"]
+  A --> I["8. Spread Operator"]
+  style B fill:#22c55e,color:#000
+  style D fill:#38bdf8,color:#000
+  style E fill:#a78bfa,color:#fff
+  style F fill:#f59e0b,color:#000
+  style G fill:#ec4899,color:#fff`,
+      },
+      {
+        heading: "Method 1 — Object Literal (Most Common)",
+        content:
+          "The simplest and most common way. Just use curly braces. This creates a plain object that inherits from Object.prototype. Use this for one-off objects, configuration, and data structures.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Basic Object Literal ═══
+const user = {
+  name: "John",
+  age: 30,
+  greet() {
+    return \`Hello, I'm \${this.name}\`;
+  },
+};
+
+console.log(user.name);      // "John"
+console.log(user.greet());   // "Hello, I'm John"
+
+// ═══ Shorthand Properties (ES6) ═══
+const name = "Jane";
+const age = 25;
+const user2 = { name, age };  // Same as { name: name, age: age }
+
+// ═══ Computed Property Names (ES6) ═══
+const key = "email";
+const user3 = {
+  name: "John",
+  [key]: "john@test.com",     // email: "john@test.com"
+  [\`get\${key.charAt(0).toUpperCase() + key.slice(1)}\`]() {
+    return this.email;
+  },
+};
+console.log(user3.getEmail()); // "john@test.com"
+
+// ═══ Nested Objects ═══
+const company = {
+  name: "CodingInvent",
+  address: {
+    city: "Mumbai",
+    country: "India",
+  },
+};`,
+        },
+      },
+      {
+        heading: "Method 2 — Constructor Function (Pre-ES6)",
+        content:
+          "Before ES6 classes, constructor functions were the standard way to create reusable object blueprints. A constructor is a regular function called with 'new'. The 'new' keyword creates a new object, sets 'this' to that object, links the prototype, and returns it.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Constructor Function ═══
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+// Methods on the prototype (shared by all instances)
+Person.prototype.greet = function() {
+  return \`Hello, I'm \${this.name}\`;
+};
+
+const john = new Person("John", 30);
+const jane = new Person("Jane", 25);
+
+console.log(john.greet());  // "Hello, I'm John"
+console.log(jane.greet());  // "Hello, I'm Jane"
+
+// Both share the SAME greet function
+console.log(john.greet === jane.greet);  // true ✅ (memory efficient)
+
+// ═══ What 'new' does under the hood ═══
+// 1. Creates empty object: {}
+// 2. Sets __proto__ to Person.prototype
+// 3. Calls Person() with 'this' = new object
+// 4. Returns the object (unless constructor returns an object)
+
+// Without 'new' — BUG!
+const broken = Person("Bob", 20);  // ❌ 'this' = window/undefined
+console.log(broken);               // undefined
+console.log(window.name);          // "Bob" — polluted global!`,
+        },
+        diagram: `sequenceDiagram
+  participant Code
+  participant new as new Keyword
+  participant Obj as New Object
+  participant Proto as Person.prototype
+
+  Code->>new: new Person("John", 30)
+  new->>Obj: 1. Create empty object {}
+  new->>Obj: 2. Set __proto__ = Person.prototype
+  new->>Obj: 3. Call Person() with this = obj
+  Note over Obj: this.name = "John"
+  Note over Obj: this.age = 30
+  new-->>Code: 4. Return object
+
+  Obj->>Proto: john.greet()
+  Note over Proto: Found on prototype!
+  Proto-->>Obj: "Hello, I'm John"`,
+      },
+      {
+        heading: "Method 3 — ES6 Class (Modern Standard)",
+        content:
+          "ES6 classes are syntactic sugar over constructor functions + prototypes. They look like classical OOP but work the same way under the hood. Classes support constructors, methods, static methods, getters/setters, and inheritance via extends.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ ES6 Class ═══
+class Person {
+  // Constructor — called when you use 'new'
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // Instance method (on prototype)
+  greet() {
+    return \`Hello, I'm \${this.name}\`;
+  }
+
+  // Getter
+  get info() {
+    return \`\${this.name}, age \${this.age}\`;
+  }
+
+  // Setter
+  set fullName(val) {
+    this.name = val;
+  }
+
+  // Static method (on class itself, not instances)
+  static create(name, age) {
+    return new Person(name, age);
+  }
+}
+
+const john = new Person("John", 30);
+console.log(john.greet());       // "Hello, I'm John"
+console.log(john.info);          // "John, age 30"
+john.fullName = "John Doe";
+console.log(john.name);          // "John Doe"
+
+const jane = Person.create("Jane", 25);  // Static factory method
+
+// ═══ Inheritance with extends ═══
+class Developer extends Person {
+  constructor(name, age, language) {
+    super(name, age);            // MUST call super() first
+    this.language = language;
+  }
+
+  greet() {
+    return \`\${super.greet()}, I code in \${this.language}\`;
+  }
+}
+
+const dev = new Developer("Alice", 28, "JavaScript");
+console.log(dev.greet());  // "Hello, I'm Alice, I code in JavaScript"
+console.log(dev instanceof Developer);  // true
+console.log(dev instanceof Person);     // true`,
+        },
+      },
+      {
+        heading: "Method 4 — Object.create() (Prototype Control)",
+        content:
+          "Object.create() lets you create an object with a specific prototype. This is the purest form of prototypal inheritance — no constructors, no classes. It's how JavaScript inheritance really works at the lowest level.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Object.create(proto) ═══
+const personProto = {
+  greet() {
+    return \`Hello, I'm \${this.name}\`;
+  },
+  init(name, age) {
+    this.name = name;
+    this.age = age;
+    return this;
+  },
+};
+
+// Create object with personProto as its prototype
+const john = Object.create(personProto);
+john.name = "John";
+john.age = 30;
+console.log(john.greet());  // "Hello, I'm John"
+
+// Or with chaining:
+const jane = Object.create(personProto).init("Jane", 25);
+
+// ═══ Object.create(null) — no prototype at all! ═══
+const pure = Object.create(null);
+pure.key = "value";
+console.log(pure.toString);      // undefined — no Object.prototype methods!
+console.log("key" in pure);      // true
+
+// ═══ With property descriptors ═══
+const config = Object.create(null, {
+  host: { value: "localhost", writable: false, enumerable: true },
+  port: { value: 3000, writable: true, enumerable: true },
+});`,
+        },
+        diagram: `graph TD
+  A["Object.create(personProto)"] --> B["New Object: john"]
+  B -->|"__proto__"| C["personProto"]
+  C -->|"__proto__"| D["Object.prototype"]
+  D -->|"__proto__"| E["null"]
+
+  F["Object.create(null)"] --> G["New Object: pure"]
+  G -->|"__proto__"| H["null (no prototype!)"]
+
+  style B fill:#38bdf8,color:#000
+  style C fill:#a78bfa,color:#fff
+  style D fill:#64748b,color:#fff
+  style G fill:#f59e0b,color:#000
+  style H fill:#ef4444,color:#fff`,
+      },
+      {
+        heading: "Method 5 — Factory Function (No 'new' Needed)",
+        content:
+          "A factory function is a regular function that returns a new object. No 'new' keyword, no 'this' confusion, no prototype chain. It's the simplest pattern for creating multiple similar objects. Preferred in functional programming.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Basic Factory Function ═══
+function createPerson(name, age) {
+  return {
+    name,
+    age,
+    greet() {
+      return \`Hello, I'm \${name}\`;  // Closure — no 'this' needed!
+    },
+  };
+}
+
+const john = createPerson("John", 30);
+console.log(john.greet());  // "Hello, I'm John"
+
+// ═══ Factory with Private Variables (Closure) ═══
+function createCounter(initial = 0) {
+  let count = initial;  // Private — cannot be accessed outside
+
+  return {
+    increment() { count++; },
+    decrement() { count--; },
+    getCount() { return count; },
+  };
+}
+
+const counter = createCounter(10);
+counter.increment();
+counter.increment();
+console.log(counter.getCount());  // 12
+console.log(counter.count);       // undefined — truly private!
+
+// ═══ Factory with Composition (vs Inheritance) ═══
+const canWalk = (state) => ({
+  walk() { return \`\${state.name} is walking\`; },
+});
+
+const canSwim = (state) => ({
+  swim() { return \`\${state.name} is swimming\`; },
+});
+
+function createDuck(name) {
+  const state = { name };
+  return { ...state, ...canWalk(state), ...canSwim(state) };
+}
+
+const duck = createDuck("Donald");
+console.log(duck.walk());  // "Donald is walking"
+console.log(duck.swim());  // "Donald is swimming"`,
+        },
+      },
+      {
+        heading: "Method 6 — Object.assign() & Spread (Cloning/Merging)",
+        content:
+          "Object.assign() copies properties from source objects into a target. The spread operator (...) does the same in a more modern syntax. Both create SHALLOW copies — nested objects are still shared by reference.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Object.assign(target, ...sources) ═══
+const defaults = { theme: "light", lang: "en", debug: false };
+const userPrefs = { theme: "dark", lang: "hi" };
+const config = Object.assign({}, defaults, userPrefs);
+console.log(config);
+// { theme: "dark", lang: "hi", debug: false }
+
+// ═══ Spread Operator (ES2018) ═══
+const config2 = { ...defaults, ...userPrefs };  // Same result
+
+// ═══ Shallow Copy Warning! ═══
+const original = {
+  name: "John",
+  address: { city: "Mumbai", country: "India" },
+};
+
+const clone = { ...original };
+clone.name = "Jane";              // ✅ Independent
+clone.address.city = "Delhi";     // ❌ Changes BOTH — shared reference!
+
+console.log(original.address.city);  // "Delhi" — mutated!
+
+// ═══ Deep Clone Solutions ═══
+// Method 1: structuredClone (modern browsers)
+const deepClone = structuredClone(original);
+
+// Method 2: JSON (loses functions, dates, undefined)
+const jsonClone = JSON.parse(JSON.stringify(original));`,
+        },
+        comparison: {
+          title: "Shallow Copy vs Deep Copy",
+          headers: ["Aspect", "Shallow ({...obj}) / Deep (structuredClone)"],
+          rows: [
+            ["Primitive Props", "Copied by value", "Copied by value"],
+            ["Nested Objects", "Shared reference!", "Independent copy"],
+            ["Performance", "Fast", "Slower"],
+            ["Functions", "Copied", "Lost (not cloneable)"],
+            ["Circular Refs", "Copied", "Handled"],
+            ["Use When", "Flat objects", "Nested objects matter"],
+          ],
+        },
+      },
+      {
+        heading: "The Prototype Chain — How Inheritance Works",
+        content:
+          "Every JavaScript object has a hidden [[Prototype]] link (accessible via __proto__ or Object.getPrototypeOf()). When you access a property, JavaScript first checks the object itself, then walks up the prototype chain until it finds it or reaches null. This is the core of JavaScript inheritance.",
+        diagram: `graph TD
+  dev["dev instance<br/>{name, age, language}"] -->|"__proto__"| DP["Developer.prototype<br/>{greet()}"]
+  DP -->|"__proto__"| PP["Person.prototype<br/>{greet(), toString()}"]
+  PP -->|"__proto__"| OP["Object.prototype<br/>{hasOwnProperty, valueOf, ...}"]
+  OP -->|"__proto__"| NULL["null<br/>(end of chain)"]
+
+  dev2["dev.hasOwnProperty('name')"] --> Check1{"Own property?"}
+  Check1 -- Yes --> Found1["Return value"]
+  Check1 -- No --> Check2{"Developer.prototype?"}
+  Check2 -- No --> Check3{"Person.prototype?"}
+  Check3 -- No --> Check4{"Object.prototype?"}
+  Check4 -- Yes --> Found4["Found! Return value"]
+  Check4 -- No --> Undef["undefined"]
+
+  style dev fill:#38bdf8,color:#000
+  style DP fill:#a78bfa,color:#fff
+  style PP fill:#7c3aed,color:#fff
+  style OP fill:#64748b,color:#fff
+  style NULL fill:#ef4444,color:#fff`,
+      },
+      {
+        heading: "Comparison of All Methods",
+        content:
+          "Here is a complete comparison to help you choose the right object creation pattern for each situation.",
+        comparison: {
+          title: "Object Creation Methods Compared",
+          headers: ["Method", "Use Case / Pros / Cons"],
+          rows: [
+            ["Object Literal {}", "One-off objects, config", "Simplest, readable / No reuse, no prototype control"],
+            ["Constructor Function", "Reusable blueprints (pre-ES6)", "Shared prototype methods / 'this' confusion, needs 'new'"],
+            ["ES6 Class", "Modern OOP, inheritance", "Clean syntax, extends / Still prototype under hood"],
+            ["Object.create()", "Direct prototype control", "True prototypal inheritance / Verbose, no constructor"],
+            ["Factory Function", "Functional style, privacy", "No 'this', closures for privacy / No instanceof, memory per instance"],
+            ["Object.assign/Spread", "Merging, cloning", "Easy composition / Shallow copy only"],
+          ],
+        },
+      },
+      {
+        heading: "Property Descriptors & Object Methods",
+        content:
+          "JavaScript objects have hidden property attributes: writable, enumerable, configurable. Knowing these is an advanced interview topic. There are also powerful Object static methods to freeze, seal, and inspect objects.",
+        codeSnippet: {
+          language: "javascript",
+          code: `// ═══ Property Descriptors ═══
+const obj = {};
+Object.defineProperty(obj, "id", {
+  value: 1,
+  writable: false,       // Cannot reassign
+  enumerable: true,      // Shows in for...in
+  configurable: false,   // Cannot delete or redefine
+});
+obj.id = 999;            // Silently fails (or throws in strict mode)
+console.log(obj.id);     // 1
+
+// ═══ Object.freeze() — nothing can change ═══
+const frozen = Object.freeze({ name: "John", age: 30 });
+frozen.name = "Jane";    // ❌ Fails silently
+frozen.email = "x";      // ❌ Cannot add properties
+delete frozen.age;       // ❌ Cannot delete
+
+// ═══ Object.seal() — can modify, cannot add/delete ═══
+const sealed = Object.seal({ name: "John", age: 30 });
+sealed.name = "Jane";    // ✅ Can modify existing
+sealed.email = "x";      // ❌ Cannot add new
+delete sealed.age;       // ❌ Cannot delete
+
+// ═══ Useful Object Methods ═══
+const user = { name: "John", age: 30, email: "john@test.com" };
+
+Object.keys(user);       // ["name", "age", "email"]
+Object.values(user);     // ["John", 30, "john@test.com"]
+Object.entries(user);    // [["name","John"], ["age",30], ["email","john@test.com"]]
+Object.fromEntries([["a",1],["b",2]]);  // { a: 1, b: 2 }
+
+user.hasOwnProperty("name");            // true
+Object.getPrototypeOf(user);            // Object.prototype
+Object.is(NaN, NaN);                    // true (unlike ===)`,
+        },
+      },
+      {
+        heading: "Common Interview Mistakes",
+        content:
+          "These object-related mistakes are red flags for interviewers:\n1) Not knowing the difference between __proto__ and prototype — __proto__ is on instances (the link), .prototype is on constructor functions (the template).\n2) Saying 'class replaces prototypes' — classes ARE prototypes with nicer syntax. typeof class is 'function'.\n3) Not understanding shallow vs deep copy — modifying nested objects in a spread copy mutates the original.\n4) Forgetting 'new' with constructor functions — without 'new', 'this' is window/undefined and properties leak to global scope.\n5) Putting methods inside the constructor — this creates a new function per instance instead of sharing via prototype.\n6) Not knowing Object.create(null) — creates objects with NO prototype, useful for pure dictionaries without toString/hasOwnProperty collisions.",
+      },
+      {
+        heading: "Interview Tips",
+        content:
+          "When asked about object creation in interviews:\n1) Start with object literals for simple cases — show you know when NOT to over-engineer.\n2) Explain constructor functions + prototype for reusable blueprints — this shows you understand the engine.\n3) Show ES6 classes as syntactic sugar — prove you know what's underneath.\n4) Demonstrate Object.create() for direct prototype control — this separates seniors from juniors.\n5) Use factory functions when you need privacy via closures — no 'this' confusion.\n6) Draw the prototype chain — interviewers love visual explanations.\n7) Mention Object.freeze, Object.seal, and property descriptors for bonus points.\n\nThis shows you understand JavaScript's object model from the bottom up, not just the surface API.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
