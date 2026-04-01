@@ -11,8 +11,37 @@ const MermaidDiagram = lazy(
   () => import("../components/shared/MermaidDiagram"),
 );
 
-/** Splits section content into paragraphs and detects numbered lists (e.g. "1) …") */
+/**
+ * Renders section content with auto-detected numbered lists.
+ * Supports two formats:
+ *   - Newline-separated: "1) item\n2) item"
+ *   - Inline: "intro text: (1) item. (2) item. (3) item."
+ */
 function renderSectionContent(text: string) {
+  // First, normalise inline "(1) … (2) …" into newline-separated "1) …\n2) …"
+  const inlinePattern = /\((\d+)\)\s*/g;
+  const hasInlineNumbers =
+    (text.match(inlinePattern) || []).length >= 2 && !text.includes("\n");
+
+  if (hasInlineNumbers) {
+    // Split at "(N)" markers, keeping the intro text as a paragraph
+    const parts = text.split(/\(\d+\)\s*/);
+    const intro = parts[0].replace(/[:\s]+$/, "").trim();
+    const items = parts.slice(1).map((s) => s.replace(/[.\s]+$/, "").trim()).filter(Boolean);
+
+    return (
+      <>
+        {intro && <p>{intro}</p>}
+        <ol className="ci-blog-detail__list">
+          {items.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ol>
+      </>
+    );
+  }
+
+  // Newline-separated format: "1) item" per line
   const lines = text.split("\n");
   const elements: React.ReactNode[] = [];
   let listItems: string[] = [];
