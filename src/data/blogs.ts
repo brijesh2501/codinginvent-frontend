@@ -4071,6 +4071,428 @@ response = openai.chat.completions.create(
       },
     ],
   },
+
+  // ════════════════════════════════════════════════════════════════
+  // BLOG 16 — GitHub Copilot: Complete Guide & Best Practices
+  // ════════════════════════════════════════════════════════════════
+  {
+    id: "16",
+    slug: "github-copilot-complete-guide-best-practices",
+    title: "GitHub Copilot — Complete Guide, All Features & Best Practices",
+    description:
+      "Master GitHub Copilot from zero to hero. Every feature, keyboard shortcut, prompt technique, and real-world best practice explained with examples.",
+    thumbnail: "🤖",
+    category: "AI Tools",
+    tags: [
+      "GitHub Copilot",
+      "AI Pair Programming",
+      "VS Code",
+      "Productivity",
+      "Developer Tools",
+    ],
+    author: "CodingInvent",
+    publishedAt: "2026-04-02",
+    readTime: "30 min",
+    sections: [
+      // ─── SECTION 1: What Is Copilot ───
+      {
+        heading: "What Is GitHub Copilot?",
+        content:
+          "GitHub Copilot is an AI pair-programming assistant developed by GitHub and OpenAI. It runs directly inside your editor (VS Code, JetBrains, Neovim, Visual Studio) and uses large language models to suggest code completions, entire functions, tests, documentation, and even terminal commands — all in real time.\n\nCopilot comes in several tiers:\n1) Copilot Free — limited completions and chat messages per month, available to all GitHub users\n2) Copilot Pro — unlimited completions, unlimited chat, access to GPT-4o and Claude Sonnet, premium requests for advanced models\n3) Copilot Business — everything in Pro plus organization-level policies, IP indemnity, admin controls\n4) Copilot Enterprise — everything in Business plus knowledge bases from your private repos, Bing-powered web search, fine-tuned suggestions\n\nAt its core, Copilot isn't magic — it's a sophisticated autocomplete powered by LLMs that have been trained on billions of lines of public code. Understanding this helps you use it effectively: you guide the AI with context, and it generates the code.",
+        diagram:
+          "graph TD\n    A[\"You type code / comment\"] --> B[\"Copilot sends context to LLM\"]\n    B --> C{\"Model generates suggestion\"}\n    C --> D[\"Ghost text appears inline\"]\n    C --> E[\"Chat panel responds\"]\n    C --> F[\"Terminal command suggested\"]\n    D --> G[\"Tab to accept\"]\n    E --> H[\"Apply / Insert at cursor\"]\n    F --> I[\"Run in terminal\"]\n    style A fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style B fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style C fill:#1e293b,stroke:#38bdf8,color:#e2e8f0\n    style D fill:#0f172a,stroke:#22c55e,color:#e2e8f0\n    style E fill:#0f172a,stroke:#22c55e,color:#e2e8f0\n    style F fill:#0f172a,stroke:#22c55e,color:#e2e8f0\n    style G fill:#0f172a,stroke:#f59e0b,color:#e2e8f0\n    style H fill:#0f172a,stroke:#f59e0b,color:#e2e8f0\n    style I fill:#0f172a,stroke:#f59e0b,color:#e2e8f0",
+      },
+      // ─── SECTION 2: All Features ───
+      {
+        heading: "Complete Feature List (2025–2026)",
+        content:
+          "GitHub Copilot has evolved far beyond simple autocomplete. Here is every major feature:\n\n**Code Completions (Inline Ghost Text)**\nThe original feature. As you type, Copilot shows gray ghost text suggesting the next line, block, or entire function. Press Tab to accept, Esc to dismiss, Alt+] / Alt+[ to cycle alternatives.\n\n**Copilot Chat (Side Panel & Inline)**\nA full conversational AI inside your editor. Ask questions, get explanations, request refactors, generate tests — all aware of your current file and workspace.\n\n**Copilot Edits (Multi-File Editing)**\nTell Copilot what to change across multiple files and it proposes a unified diff. You review, accept/reject per-file, and iterate. Revolutionary for large refactors.\n\n**Copilot Agent Mode**\nThe most powerful mode. Copilot autonomously plans, writes code, runs terminal commands, reads errors, fixes them, and iterates until the task is done. It can install packages, create files, run tests — a true AI developer.\n\n**Chat Participants (@-mentions)**\nScope your chat to specialized contexts:\n1) @workspace — searches your entire codebase to answer questions\n2) @vscode — asks about VS Code features and settings\n3) @terminal — explains terminal errors and suggests commands\n4) @github — searches GitHub repos, issues, PRs\n\n**Slash Commands**\nShortcuts for common tasks:\n1) /explain — explain selected code\n2) /fix — propose a fix for bugs or errors\n3) /tests — generate unit tests\n4) /doc — generate documentation\n5) /new — scaffold a new project\n6) /fixTestFailure — fix a failing test\n7) /setupTests — configure test framework\n8) /newNotebook — create a Jupyter notebook\n\n**Context Variables (#-references)**\nAttach specific context to your chat:\n1) #file — reference a specific file\n2) #selection — the currently selected code\n3) #editor — the visible editor content\n4) #codebase — entire repo context\n5) #terminalLastCommand — last terminal output\n6) #terminalSelection — selected terminal text\n7) #testFailure — test failure output\n8) #changedFiles — git diff context\n\n**Vision (Image Understanding)**\nDrag an image or screenshot into Copilot Chat and ask it to generate code from a UI mockup, explain a diagram, or convert a whiteboard sketch into code.\n\n**Copilot in the Terminal**\nType natural language in the integrated terminal and Copilot suggests the command. Ctrl+I in terminal opens Copilot inline chat for command generation.\n\n**Voice Interactions**\nUse the 'Hey Code' wake word to talk to Copilot hands-free. Dictate code, ask questions, and get responses spoken back.\n\n**Copilot in GitHub.com**\nCopilot works on github.com for PR summaries, code review, issue triage, and repo-level Q&A without opening an editor.\n\n**Custom Instructions**\nCreate a .github/copilot-instructions.md file in your repo to define coding standards, frameworks, and patterns that Copilot should always follow.\n\n**MCP Server Support**\nCopilot can connect to Model Context Protocol servers for external tool access — databases, APIs, deployment systems — directly from chat.\n\n**Model Selection**\nChoose between multiple models: GPT-4o (default, fast), Claude 3.5/4 Sonnet (excellent for code), Gemini 2.0 Pro, o1/o3-mini (reasoning-heavy tasks).",
+      },
+      // ─── SECTION 3: Keyboard Shortcuts ───
+      {
+        heading: "Essential Keyboard Shortcuts",
+        content:
+          "Memorise these shortcuts to maximise speed with Copilot:\n\n**Inline Completions:**\n1) Tab — accept the full suggestion\n2) Ctrl+→ (Cmd+→ Mac) — accept word-by-word\n3) Esc — dismiss suggestion\n4) Alt+] — next suggestion\n5) Alt+[ — previous suggestion\n6) Ctrl+Enter — open completions panel (see 10 alternatives)\n\n**Copilot Chat:**\n1) Ctrl+Alt+I (Cmd+Alt+I Mac) — toggle Chat panel\n2) Ctrl+I (Cmd+I Mac) — inline chat at cursor position\n3) Ctrl+Shift+I (Cmd+Shift+I Mac) — open Copilot Edits\n4) Ctrl+L — start new chat thread\n\n**Terminal:**\n1) Ctrl+I in terminal — open inline Copilot for commands\n2) Ctrl+Shift+` — new terminal\n\n**Quick Actions:**\n1) Select code → right-click → Copilot → Explain / Fix / Test / Doc\n2) Sparkle icon on hover → quick fix with Copilot\n3) F2 → Rename symbol (Copilot enhances rename suggestions)",
+        codeSnippet: {
+          language: "json",
+          code: "// Add to keybindings.json for custom shortcuts\n[\n  {\n    \"key\": \"ctrl+shift+a\",\n    \"command\": \"github.copilot.chat.attachFile\",\n    \"when\": \"chatIsVisible\"\n  },\n  {\n    \"key\": \"alt+d\",\n    \"command\": \"github.copilot.interactiveEditor.generate\",\n    \"when\": \"editorTextFocus\"\n  }\n]",
+        },
+      },
+      // ─── SECTION 4: Prompt Engineering for Copilot ───
+      {
+        heading: "Prompt Engineering — How to Get Better Suggestions",
+        content:
+          "Copilot is only as good as the context you give it. Master these techniques:\n\n**1. Write Descriptive Comments First**\nBefore writing code, write a detailed comment describing what you want. Copilot reads comments as primary context.\n\n**2. Name Functions and Variables Clearly**\nIf you name a function `calculateMonthlyMortgagePayment(principal, annualRate, years)`, Copilot generates the correct formula. Name it `calc(a, b, c)` and you'll get garbage.\n\n**3. Provide Examples in Comments**\nShow Copilot the expected input/output:\n\n**4. Open Related Files**\nCopilot reads all open tabs as context. Before generating a React component, open your types file, a similar component, and your CSS to guide it.\n\n**5. Use the #file Reference**\nIn Chat: 'Generate a service like #file:userService.ts but for products'. This anchors suggestions to your existing patterns.\n\n**6. Be Specific in Chat**\nBad: 'Write a function'\nGood: 'Write a TypeScript async function that fetches user data from /api/users, handles 401 by redirecting to /login, and returns User[] type from #file:types.ts'\n\n**7. Iterate, Don't Restart**\nIf Copilot's first suggestion is 80% right, say 'Almost, but change X and Y' instead of re-prompting from scratch.\n\n**8. Use the @workspace Participant**\nFor project-wide questions, always prefix with @workspace: '@workspace how is authentication implemented in this project?'",
+        codeSnippet: {
+          language: "typescript",
+          code: "// BAD — vague comment, bad variable names\n// process the data\nfunction proc(d: any) { ... }\n\n// GOOD — descriptive comment with example\n// Flatten a nested array of any depth into a single-level array.\n// Example: flattenDeep([1, [2, [3, [4]]]]) → [1, 2, 3, 4]\nfunction flattenDeep<T>(arr: (T | T[])[]): T[] {\n  // Copilot now generates the correct recursive solution\n}",
+        },
+      },
+      // ─── SECTION 5: Agent Mode Deep Dive ───
+      {
+        heading: "Copilot Agent Mode — The Autonomous Developer",
+        content:
+          "Agent Mode is the most powerful Copilot feature. Instead of generating one suggestion, the agent plans, executes, observes, and iterates autonomously.\n\n**How It Works:**\n1) You describe a task in the Edits panel (Ctrl+Shift+I)\n2) Select 'Agent' mode (not 'Edit')\n3) The agent analyzes your codebase, creates a plan\n4) It writes code across multiple files\n5) It runs terminal commands (tests, builds, linters)\n6) If something fails, it reads the error and fixes it automatically\n7) It continues until the task is done or asks for your input\n\n**What Agent Mode Can Do:**\n1) Scaffold entire features — 'Add a user settings page with dark mode toggle, persisted in localStorage'\n2) Fix bugs end-to-end — 'The login form doesn't validate email format. Fix it and add tests.'\n3) Refactor across files — 'Convert all class components in /src/components to functional components with hooks'\n4) Set up tooling — 'Add ESLint, Prettier, and Husky pre-commit hooks to this project'\n5) Run and fix tests — 'Run all tests and fix any failures'\n\n**Limitations to Know:**\n1) It can loop — if a fix introduces a new bug that triggers another fix, the agent can cycle. You can always pause/cancel.\n2) Context window limits — very large codebases may exceed context, so scope your requests.\n3) No network requests — the agent can't deploy, hit APIs, or interact with browsers (yet).\n4) Review everything — agent-generated code works often, but it can introduce subtle issues. Always review the diff.",
+        diagram:
+          "graph TD\n    A[\"User describes task\"] --> B[\"Agent reads codebase\"]\n    B --> C[\"Creates plan\"]\n    C --> D[\"Writes code changes\"]\n    D --> E[\"Runs terminal commands\"]\n    E --> F{\"Errors?\"}\n    F -->|Yes| G[\"Reads error output\"]\n    G --> D\n    F -->|No| H{\"Tests pass?\"}\n    H -->|No| G\n    H -->|Yes| I[\"Presents diff for review\"]\n    I --> J[\"User accepts/rejects\"]\n    style A fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style B fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style C fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style D fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style E fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style F fill:#1e293b,stroke:#f59e0b,color:#e2e8f0\n    style G fill:#0f172a,stroke:#ef4444,color:#e2e8f0\n    style H fill:#1e293b,stroke:#f59e0b,color:#e2e8f0\n    style I fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style J fill:#0f172a,stroke:#22c55e,color:#e2e8f0",
+      },
+      // ─── SECTION 6: Copilot Edits ───
+      {
+        heading: "Copilot Edits — Multi-File Editing",
+        content:
+          "Copilot Edits is the middle ground between Chat and Agent Mode. You describe what to change, Copilot proposes edits across multiple files, and you review the diff before applying.\n\n**How to Use:**\n1) Open the Edits panel (Ctrl+Shift+I)\n2) Add files to the working set (click + or use #file)\n3) Describe the change: 'Add loading state to UserList and show a Spinner component while data is fetched'\n4) Copilot generates a diff across all files in the working set\n5) Review each file — Accept, Reject, or Modify\n6) Iterate: 'Also add error handling with a retry button'\n\n**Best Practices for Edits:**\n1) Keep the working set small — 3-7 files max for best results\n2) Be specific about which files to change — 'Update UserList.tsx and UserList.css'\n3) Describe the 'what' and 'where', not the 'how' — let Copilot figure out the implementation\n4) Use iterative refinement — get the basic change right, then ask for adjustments\n5) Compare with Edit vs Agent — use Edit mode for controlled changes, Agent for autonomous tasks",
+      },
+      // ─── SECTION 7: Custom Instructions ───
+      {
+        heading: "Custom Instructions — Teach Copilot Your Standards",
+        content:
+          "Custom instructions let you define project-level rules that Copilot always follows. Create a file at `.github/copilot-instructions.md` in your repo root.\n\nThis is one of the most underused features. With good instructions, Copilot generates code that matches your team's style from the start.",
+        codeSnippet: {
+          language: "markdown",
+          code: "# Copilot Instructions for Our Project\n\n## Tech Stack\n- React 19 with TypeScript (strict mode)\n- Vite for bundling\n- React Router v7 for routing\n- CSS Modules (no Tailwind)\n- Jest + React Testing Library for tests\n\n## Coding Standards\n- Use functional components with hooks only (no class components)\n- Use named exports, not default exports\n- All components must have a corresponding .test.tsx file\n- Use BEM naming for CSS: `ci-[component]__[element]--[modifier]`\n- All API calls go through the service layer in /src/services/\n- Never use `any` type — use `unknown` and narrow\n\n## Patterns\n- State management: React Context + useReducer for global state\n- Error boundaries around every route\n- Lazy load all page components with React.lazy + Suspense\n- Use custom hooks for reusable logic (prefix with `use`)\n\n## Don'ts\n- Don't use inline styles\n- Don't use var — use const/let\n- Don't mutate state directly\n- Don't use index as key in lists",
+        },
+      },
+      // ─── SECTION 8: MCP in Copilot ───
+      {
+        heading: "MCP Server Integration in Copilot",
+        content:
+          "Copilot supports the Model Context Protocol (MCP) for connecting to external tools and data sources directly from chat.\n\n**What MCP Enables:**\n1) Query databases — ask Copilot to look up production data\n2) Access APIs — send Slack messages, create Jira tickets\n3) Deployment — trigger CI/CD pipelines\n4) File systems — read from remote servers\n5) Custom tools — anything you build as an MCP server\n\n**How to Configure:**\nAdd MCP servers in your VS Code settings.json or workspace .vscode/mcp.json file.\n\n**Built-in MCP Servers:**\nGitHub Copilot ships with a built-in GitHub MCP server that can search repos, list issues, create PRs, and more — all from chat. Use the @github participant to access it.",
+        codeSnippet: {
+          language: "json",
+          code: "// .vscode/mcp.json — MCP server configuration\n{\n  \"servers\": {\n    \"my-database\": {\n      \"type\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-postgres\"],\n      \"env\": {\n        \"DATABASE_URL\": \"postgresql://user:pass@localhost:5432/mydb\"\n      }\n    },\n    \"filesystem\": {\n      \"type\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"./src\"]\n    },\n    \"github\": {\n      \"type\": \"stdio\",\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_TOKEN\": \"${input:githubToken}\"\n      }\n    }\n  }\n}",
+        },
+      },
+      // ─── SECTION 9: Testing with Copilot ───
+      {
+        heading: "Generating Tests Like a Pro",
+        content:
+          "Copilot excels at generating tests when given proper context. Here's how to get production-quality tests:\n\n**Method 1: /tests Slash Command**\nSelect a function → open Chat → type /tests. Copilot generates tests matching your test framework (auto-detected from package.json).\n\n**Method 2: Inline Comment**\nIn a test file, write a comment like `// test: should return empty array when input is null` and Copilot generates the full test case.\n\n**Method 3: Agent Mode**\n'Run all tests in /src/components and fix any failures.' The agent runs Jest, reads failures, and writes fixes.\n\n**Best Practices for Test Generation:**\n1) Open the source file AND the test file side-by-side — Copilot reads both\n2) Write 1-2 test cases manually first — Copilot follows your pattern\n3) Use descriptive test names — 'should throw ValidationError when email is invalid'\n4) Ask for edge cases — 'Now add edge case tests: null input, empty string, very long string'\n5) Ask for specific coverage — 'Add tests to cover the error handling branch in lines 45-60'\n6) Reference #testFailure — when a test fails, use #testFailure in chat and Copilot sees the full error + stack trace",
+        codeSnippet: {
+          language: "typescript",
+          code: "// Write one test manually, Copilot generates the rest\ndescribe('validateEmail', () => {\n  it('should return true for valid email', () => {\n    expect(validateEmail('user@example.com')).toBe(true);\n  });\n\n  // Copilot now generates these:\n  it('should return false for email without @', () => {\n    expect(validateEmail('userexample.com')).toBe(false);\n  });\n\n  it('should return false for email without domain', () => {\n    expect(validateEmail('user@')).toBe(false);\n  });\n\n  it('should return false for empty string', () => {\n    expect(validateEmail('')).toBe(false);\n  });\n\n  it('should return false for null input', () => {\n    expect(validateEmail(null as any)).toBe(false);\n  });\n});",
+        },
+      },
+      // ─── SECTION 10: Best Practices ───
+      {
+        heading: "20 Best Practices for GitHub Copilot",
+        content:
+          "These practices separate casual users from power users:\n\n1) **Always review generated code** — Copilot is a suggestion engine, not a replacement for your brain. Read every line.\n\n2) **Treat Copilot as a junior developer** — it's fast and broad but can miss edge cases, security issues, and business logic.\n\n3) **Write comments before code** — leading comments are Copilot's strongest signal for what to generate next.\n\n4) **Use custom instructions on every project** — create .github/copilot-instructions.md with your stack, patterns, and don'ts.\n\n5) **Keep files open for context** — Copilot reads all open editor tabs. Open your types, interfaces, and similar files.\n\n6) **Use @workspace for project questions** — don't manually search. Let Copilot search your codebase.\n\n7) **Use Agent Mode for multi-file tasks** — don't edit file by file. Let the agent plan and execute.\n\n8) **Iterate on Chat responses** — say 'Almost, but change X' instead of re-prompting from scratch.\n\n9) **Use #file references** — be explicit about which files to reference: 'Use the pattern from #file:UserService.ts'.\n\n10) **Choose the right model** — use GPT-4o for speed, Claude Sonnet for complex code, o1/o3 for reasoning-heavy tasks.\n\n11) **Scope your requests** — 'Refactor the entire codebase' will fail. 'Refactor UserList to use React Query' will succeed.\n\n12) **Generate tests alongside code** — after implementing a feature, immediately say 'Now generate tests for this'.\n\n13) **Use Copilot for documentation** — /doc generates JSDoc, README sections, and API docs instantly.\n\n14) **Use inline chat for quick fixes** — Ctrl+I → 'add null check' is faster than typing it.\n\n15) **Don't fight the suggestion** — if Copilot keeps suggesting something different from what you want, your naming or structure may be misleading.\n\n16) **Learn the keyboard shortcuts** — Tab, Alt+], Ctrl+→ for word-by-word accept, Ctrl+I for inline chat.\n\n17) **Use Copilot for commit messages** — in the Source Control panel, click the sparkle icon to auto-generate commit messages.\n\n18) **Break complex tasks into steps** — instead of 'build a full auth system', break it into: 'create login form', 'add validation', 'connect to API', 'add error handling'.\n\n19) **Set up MCP for your tools** — connect databases, APIs, and services so Copilot can access real data.\n\n20) **Stay updated** — Copilot ships new features monthly. Read the GitHub Copilot changelog and VS Code release notes.",
+      },
+      // ─── SECTION 11: Common Mistakes ───
+      {
+        heading: "Common Mistakes to Avoid",
+        content:
+          "These mistakes reduce Copilot's effectiveness dramatically:\n\n1) **Accepting without reading** — the #1 mistake. Copilot can generate code with subtle bugs, wrong types, or security flaws. Always review.\n\n2) **Vague prompts** — 'Fix this' gives worse results than 'Fix the null pointer exception on line 42 where user.address might be undefined'.\n\n3) **Not using context variables** — typing a question without #file, @workspace, or #selection means Copilot has minimal context.\n\n4) **Using Copilot for everything** — it's great for boilerplate, patterns, tests, and docs. It's bad for complex business logic, security-critical code, and algorithmic innovation.\n\n5) **Not setting up custom instructions** — without them, Copilot doesn't know your stack, patterns, or coding standards.\n\n6) **Copy-pasting from Chat** — use the 'Apply in editor' or 'Insert at cursor' buttons instead. They handle indentation and placement.\n\n7) **Ignoring the completions panel** — Ctrl+Enter shows 10 alternative suggestions. The first suggestion isn't always the best.\n\n8) **Not using inline chat** — Ctrl+I for quick edits is dramatically faster than switching to the chat panel.\n\n9) **Treating Agent Mode as infallible** — always review every diff from Agent Mode. It can refactor working code incorrectly.\n\n10) **Not giving feedback** — use thumbs up/down on suggestions to help Copilot learn your preferences.",
+      },
+      // ─── SECTION 12: Settings ───
+      {
+        heading: "Recommended VS Code Settings for Copilot",
+        content:
+          "Optimise your VS Code setup for the best Copilot experience:",
+        codeSnippet: {
+          language: "json",
+          code: "// settings.json — recommended Copilot configuration\n{\n  // Enable completions everywhere\n  \"github.copilot.enable\": {\n    \"*\": true,\n    \"markdown\": true,\n    \"plaintext\": true,\n    \"yaml\": true\n  },\n\n  // Choose your preferred model\n  \"github.copilot.chat.defaultModel\": \"gpt-4o\",\n\n  // Enable ghost text completions\n  \"editor.inlineSuggest.enabled\": true,\n\n  // Show Copilot status in the status bar\n  \"github.copilot.chat.localeOverride\": \"en\",\n\n  // Enable NES (Next Edit Suggestions)\n  \"github.copilot.nextEditSuggestions.enabled\": true,\n\n  // Auto-complete brackets and quotes (helps Copilot)\n  \"editor.autoClosingBrackets\": \"always\",\n  \"editor.autoClosingQuotes\": \"always\",\n\n  // Show inline chat diff before applying\n  \"inlineChat.mode\": \"preview\"\n}",
+        },
+      },
+      // ─── SECTION 13: Copilot for Specific Stacks ───
+      {
+        heading: "Copilot for React + TypeScript Projects",
+        content:
+          "Copilot shines brightest in typed environments. Here's how to maximise it for React + TypeScript:\n\n1) **Define your types first** — write interfaces before components. Copilot reads types to generate perfectly typed props, state, and return values.\n\n2) **Use descriptive prop names** — `onUserSelect: (user: User) => void` generates better handlers than `onChange: (x: any) => void`.\n\n3) **Component scaffolding** — type `export const UserCard: React.FC<UserCardProps> = ({` and Copilot destructures all props and generates the JSX.\n\n4) **Custom hooks** — write `function useDebounce<T>(value: T, delay: number): T {` and Copilot generates the timer logic with proper cleanup.\n\n5) **API integration** — write the return type first: `async function fetchUsers(): Promise<User[]>` and Copilot generates the fetch, error handling, and type assertions.\n\n6) **Form handling** — describe the form shape and Copilot generates validation, controlled inputs, and submission logic.\n\n7) **Context + Reducers** — write the action types as a discriminated union and Copilot generates the reducer with exhaustive switch cases.\n\nPro tip: keep your tsconfig.json strict — `strict: true`, `noImplicitAny: true`. Stricter types give Copilot more information to work with.",
+        codeSnippet: {
+          language: "typescript",
+          code: "// Define types FIRST — Copilot generates perfect components\ninterface UserCardProps {\n  user: User;\n  onSelect: (userId: string) => void;\n  isActive: boolean;\n  variant: 'compact' | 'detailed';\n}\n\n// Now Copilot generates this perfectly:\nexport const UserCard: React.FC<UserCardProps> = ({\n  user,\n  onSelect,\n  isActive,\n  variant,\n}) => {\n  return (\n    <div\n      className={`user-card user-card--${variant} ${isActive ? 'user-card--active' : ''}`}\n      onClick={() => onSelect(user.id)}\n    >\n      <img src={user.avatar} alt={user.name} />\n      <h3>{user.name}</h3>\n      {variant === 'detailed' && (\n        <>\n          <p>{user.email}</p>\n          <span>{user.role}</span>\n        </>\n      )}\n    </div>\n  );\n};",
+        },
+      },
+      // ─── SECTION 14: Interview Tips ───
+      {
+        heading: "Interview Questions About Copilot",
+        content:
+          "If you're asked about AI coding tools in interviews, here's what to cover:\n\n1) **'Do you use AI tools?'** — Yes. Copilot for completions, chat for explanations, Agent Mode for scaffolding. I always review generated code.\n\n2) **'How do you ensure AI-generated code quality?'** — I review every suggestion, run tests, check types, and never accept blindly. I use custom instructions to enforce standards.\n\n3) **'What are the limitations?'** — Copilot can hallucinate APIs, generate insecure code, and miss edge cases. It doesn't understand business context. I use it for acceleration, not replacement.\n\n4) **'How does Copilot work technically?'** — It sends your code as context to a cloud-hosted LLM (GPT-4o/Claude). The model predicts the most likely next tokens based on your code patterns.\n\n5) **'Should companies adopt it?'** — Yes for productivity (30-55% faster coding per GitHub studies), but with guardrails: code review, security scanning, and IP indemnity (Copilot Business/Enterprise).\n\n6) **'What about code security?'** — Copilot Business/Enterprise doesn't store or train on your code. Free/Pro telemetry can be disabled. Always scan generated code with security tools.",
+      },
+    ],
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // BLOG 17 — Cursor: Complete Guide & Best Practices
+  // ════════════════════════════════════════════════════════════════
+  {
+    id: "17",
+    slug: "cursor-complete-guide-best-practices",
+    title: "Cursor — Complete Guide, All Features & Best Practices",
+    description:
+      "Master Cursor AI editor from zero to hero. Every feature, keyboard shortcut, prompt technique, and power-user workflow explained with real examples.",
+    thumbnail: "🖱️",
+    category: "AI Tools",
+    tags: [
+      "Cursor",
+      "AI Editor",
+      "AI Pair Programming",
+      "Productivity",
+      "Developer Tools",
+    ],
+    author: "CodingInvent",
+    publishedAt: "2026-04-02",
+    readTime: "30 min",
+    sections: [
+      // ─── SECTION 1: What Is Cursor ───
+      {
+        heading: "What Is Cursor?",
+        content:
+          "Cursor is a standalone AI-first code editor built as a fork of VS Code. Unlike Copilot (which is an extension), Cursor is the entire editor — rebuilt from the ground up with AI at every layer.\n\nCreated by Anysphere (founded 2022, $400M+ raised), Cursor has become the fastest-growing AI code editor with 1M+ developers by early 2026.\n\n**Why Cursor exists:**\nThe founders believed that AI shouldn't be an add-on — it should be the foundation. Every feature in Cursor is designed with AI in mind: the file system, the editor, the terminal, the debugger.\n\n**Pricing Tiers:**\n1) Hobby (Free) — 2000 completions/month, 50 slow premium requests, limited chat\n2) Pro ($20/month) — unlimited completions, 500 fast premium requests/month, unlimited slow requests\n3) Business ($40/user/month) — everything in Pro plus team management, SSO, usage analytics, centralized billing\n\n**Key Differentiator:**\nCursor is a full VS Code fork — all your extensions, settings, and keybindings work. You can import your VS Code setup in one click. But under the hood, Cursor's AI has deeper editor integration than any extension can achieve.",
+        diagram:
+          "graph TD\n    A[\"Cursor Editor\"] --> B[\"Tab Completions\"]\n    A --> C[\"Cmd+K Inline Edit\"]\n    A --> D[\"Chat Panel\"]\n    A --> E[\"Composer Multi-File\"]\n    A --> F[\"Agent Mode\"]\n    B --> G[\"Multi-line predictions\"]\n    B --> H[\"Next-edit suggestions\"]\n    C --> I[\"Generate / Edit at cursor\"]\n    D --> J[\"@-mentions & context\"]\n    E --> K[\"Orchestrated multi-file edits\"]\n    F --> L[\"Autonomous plan + execute\"]\n    style A fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style B fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style C fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style D fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style E fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style F fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style G fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style H fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style I fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style J fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style K fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style L fill:#1e293b,stroke:#22c55e,color:#e2e8f0",
+      },
+      // ─── SECTION 2: All Features ───
+      {
+        heading: "Complete Feature List (2025–2026)",
+        content:
+          "Cursor has a feature set that goes beyond traditional code completion:\n\n**Tab Completions (Cursor Tab)**\nCursor's completion engine is more aggressive than Copilot. It predicts multi-line changes, anticipates your next edit, and even suggests edits to existing code (not just new code). It looks at your recent changes to predict what you'll do next.\n\n**Cmd+K / Ctrl+K (Inline Edit)**\nThe signature Cursor feature. Select code (or don't — it works on the current line), press Ctrl+K, type what you want, and Cursor edits the code inline with a diff preview. Accept with Enter, reject with Esc.\n\n**Chat (Ctrl+L)**\nSide panel chat with full codebase awareness. Supports @-mentions for files, symbols, docs, and web search. All responses have 'Apply' buttons that insert code directly.\n\n**Composer (Ctrl+I)**\nMulti-file editing orchestrator. Describe a change that spans multiple files, and Composer creates a plan, edits all files, and shows a unified diff. It's like Copilot Edits but was Cursor's first.\n\n**Agent Mode**\nActivated within Composer. The agent can read files, run terminal commands, install packages, search codebase, and iterate until the task is done. Cursor's agent can also run linters and tests to validate its work.\n\n**Codebase Indexing**\nCursor indexes your entire codebase locally for lightning-fast semantic search. When you ask a question, it retrieves relevant files in milliseconds. This is more thorough than token-limited context windows.\n\n**@-Mentions (Context Tags)**\n1) @file — reference specific files\n2) @folder — reference an entire folder\n3) @code — reference a specific symbol/function\n4) @web — search the web for up-to-date information\n5) @docs — reference documentation (add your own doc URLs)\n6) @git — reference git history, diffs, commits\n7) @codebase — search the entire indexed codebase\n8) @definitions — find all definitions of a symbol\n9) @link — fetch and use content from a URL\n\n**Custom Docs**\nAdd documentation URLs (React docs, your API docs, design system docs) and Cursor indexes them. Then use @docs to reference them in chat. This is powerful for framework-specific questions.\n\n**Rules for AI (.cursorrules)**\nCreate a `.cursorrules` file at your project root to define coding standards, patterns, and constraints. Cursor reads this file before every interaction.\n\n**Cursor Notepads**\nPersistent scratch pads for storing common prompts, context, or notes that you can reference across chat sessions. Great for project-specific context that doesn't belong in .cursorrules.\n\n**Multi-Model Support**\nSwitch between models per-request:\n1) Claude 3.5/4 Sonnet — best for code editing (Cursor default)\n2) GPT-4o — fast and versatile\n3) Claude Opus — deep reasoning\n4) Gemini 2.0 Pro — large context (1M tokens)\n5) cursor-small — fast, cheap, good for simple completions\n6) Bring Your Own Key — use your own OpenAI/Anthropic API keys\n\n**MCP Server Support**\nCursor supports MCP natively. Configure servers in Cursor Settings → MCP to connect databases, APIs, and external tools.\n\n**Auto-Apply**\nWhen Chat suggests code changes, click 'Apply' and Cursor intelligently merges the suggestion into your file — handling imports, formatting, and placement.\n\n**Bug Finder (Beta)**\nCursor scans your codebase for potential bugs and suggests fixes before you even know there's a problem.\n\n**Terminal Integration**\nCtrl+K in the terminal generates shell commands from natural language. Cursor also reads terminal output to help debug errors.",
+      },
+      // ─── SECTION 3: Keyboard Shortcuts ───
+      {
+        heading: "Essential Keyboard Shortcuts",
+        content:
+          "These shortcuts are what make Cursor users fast:\n\n**Core AI Shortcuts:**\n1) Ctrl+K (Cmd+K Mac) — inline edit / generate at cursor\n2) Ctrl+L (Cmd+L Mac) — open Chat panel\n3) Ctrl+I (Cmd+I Mac) — open Composer\n4) Tab — accept completion\n5) Esc — dismiss suggestion or close inline edit\n6) Ctrl+Shift+K — open terminal inline AI\n\n**Chat Context:**\n1) @ — open mentions menu (files, folders, docs, web)\n2) Ctrl+Enter — send message with codebase context\n3) Ctrl+Shift+L — add selected code to Chat context\n4) Ctrl+M — toggle between models in Chat\n\n**Completions:**\n1) Tab — accept full suggestion\n2) Ctrl+→ — accept word-by-word\n3) Alt+] — next suggestion\n4) Alt+[ — previous suggestion\n\n**Navigation & Editing:**\n1) Ctrl+Shift+P — command palette\n2) Ctrl+P — quick file open\n3) Ctrl+G — go to line\n4) Ctrl+Shift+F — search across files\n5) F12 — go to definition\n6) Shift+F12 — find all references\n\n**Composer:**\n1) Ctrl+I — open Composer\n2) Ctrl+Enter — send with all workspace context\n3) Accept/Reject individual file changes in the diff view\n\nPro tip: since Cursor is a VS Code fork, ALL VS Code shortcuts work. Your muscle memory transfers completely.",
+        codeSnippet: {
+          language: "json",
+          code: "// Cursor-specific keybindings (already built-in)\n// These are the most important ones to memorise\n{\n  \"Ctrl+K\": \"Inline AI edit — the MOST used Cursor shortcut\",\n  \"Ctrl+L\": \"Open Chat — ask questions, get explanations\",\n  \"Ctrl+I\": \"Composer — multi-file AI editing\",\n  \"Tab\":    \"Accept AI suggestion\",\n  \"Ctrl+→\": \"Accept word-by-word\",\n  \"@file\":  \"Reference a file in Chat/Composer\",\n  \"@web\":   \"Search the web for current info\",\n  \"@docs\":  \"Reference indexed documentation\",\n  \"@codebase\": \"Search your entire project\"\n}",
+        },
+      },
+      // ─── SECTION 4: Cursor Rules ───
+      {
+        heading: ".cursorrules — Your AI Configuration File",
+        content:
+          "The `.cursorrules` file is Cursor's equivalent of Copilot's custom instructions, but more powerful. It's read before every AI interaction, shaping all completions, chat responses, and agent actions.\n\nPlace it at your project root. Here's a production-grade example:",
+        codeSnippet: {
+          language: "markdown",
+          code: "# .cursorrules\n\nYou are an expert senior developer working on a React 19 + TypeScript project.\n\n## Tech Stack\n- React 19 with TypeScript 5.9 (strict mode)\n- Vite 8 for dev server and bundling\n- React Router v7 for client-side routing\n- CSS Modules with BEM naming: ci-[component]__[element]--[modifier]\n- Jest + React Testing Library for tests\n- No Tailwind, no styled-components\n\n## Code Style\n- Functional components with hooks only\n- Named exports everywhere (no default exports)\n- Explicit return types on all functions\n- Destructure props in function signature\n- Use const for all declarations unless reassignment needed\n- Prefer early returns over nested conditionals\n- Max function length: 50 lines (extract helpers)\n\n## File Structure\n- Components: src/components/[ComponentName]/[ComponentName].tsx\n- Tests: co-located as [ComponentName].test.tsx\n- Styles: co-located as [ComponentName].css\n- Types: src/types/index.ts (shared), local types in component file\n- Services: src/services/ for all API calls\n\n## Testing\n- Every component must have a test file\n- Use screen.getByRole over getByTestId\n- Mock API calls, never hit real endpoints\n- Test accessibility: check ARIA attributes\n\n## Don'ts\n- Never use `any` — use `unknown` and type-narrow\n- Never use class components\n- Never mutate state or props directly\n- Never use inline styles\n- Never use var\n- Never import from barrel files in the same feature",
+        },
+      },
+      // ─── SECTION 5: Prompt Engineering for Cursor ───
+      {
+        heading: "Prompt Engineering — Getting the Best from Cursor",
+        content:
+          "Cursor's AI responds differently than Copilot because of its deeper codebase integration. Here's how to maximise quality:\n\n**1. Use Ctrl+K for Targeted Edits**\nSelect the exact code you want to change, press Ctrl+K, and describe the transformation. Being specific about 'this code' with a selection gives better results than describing code in chat.\n\n**2. Use @codebase for Architecture Questions**\nType @codebase in chat to force Cursor to read your entire indexed project. Great for: 'How is auth implemented?', 'Where is the user state managed?', 'What pattern do we use for API calls?'\n\n**3. Combine @-Mentions**\nUse multiple references: 'Create a new ProductService following the pattern in @file:UserService.ts with types from @file:types.ts'\n\n**4. Use @web for Current Info**\nCursor can search the web: '@web what is the latest React Router v7 API for data loading?'\n\n**5. Add Custom @docs**\nGo to Cursor Settings → Features → Docs → Add Doc. Add your framework docs, internal wiki, API reference. Then use @docs:react or @docs:your-api in chat.\n\n**6. Composer for Multi-File Changes**\nCtrl+I → describe the feature → list the files that need changes. Composer plans and executes across files.\n\n**7. Iterate with 'Fix this'**\nIf Cursor's suggestion has an error, don't re-prompt. Just say 'Fix the TypeScript error in the return type' and it iterates.\n\n**8. Use Notepads for Persistent Context**\nStore project-specific context, architecture decisions, and common patterns in Notepads. Reference them in any chat.",
+        codeSnippet: {
+          language: "typescript",
+          code: "// Ctrl+K workflow example:\n\n// 1. Select this function\nfunction getUser(id: string) {\n  const response = fetch(`/api/users/${id}`);\n  return response;\n}\n\n// 2. Press Ctrl+K and type:\n// \"Make this async, add error handling, type the response as User,\n//  and throw ApiError on non-200 status\"\n\n// 3. Cursor generates:\nasync function getUser(id: string): Promise<User> {\n  try {\n    const response = await fetch(`/api/users/${id}`);\n    if (!response.ok) {\n      throw new ApiError(\n        `Failed to fetch user: ${response.status}`,\n        response.status\n      );\n    }\n    return (await response.json()) as User;\n  } catch (error) {\n    if (error instanceof ApiError) throw error;\n    throw new ApiError('Network error fetching user', 0);\n  }\n}",
+        },
+      },
+      // ─── SECTION 6: Agent Mode Deep Dive ───
+      {
+        heading: "Cursor Agent Mode — Full Autonomous Workflow",
+        content:
+          "Cursor's Agent Mode (accessed through Composer) is its most powerful feature. The agent can autonomously:\n\n**Capabilities:**\n1) Read and search files across your codebase\n2) Write and edit multiple files simultaneously\n3) Run terminal commands (npm install, tests, builds)\n4) Read command output and fix errors\n5) Create new files and directories\n6) Search the web for documentation\n7) Use MCP tools for external services\n\n**How to Use:**\n1) Open Composer (Ctrl+I)\n2) Select 'Agent' mode from the dropdown (or it's default)\n3) Describe your task: 'Add dark mode support. Create a ThemeContext, a useTheme hook, add a toggle button in the Header, and persist the choice in localStorage. Update all components to use CSS variables for colors.'\n4) Agent creates a plan, then executes step by step\n5) Each file change appears as a diff you can review\n6) Terminal commands ask for approval before running\n\n**Pro Tips for Agent Mode:**\n1) Start with a clear, scoped task — don't say 'refactor everything'\n2) Mention specific files if you know them — 'Update @file:Header.tsx and @file:App.tsx'\n3) Agent learns from your .cursorrules — make sure it's set up\n4) Use checkpoints — Cursor auto-saves checkpoints so you can revert if the agent goes sideways\n5) Chain agent tasks — do one feature at a time rather than five\n6) Let it run tests — 'After making changes, run npm test and fix any failures'\n\n**Agent vs Composer (Normal):**\nNormal Composer generates edits and waits for you. Agent executes, observes results, and iterates. Use Normal for simple multi-file edits, Agent for complex features.",
+        diagram:
+          "graph TD\n    A[\"Open Composer Ctrl+I\"] --> B[\"Select Agent Mode\"]\n    B --> C[\"Describe task in detail\"]\n    C --> D[\"Agent indexes codebase\"]\n    D --> E[\"Creates step-by-step plan\"]\n    E --> F[\"Executes: read/write/terminal\"]\n    F --> G{\"Success?\"}\n    G -->|Error| H[\"Reads error, fixes\"]\n    H --> F\n    G -->|Success| I{\"More steps?\"}\n    I -->|Yes| F\n    I -->|No| J[\"Shows full diff\"]\n    J --> K[\"You review & accept\"]\n    style A fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style B fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style C fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style D fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style E fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style F fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style G fill:#1e293b,stroke:#f59e0b,color:#e2e8f0\n    style H fill:#0f172a,stroke:#ef4444,color:#e2e8f0\n    style I fill:#1e293b,stroke:#f59e0b,color:#e2e8f0\n    style J fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style K fill:#0f172a,stroke:#22c55e,color:#e2e8f0",
+      },
+      // ─── SECTION 7: Custom Docs ───
+      {
+        heading: "Custom Docs — Give Cursor Framework Knowledge",
+        content:
+          "One of Cursor's killer features is the ability to index external documentation and reference it in chat.\n\n**How to Add Docs:**\n1) Go to Cursor Settings → Features → Docs\n2) Click 'Add new doc'\n3) Enter the URL (e.g., https://react.dev, https://tanstack.com/query/latest)\n4) Cursor crawls and indexes the documentation\n5) Use @docs:react-query in Chat to reference it\n\n**Why This Matters:**\nLLMs are trained on data up to a cutoff date. If a library released a new API, the LLM doesn't know about it. Custom Docs give the AI up-to-date documentation.\n\n**Recommended Docs to Add:**\n1) Your framework — React, Vue, Angular, Svelte\n2) Your state management — Zustand, Redux Toolkit, TanStack Query\n3) Your UI library — MUI, shadcn/ui, Radix\n4) Your API docs — Swagger/OpenAPI specs\n5) Your internal docs — wiki, architecture docs\n6) Your deployment platform — Azure, AWS, Vercel docs\n\n**Example Usage:**\n'Using @docs:tanstack-query, create a custom hook that fetches user data with caching, stale-while-revalidate, and automatic retry on failure.'\n\nThis gives Cursor the latest TanStack Query API instead of relying on potentially outdated training data.",
+      },
+      // ─── SECTION 8: Best Practices ───
+      {
+        heading: "20 Best Practices for Cursor",
+        content:
+          "Power-user techniques that maximise Cursor's potential:\n\n1) **Set up .cursorrules immediately** — before writing any code. Define your stack, patterns, and don'ts.\n\n2) **Index your docs** — add your framework, libraries, and API documentation to Cursor's doc index.\n\n3) **Use Ctrl+K more than Chat** — inline edits are faster and more precise than chat-based workflows.\n\n4) **Select before Ctrl+K** — selecting the exact code to change gives Cursor better context than working on the whole file.\n\n5) **Use @codebase for project-wide questions** — it searches your indexed codebase semantically.\n\n6) **Combine @-mentions** — '@file:types.ts @file:UserService.ts create ProductService following the same pattern'.\n\n7) **Use @web for current info** — '@web latest Next.js 15 route handler syntax' beats outdated training data.\n\n8) **Create Notepads for recurring context** — store architecture decisions, common prompts, and project context.\n\n9) **Use Agent Mode for features, Composer for edits** — Agent for 'build this feature', Composer for 'change these 3 files'.\n\n10) **Let Agent run tests** — end your prompt with 'run tests and fix failures' and the agent does the debug loop.\n\n11) **Review every diff** — even Agent Mode can introduce subtle bugs. Always read the changes.\n\n12) **Use checkpoints** — Cursor saves checkpoints automatically. Revert if the agent goes off track.\n\n13) **Switch models per task** — Claude for complex code, GPT-4o for speed, Gemini for large context.\n\n14) **Use git branches with Agent** — create a feature branch before running Agent Mode so you can easily revert.\n\n15) **Keep the codebase indexed** — large new files may not be indexed immediately. Use Cursor Settings → check indexing status.\n\n16) **Use Ctrl+Shift+L to add context** — select code in the editor and press Ctrl+Shift+L to add it to Chat context.\n\n17) **Break complex tasks into steps** — 'Add auth' is too broad. 'Add login form with email/password validation' is perfect.\n\n18) **Use terminal AI (Ctrl+K in terminal)** — generate shell commands from natural language.\n\n19) **Bring your own API keys** — if you hit rate limits, add your own OpenAI/Anthropic keys in settings.\n\n20) **Stay updated** — Cursor ships updates weekly. Check the changelog regularly for new features.",
+      },
+      // ─── SECTION 9: Common Mistakes ───
+      {
+        heading: "Common Mistakes to Avoid in Cursor",
+        content:
+          "Avoid these to get better results:\n\n1) **Not setting up .cursorrules** — without a rules file, Cursor generates code in its own style, not yours.\n\n2) **Using Chat instead of Ctrl+K** — for editing existing code, inline edit (Ctrl+K) is always faster and more precise.\n\n3) **Vague prompts** — 'Make this better' gives poor results. 'Add input validation, error handling, and TypeScript types' works.\n\n4) **Not using @-mentions** — Cursor has better context when you explicitly reference files, docs, and the web.\n\n5) **Running Agent Mode on main branch** — always branch first. Agent can make many changes that are hard to manually revert.\n\n6) **Accepting all changes at once** — in Composer/Agent, review each file diff individually. Accept the good ones, reject or modify the bad.\n\n7) **Ignoring the indexing status** — if your codebase isn't indexed, @codebase queries won't find relevant code. Check indexing in settings.\n\n8) **Not adding custom docs** — using an older library API because Cursor's training data is outdated.\n\n9) **Tab-completing everything** — Tab completions are great for boilerplate but can autocomplete incorrect logic. Stay alert.\n\n10) **Not using Notepads** — re-explaining the same context in every chat session wastes time.",
+      },
+      // ─── SECTION 10: Advanced Workflows ───
+      {
+        heading: "Advanced Workflows for Power Users",
+        content:
+          "These workflows separate beginners from power users:\n\n**The 'Codebase Q&A' Session:**\nWhen joining a new project, open Chat and ask: '@codebase explain the architecture of this project. What are the main modules, how does routing work, where is state managed, and what patterns are used?' Cursor gives you a comprehensive overview in seconds.\n\n**The 'Bug Fix' Pipeline:**\n1) Paste the error into Chat with @terminalLastCommand\n2) Cursor identifies the cause\n3) Click 'Apply' to fix the code\n4) If the fix causes new issues, say 'That introduced a new error: [paste]'\n5) Iterate until fixed\n\n**The 'Test-Driven' Workflow:**\n1) Write the test first: 'Create tests for a UserService that handles CRUD operations'\n2) Then: 'Now implement UserService to pass all these tests'\n3) Agent runs tests and iterates until green\n\n**The 'Documentation' Sprint:**\n1) '@codebase list all exported functions without JSDoc comments'\n2) 'Generate JSDoc for each of these functions'\n3) Apply all at once\n\n**The 'Migration' Workflow:**\n1) '@docs:new-framework read the migration guide from v4 to v5'\n2) '@codebase find all usages of deprecated APIs from v4'\n3) 'Update all usages to the v5 API based on @docs:new-framework'\n\n**The 'Review' Workflow:**\n1) Open a PR's changed files\n2) In Chat: 'Review these changes. Check for: TypeScript strictness, error handling, test coverage, and security issues.'\n3) Cursor reviews code like a senior developer.",
+      },
+      // ─── SECTION 11: Settings ───
+      {
+        heading: "Recommended Cursor Settings",
+        content:
+          "Optimise Cursor for professional development:\n\n**General:**\n1) Enable codebase indexing — Settings → Features → Codebase Indexing → Enable\n2) Set default model to Claude Sonnet — best for code tasks\n3) Enable auto-apply — so Chat suggestions apply directly\n4) Configure .cursorrules — create this in every project\n\n**Privacy:**\n1) Enable 'Privacy Mode' if working on proprietary code — Cursor won't store or train on your code\n2) Business plan includes zero data retention policy\n\n**Performance:**\n1) Exclude large folders from indexing: node_modules, .git, dist, coverage\n2) Set completion delay to 'Fast' for instant suggestions\n3) Use cursor-small model for simple completions to save premium requests\n\n**Models:**\n1) Default: Claude 3.5/4 Sonnet for best code quality\n2) Fast tasks: GPT-4o mini or cursor-small\n3) Complex reasoning: Claude Opus or o1\n4) Large files: Gemini 2.0 Pro (1M context)",
+      },
+      // ─── SECTION 12: Interview Tips ───
+      {
+        heading: "Interview — Talking About Cursor",
+        content:
+          "When asked about AI coding tools in interviews:\n\n1) **'Why Cursor over Copilot?'** — Cursor offers deeper codebase integration (full indexing), better multi-file editing (Composer), built-in model switching, and Notepads for persistent context. It's the whole editor, not just an extension.\n\n2) **'Is Cursor production-ready?'** — Yes. It's a VS Code fork, so all extensions and workflows transfer. Privacy mode and Business plan make it enterprise-ready.\n\n3) **'How do you ensure code quality with AI?'** — .cursorrules enforce standards, I review every diff, I use Agent Mode with test validation, and I always branch before major AI-generated changes.\n\n4) **'What are the downsides?'** — Subscription cost, dependence on cloud AI (latency), occasional incorrect suggestions, and the risk of developers becoming less thoughtful about code they accept.\n\n5) **'How does it handle large codebases?'** — Cursor's codebase indexing creates a local semantic index. Combined with @codebase queries, it handles large repos well. For monorepos, you can configure indexing scope.",
+      },
+    ],
+  },
+
+  // ════════════════════════════════════════════════════════════════
+  // BLOG 18 — GitHub Copilot vs Cursor: Complete Comparison
+  // ════════════════════════════════════════════════════════════════
+  {
+    id: "18",
+    slug: "github-copilot-vs-cursor-complete-comparison",
+    title: "GitHub Copilot vs Cursor — The Definitive 2026 Comparison",
+    description:
+      "An exhaustive side-by-side comparison of GitHub Copilot and Cursor. Features, pricing, performance, workflows, and which one you should choose.",
+    thumbnail: "⚔️",
+    category: "AI Tools",
+    tags: [
+      "GitHub Copilot",
+      "Cursor",
+      "AI Tools",
+      "Comparison",
+      "VS Code",
+      "Productivity",
+    ],
+    author: "CodingInvent",
+    publishedAt: "2026-04-02",
+    readTime: "25 min",
+    sections: [
+      // ─── SECTION 1: Overview ───
+      {
+        heading: "The Two Giants of AI Coding",
+        content:
+          "GitHub Copilot and Cursor are the two dominant AI coding tools in 2026. They share a common ancestor (VS Code) but take fundamentally different approaches:\n\n**GitHub Copilot** is an extension/service that integrates into VS Code, JetBrains, Neovim, and Visual Studio. It's backed by GitHub (Microsoft) and OpenAI, with 15M+ users and the largest market share.\n\n**Cursor** is a standalone AI-first code editor, forked from VS Code. Built by Anysphere, it has 1M+ users and is the fastest-growing AI editor. It rebuilds the editor experience around AI.\n\nBoth tools use large language models (Claude, GPT-4o, Gemini) and both are rapidly adding features. This blog compares every aspect so you can make an informed choice.\n\nImportant: as of 2026, both tools are very capable. The gap between them is much smaller than in 2024. Your choice depends on workflow preferences, ecosystem needs, and team requirements — not a clear 'winner'.",
+        diagram:
+          "graph LR\n    A[\"AI Coding Tools 2026\"] --> B[\"GitHub Copilot\"]\n    A --> C[\"Cursor\"]\n    B --> D[\"Extension-based\"]\n    B --> E[\"GitHub ecosystem\"]\n    B --> F[\"15M+ users\"]\n    C --> G[\"Full editor fork\"]\n    C --> H[\"AI-first design\"]\n    C --> I[\"1M+ users\"]\n    D --> J[\"Works in VS Code, JetBrains, Neovim\"]\n    G --> K[\"VS Code fork + AI at every layer\"]\n    style A fill:#0f172a,stroke:#38bdf8,color:#e2e8f0\n    style B fill:#0f172a,stroke:#a78bfa,color:#e2e8f0\n    style C fill:#0f172a,stroke:#22c55e,color:#e2e8f0\n    style D fill:#1e293b,stroke:#a78bfa,color:#e2e8f0\n    style E fill:#1e293b,stroke:#a78bfa,color:#e2e8f0\n    style F fill:#1e293b,stroke:#a78bfa,color:#e2e8f0\n    style G fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style H fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style I fill:#1e293b,stroke:#22c55e,color:#e2e8f0\n    style J fill:#1e293b,stroke:#a78bfa,color:#e2e8f0\n    style K fill:#1e293b,stroke:#22c55e,color:#e2e8f0",
+      },
+      // ─── SECTION 2: Feature Comparison Table ───
+      {
+        heading: "Feature-by-Feature Comparison",
+        content:
+          "Here's a comprehensive side-by-side comparison of every major feature:",
+        comparison: {
+          title: "Copilot vs Cursor — Feature Comparison",
+          headers: ["Feature", "GitHub Copilot / Cursor"],
+          rows: [
+            ["Type", "VS Code extension + service", "Standalone editor (VS Code fork)"],
+            ["Inline Completions", "Yes — ghost text, Tab to accept", "Yes — more aggressive, multi-line predictions"],
+            ["Inline Edit", "Ctrl+I (inline chat)", "Ctrl+K (inline edit — faster, more precise)"],
+            ["Chat Panel", "Copilot Chat (Ctrl+Alt+I)", "Chat (Ctrl+L) — similar"],
+            ["Multi-File Edit", "Copilot Edits (Ctrl+Shift+I)", "Composer (Ctrl+I) — Cursor pioneered this"],
+            ["Agent Mode", "Yes — autonomous plan+execute+test", "Yes — tight terminal integration"],
+            ["Codebase Search", "@workspace (sends relevant snippets)", "@codebase (full local index — faster)"],
+            ["File References", "#file context variable", "@file mention + @folder"],
+            ["Web Search", "Limited (Enterprise with Bing)", "@web — available on all plans"],
+            ["Custom Docs Index", "No — relies on training data", "Yes — add any URL, indexed locally"],
+            ["Custom Rules", ".github/copilot-instructions.md", ".cursorrules — more widely adopted"],
+            ["Persistent Notes", "No built-in", "Notepads — persistent across sessions"],
+            ["Vision (Images)", "Yes — drag images into Chat", "Yes — paste/drag images"],
+            ["Terminal AI", "Ctrl+I in terminal", "Ctrl+K in terminal"],
+            ["Voice Input", "Yes — 'Hey Code' wake word", "No native voice"],
+            ["MCP Support", "Yes — via settings/mcp.json", "Yes — via Cursor Settings"],
+            ["Model Selection", "GPT-4o, Claude, Gemini, o1/o3", "Claude, GPT-4o, Gemini, Opus, cursor-small, BYOK"],
+            ["BYOK (Own API Key)", "No", "Yes — bring your own OpenAI/Anthropic keys"],
+            ["GitHub Integration", "Deep — PR summaries, code review, issues", "Basic — @git for history"],
+            ["IDE Support", "VS Code, JetBrains, Neovim, Visual Studio", "Cursor only (VS Code fork)"],
+            ["Extension Support", "Full VS Code marketplace", "Full VS Code marketplace (fork)"],
+          ],
+        },
+      },
+      // ─── SECTION 3: Pricing Comparison ───
+      {
+        heading: "Pricing Comparison (2026)",
+        content:
+          "Both tools offer free tiers but monetise differently:",
+        comparison: {
+          title: "Pricing Breakdown",
+          headers: ["Tier", "Copilot / Cursor"],
+          rows: [
+            ["Free Tier", "Limited completions + 50 chat messages/month", "2000 completions + 50 slow premium requests"],
+            ["Individual", "Pro $10/month — unlimited completions & chat", "Pro $20/month — unlimited completions, 500 fast requests"],
+            ["Team", "Business $19/user/month — policies, indemnity", "Business $40/user/month — admin, SSO, analytics"],
+            ["Enterprise", "Enterprise $39/user/month — knowledge bases", "Enterprise — custom pricing"],
+            ["Premium Models", "Included (with monthly request limits)", "500 fast premium/month (Pro), more on Business"],
+            ["BYOK Option", "No", "Yes — use your own API keys (no request limits)"],
+          ],
+        },
+      },
+      // ─── SECTION 4: Completions Comparison ───
+      {
+        heading: "Code Completions — Head to Head",
+        content:
+          "Both tools provide inline ghost-text completions, but they work differently under the hood:\n\n**GitHub Copilot completions:**\n1) Triggered as you type\n2) Shows one suggestion at a time (cycle with Alt+]/[)\n3) Can preview 10 alternatives with Ctrl+Enter\n4) Context: current file + open tabs + workspace info\n5) Next Edit Suggestions (NES) — predicts where you'll edit next\n\n**Cursor completions (Cursor Tab):**\n1) More aggressive — predicts larger blocks of code\n2) Predicts edits to existing code, not just new insertions\n3) Uses your recent editing patterns to predict what you'll do next\n4) Context: current file + indexed codebase + recent edits\n5) Multi-line predictions that span several lines at once\n\n**Verdict:**\nCursor's completions are generally considered more aggressive and context-aware because of its local codebase index. Copilot's completions are solid and reliable, especially with the new Next Edit Suggestions feature. For most developers, the difference is minor.\n\n**Key Difference:**\nCursor's completion model understands your editing intent — if you just renamed a variable in one place, it suggests renaming it everywhere else. Copilot's NES is catching up but was released later.",
+      },
+      // ─── SECTION 5: Multi-File Editing ───
+      {
+        heading: "Multi-File Editing & Agent Mode",
+        content:
+          "This is where both tools are evolving fastest:\n\n**Copilot Edits vs Cursor Composer:**\n1) Copilot Edits: add files to working set → describe changes → review per-file diff\n2) Cursor Composer: describe changes → Composer auto-identifies files → review diff\n3) Both produce multi-file diffs you can accept/reject per file\n4) Cursor's Composer tends to auto-discover files better; Copilot Edits requires you to manually add files\n\n**Copilot Agent vs Cursor Agent:**\n1) Both can plan, write, run terminal commands, and iterate on errors\n2) Copilot Agent: more cautious, asks for confirmation more often\n3) Cursor Agent: more autonomous, runs more steps before checking in\n4) Both can run tests and fix failures automatically\n5) Both support MCP for external tool access\n\n**Verdict:**\nCursor was first to market with multi-file editing and agent mode, and that head start shows in polish. Copilot's agent mode is newer but benefits from tighter GitHub integration (it can create PRs, manage issues). For pure coding tasks, both are excellent.",
+      },
+      // ─── SECTION 6: Context & Intelligence ───
+      {
+        heading: "Context Awareness & Codebase Intelligence",
+        content:
+          "How well the tool understands your project is often the decisive factor:\n\n**GitHub Copilot Context:**\n1) Open tabs in the editor (automatic)\n2) @workspace — searches workspace and sends relevant snippets\n3) #file — reference specific files\n4) #codebase — broader workspace search\n5) Custom instructions file (.github/copilot-instructions.md)\n6) GitHub Enterprise: knowledge bases from private repos\n\n**Cursor Context:**\n1) Full codebase index (local, semantic) — always available\n2) @codebase — searches the entire indexed project\n3) @file, @folder — reference files or directories\n4) @docs — indexed external documentation\n5) @web — real-time web search\n6) @git — git history and diffs\n7) .cursorrules file\n8) Notepads for persistent context\n\n**Verdict:**\nCursor has a clear edge in context management. Its local codebase index means @codebase queries are fast and comprehensive. Custom Docs and @web give it up-to-date knowledge. Copilot's @workspace is good but works by sending snippets rather than having a full index.\n\nCopilot's advantage is GitHub integration — if your entire workflow is on GitHub, Copilot can access PRs, issues, and code review context that Cursor can't.",
+        comparison: {
+          title: "Context Capabilities Comparison",
+          headers: ["Capability", "Copilot / Cursor"],
+          rows: [
+            ["Codebase Index", "No local index (sends snippets)", "Full local semantic index"],
+            ["Custom Docs", "No", "Yes — index any URL"],
+            ["Web Search", "Enterprise only (Bing)", "All plans (@web)"],
+            ["Git Context", "Via GitHub (@github)", "Local (@git)"],
+            ["Persistent Notes", "No", "Notepads"],
+            ["Rules File", ".github/copilot-instructions.md", ".cursorrules"],
+          ],
+        },
+      },
+      // ─── SECTION 7: Ecosystem & Integration ───
+      {
+        heading: "Ecosystem & Integration",
+        content:
+          "The ecosystem around each tool matters for professional teams:\n\n**GitHub Copilot Advantages:**\n1) Works in VS Code, JetBrains, Neovim, Visual Studio — any editor your team uses\n2) Deep GitHub.com integration — PR summaries, code review, issue triage\n3) GitHub Actions integration — Copilot in CI/CD\n4) Microsoft enterprise backing — SOC 2, IP indemnity, admin controls\n5) Copilot Extensions — third-party tools in chat (@docker, @azure)\n6) Massive community — 15M+ users, extensive documentation\n\n**Cursor Advantages:**\n1) All VS Code extensions work (it's a fork)\n2) BYOK (Bring Your Own Key) — use your own OpenAI/Anthropic keys\n3) Custom Docs indexing — no competitor matches this\n4) Notepads for team knowledge sharing\n5) Faster iteration — ships new features weekly\n6) Privacy Mode — clear data handling policies\n\n**The IDE Lock-in Question:**\nCopilot's biggest advantage is IDE flexibility. If your team uses JetBrains or Neovim, Cursor isn't an option. If everyone uses VS Code, this advantage is irrelevant since Cursor is a VS Code fork with the same extension support.\n\n**Enterprise Considerations:**\n1) Copilot Business/Enterprise: mature admin controls, SSO, audit logs, IP indemnity, GitHub support\n2) Cursor Business: newer but growing, SSO, centralized billing, privacy mode\n3) For enterprises deeply invested in GitHub, Copilot is the natural choice\n4) For startups and smaller teams, Cursor's features per dollar may be better",
+      },
+      // ─── SECTION 8: Performance ───
+      {
+        heading: "Speed & Performance",
+        content:
+          "Speed matters — slow AI is AI you don't use:\n\n**Completion Speed:**\n1) Copilot: fast — suggestions appear in ~200-500ms typically\n2) Cursor: fast — similar latency, cursor-small model is very quick\n3) Both: speed depends on model selected and request complexity\n\n**Chat Response Speed:**\n1) Copilot: varies by model — GPT-4o is fast, o1 is slower\n2) Cursor: similar — plus 'Fast' vs 'Slow' request tiers\n3) Cursor BYOK: can be faster if using a direct API with no queue\n\n**Codebase Search Speed:**\n1) Copilot @workspace: moderate — sends snippets to cloud for analysis\n2) Cursor @codebase: fast — searches local semantic index first, then sends relevant context\n3) Cursor has a significant advantage here\n\n**Editor Performance:**\n1) Copilot: VS Code performance (lightweight, fast)\n2) Cursor: slightly heavier than VS Code (extra AI features, indexing)\n3) On modern machines, the difference is negligible\n4) Cursor's indexing can cause brief CPU spikes on first open of a large project\n\n**Verdict:**\nPerformance is comparable for most workflows. Cursor's local codebase index gives it an edge for @codebase queries. Copilot's advantage is that VS Code is marginally lighter since Copilot is just an extension.",
+      },
+      // ─── SECTION 9: Privacy & Security ───
+      {
+        heading: "Privacy & Security",
+        content:
+          "For professional use, data handling is non-negotiable:\n\n**GitHub Copilot:**\n1) Free/Pro: code snippets sent to GitHub's servers for processing. Telemetry can be disabled.\n2) Business: code not retained after processing, not used for training. IP indemnity included.\n3) Enterprise: same as Business + SOC 2 compliance, admin controls, audit logs.\n4) All tiers: prompts processed on Microsoft/GitHub infrastructure (Azure).\n\n**Cursor:**\n1) All tiers: code sent to AI providers (Anthropic, OpenAI) for processing.\n2) Privacy Mode: when enabled, code is not stored on any server after processing. No training on your data.\n3) Business: zero data retention policy, SOC 2 compliance.\n4) BYOK: when using your own API keys, data goes directly to the provider under your own terms.\n\n**Verdict:**\nBoth are enterprise-ready with their paid plans. Copilot benefits from Microsoft's infra and compliance certifications. Cursor's Privacy Mode and BYOK give developers more control. For highly regulated industries, Copilot Enterprise's IP indemnity is a strong selling point.\n\n**Key Question:**\nAsk your security team: 'Where does our code go, and who stores it?' Both tools have clear answers on their Business/Enterprise tiers.",
+      },
+      // ─── SECTION 10: Who Should Use What ───
+      {
+        heading: "Who Should Use Copilot vs Cursor?",
+        content:
+          "Based on everything above, here's the recommendation matrix:\n\n**Choose GitHub Copilot if:**\n1) Your team uses JetBrains, Neovim, or Visual Studio (Cursor only works as its own editor)\n2) You're deeply invested in the GitHub ecosystem (PRs, issues, Actions)\n3) Your enterprise requires IP indemnity and Microsoft-level compliance\n4) You want the widest community support and documentation\n5) You prefer a stable, extension-based approach over a separate editor\n6) You use the free tier — Copilot's free tier is generous\n\n**Choose Cursor if:**\n1) You use VS Code (or would switch from VS Code — settings import is seamless)\n2) You want the most powerful codebase context (local indexing + custom docs + web)\n3) You value multi-file editing and Agent Mode as primary workflows\n4) You want BYOK to control costs and avoid rate limits\n5) You want @web for real-time information in chat\n6) You're a startup or small team that wants max features per dollar\n7) You want Notepads and .cursorrules for deep project customisation\n\n**Choose Both:**\nMany developers use BOTH — Copilot for GitHub integration (PR reviews, code review) and Cursor for daily coding. They're not mutually exclusive.\n\n**Bottom Line:**\nIf you live in VS Code and want the best AI coding experience TODAY, Cursor has a slight edge in features and context awareness. If you need enterprise support, IDE flexibility, or GitHub integration, Copilot is the safer choice. Both are excellent — the gap is closing every month.",
+      },
+      // ─── SECTION 11: Summary Table ───
+      {
+        heading: "Final Verdict — Summary Table",
+        content:
+          "Here's the final scoring across every key dimension:",
+        comparison: {
+          title: "Final Comparison",
+          headers: ["Category", "Copilot / Cursor"],
+          rows: [
+            ["Inline Completions", "★★★★☆ Very good", "★★★★★ Best-in-class predictions"],
+            ["Chat Quality", "★★★★★ Excellent with @workspace", "★★★★★ Excellent with @codebase + @docs"],
+            ["Multi-File Editing", "★★★★☆ Copilot Edits is solid", "★★★★★ Composer is more mature"],
+            ["Agent Mode", "★★★★☆ Newer but powerful", "★★★★★ More autonomous and polished"],
+            ["Context Awareness", "★★★★☆ Good with @workspace", "★★★★★ Local index + docs + web"],
+            ["IDE Flexibility", "★★★★★ VS Code + JetBrains + Neovim", "★★☆☆☆ Cursor only"],
+            ["GitHub Integration", "★★★★★ Deep native integration", "★★★☆☆ Basic git support"],
+            ["Pricing (Value)", "★★★★★ $10/mo Pro is great value", "★★★★☆ $20/mo Pro, but BYOK option"],
+            ["Enterprise Ready", "★★★★★ Microsoft backing + indemnity", "★★★★☆ Growing, SOC 2, privacy mode"],
+            ["Innovation Speed", "★★★★☆ Monthly updates", "★★★★★ Weekly updates"],
+            ["Community", "★★★★★ 15M+ users, massive ecosystem", "★★★★☆ 1M+ users, passionate community"],
+          ],
+        },
+      },
+      // ─── SECTION 12: Future Predictions ───
+      {
+        heading: "Future — Where Are They Heading?",
+        content:
+          "Both tools are evolving rapidly. Here's what to expect in 2026-2027:\n\n**GitHub Copilot — Expected Evolution:**\n1) Copilot Workspace — end-to-end development environments where Copilot plans, codes, tests, and deploys\n2) Deeper GitHub Actions integration — AI-powered CI/CD\n3) Multi-agent collaboration — multiple Copilot agents working on different parts of a feature\n4) Copilot for non-developers — product managers, designers writing specs that become code\n5) Custom models — fine-tune Copilot on your codebase (Enterprise)\n\n**Cursor — Expected Evolution:**\n1) Background agents — AI working on tasks while you code something else\n2) Deeper team features — shared Notepads, team rules, collaborative AI sessions\n3) Built-in deployment — push to production from within Cursor\n4) Visual debugging — AI that watches your app run and suggests fixes\n5) Cursor for mobile/tablet — AI coding from any device\n\n**Industry Trends:**\n1) AI coding tools will handle 80%+ of boilerplate by 2027\n2) The 'AI pair programmer' becomes 'AI team member' — agents that take tickets, write code, test, and create PRs\n3) The editor becomes less important — AI agents work across multiple files, repos, and even codebases\n4) Prompt engineering for developers becomes a critical skill\n5) AI-generated code still needs human review, testing, and domain expertise\n\n**The Key Takeaway:**\nLearn BOTH tools. The skills transfer. Prompt engineering, context management, and AI code review are universal. Whether you use Copilot or Cursor, the developer who uses AI effectively will outperform the one who doesn't.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
