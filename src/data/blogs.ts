@@ -3091,6 +3091,986 @@ Object.is(NaN, NaN);                    // true (unlike ===)`,
       },
     ],
   },
+  // ── 15. GenAI Complete Interview Guide ────────────────────
+  {
+    id: "15",
+    slug: "genai-complete-interview-guide",
+    title: "GenAI Complete Interview Guide — LLM, RAG, Agents, MCP, Prompt Engineering & More",
+    description:
+      "The ultimate GenAI interview preparation guide covering LLMs, RAG pipelines, AI Agents, MCP servers, function calling, vector databases, embeddings, fine-tuning, LangChain, evaluation metrics, hallucination handling — with visual diagrams for every concept, code examples, pros/cons, and interview tips.",
+    thumbnail: "🤖",
+    category: "GenAI",
+    tags: ["GenAI", "LLM", "RAG", "AI Agents", "MCP", "LangChain", "Interview", "Prompt Engineering"],
+    author: "CodingInvent",
+    publishedAt: "2026-04-02",
+    readTime: "25 min",
+    sections: [
+      // ─── SECTION 1: GenAI Landscape ───
+      {
+        heading: "GenAI Landscape — All Topics You Must Know",
+        content:
+          "Generative AI interviews cover a wide range of topics. Here is the complete map of everything you need to know, organised from fundamentals to advanced. Each of these topics is covered in detail below with diagrams, code, and interview tips.",
+        diagram: `graph TD
+  GenAI["Generative AI<br/>Interview Topics"] --> LLM["LLMs<br/>GPT, Claude, Llama, Gemini"]
+  GenAI --> PE["Prompt Engineering<br/>Zero-shot, Few-shot, CoT"]
+  GenAI --> RAG["RAG<br/>Retrieval Augmented Generation"]
+  GenAI --> Agents["AI Agents<br/>Autonomous task execution"]
+  GenAI --> MCP["MCP Server<br/>Model Context Protocol"]
+  GenAI --> FC["Function Calling<br/>Tool Use"]
+  GenAI --> FT["Fine-Tuning<br/>LoRA, QLoRA, RLHF"]
+  GenAI --> VDB["Vector Databases<br/>Embeddings, Similarity Search"]
+  GenAI --> Eval["Evaluation<br/>Hallucination, Metrics"]
+  GenAI --> Frame["Frameworks<br/>LangChain, LlamaIndex"]
+  GenAI --> Safety["Safety & Ethics<br/>Guardrails, Bias"]
+
+  style LLM fill:#38bdf8,color:#000
+  style PE fill:#f59e0b,color:#000
+  style RAG fill:#22c55e,color:#000
+  style Agents fill:#a78bfa,color:#fff
+  style MCP fill:#ec4899,color:#fff
+  style FC fill:#6366f1,color:#fff
+  style FT fill:#ef4444,color:#fff
+  style VDB fill:#14b8a6,color:#000
+  style Eval fill:#f97316,color:#000
+  style Frame fill:#8b5cf6,color:#fff
+  style Safety fill:#64748b,color:#fff`,
+      },
+      // ─── SECTION 2: What is an LLM ───
+      {
+        heading: "What is an LLM? — How Large Language Models Work",
+        content:
+          "A Large Language Model (LLM) is a deep neural network trained on massive text data to predict the next token. It uses the Transformer architecture (self-attention mechanism) to understand context and generate human-like text. LLMs don't 'understand' — they predict statistically likely continuations.\n\nKey interview questions:\n1) What is the Transformer architecture?\n2) What is self-attention and why does it matter?\n3) What is the difference between encoder and decoder models?\n4) What are tokens and tokenization?\n5) What is the context window?\n6) What is temperature and how does it affect output?",
+        diagram: `graph TD
+  Input["Input: 'The cat sat on the'"] --> Tokenizer["Tokenizer<br/>Split into tokens"]
+  Tokenizer --> Embed["Token Embeddings<br/>Convert to vectors"]
+  Embed --> Pos["Positional Encoding<br/>Add position info"]
+  Pos --> Attention["Self-Attention Layers<br/>x96 layers in GPT-4"]
+  Attention --> FFN["Feed-Forward Network"]
+  FFN --> Output["Output Distribution<br/>Probability over vocabulary"]
+  Output --> Next["Next Token: 'mat'<br/>P=0.34"]
+  Output --> Alt1["Alternative: 'floor'<br/>P=0.21"]
+  Output --> Alt2["Alternative: 'chair'<br/>P=0.12"]
+
+  style Attention fill:#38bdf8,color:#000
+  style Output fill:#22c55e,color:#000
+  style Next fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "LLM Key Concepts — Temperature, Tokens, Context Window",
+        content:
+          "These are the parameters you must know for any GenAI interview:",
+        codeSnippet: {
+          language: "python",
+          code: `# ═══ Temperature — controls randomness ═══
+# Low (0.0-0.3): Deterministic, factual, consistent
+# Medium (0.4-0.7): Balanced creativity
+# High (0.8-1.0): Creative, diverse, may hallucinate
+
+response = openai.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Explain React"}],
+    temperature=0.2,        # Factual output
+    max_tokens=500,          # Max output length
+    top_p=0.9,               # Nucleus sampling
+    frequency_penalty=0.5,   # Reduce repetition
+    presence_penalty=0.3,    # Encourage new topics
+)
+
+# ═══ Tokenization ═══
+# "Hello world" → ["Hello", " world"] → [9906, 1917]
+# GPT-4: ~100K token vocabulary
+# 1 token ≈ 4 characters ≈ 0.75 words
+
+# ═══ Context Window ═══
+# GPT-4:      128K tokens (~96K words)
+# Claude 3:   200K tokens (~150K words)
+# Llama 3:    128K tokens
+# Gemini 1.5: 1M tokens (longest!)`,
+        },
+        comparison: {
+          title: "Popular LLMs Compared",
+          headers: ["Model", "Provider / Context / Strengths"],
+          rows: [
+            ["GPT-4o", "OpenAI", "128K tokens / Best overall, multimodal"],
+            ["Claude 3.5 Sonnet", "Anthropic", "200K tokens / Best for coding, long context"],
+            ["Gemini 1.5 Pro", "Google", "1M tokens / Longest context, multimodal"],
+            ["Llama 3.1 405B", "Meta (Open)", "128K tokens / Best open-source"],
+            ["Mistral Large", "Mistral", "128K tokens / Strong reasoning, EU-based"],
+            ["Phi-3", "Microsoft (Small)", "4K-128K / Best small model for edge"],
+          ],
+        },
+      },
+      // ─── SECTION 3: Prompt Engineering ───
+      {
+        heading: "Prompt Engineering — Techniques That Work",
+        content:
+          "Prompt engineering is the art of crafting inputs to get optimal outputs from LLMs. It's the most cost-effective way to improve AI output — no training, no fine-tuning, just better instructions.\n\nKey techniques:\n1) Zero-shot — ask directly with no examples.\n2) Few-shot — provide 2-5 examples before the question.\n3) Chain-of-Thought (CoT) — ask the model to reason step by step.\n4) System prompts — set persona, tone, and constraints.\n5) ReAct — Reason + Act, the model thinks then takes action.\n6) Self-consistency — generate multiple answers and pick the majority.",
+        diagram: `graph TD
+  PE["Prompt Engineering"] --> ZS["Zero-Shot<br/>'Translate this to French'"]
+  PE --> FS["Few-Shot<br/>'Here are 3 examples...'"]
+  PE --> CoT["Chain of Thought<br/>'Think step by step'"]
+  PE --> Sys["System Prompt<br/>'You are a senior dev...'"]
+  PE --> ReAct["ReAct<br/>Thought -> Action -> Observe"]
+  PE --> SC["Self-Consistency<br/>Multiple paths, vote"]
+
+  ZS --> Q["Quality: Good"]
+  FS --> Q2["Quality: Better"]
+  CoT --> Q3["Quality: Best for reasoning"]
+
+  style ZS fill:#64748b,color:#fff
+  style FS fill:#38bdf8,color:#000
+  style CoT fill:#22c55e,color:#000
+  style ReAct fill:#a78bfa,color:#fff
+  style Sys fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "Prompt Engineering — Code Examples",
+        content:
+          "Here are practical examples of each prompting technique that you can use in interviews to demonstrate hands-on experience:",
+        codeSnippet: {
+          language: "python",
+          code: `# ═══ ZERO-SHOT — No examples ═══
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is React virtual DOM?"}
+]
+
+# ═══ FEW-SHOT — Provide examples ═══
+messages = [
+    {"role": "system", "content": "Classify the sentiment as positive, negative, or neutral."},
+    {"role": "user", "content": "I love this product!"},
+    {"role": "assistant", "content": "positive"},
+    {"role": "user", "content": "This is terrible."},
+    {"role": "assistant", "content": "negative"},
+    {"role": "user", "content": "The package arrived on Tuesday."},
+    # Model will respond: "neutral"
+]
+
+# ═══ CHAIN-OF-THOUGHT — Step by step reasoning ═══
+messages = [
+    {"role": "system", "content": "Think step by step before answering."},
+    {"role": "user", "content": """
+        A store has 5 apples. They buy 3 more boxes with 6 apples each.
+        They sell 12 apples. How many are left?
+        
+        Let's think step by step:
+    """}
+]
+# Model: Step 1: Start with 5. Step 2: 3×6=18. Step 3: 5+18=23. Step 4: 23-12=11.
+
+# ═══ SYSTEM PROMPT — Set persona & constraints ═══
+messages = [
+    {"role": "system", "content": """
+        You are a senior React developer at a Fortune 500 company.
+        - Always provide TypeScript code examples
+        - Explain trade-offs and alternatives
+        - Mention performance implications
+        - Keep responses under 300 words
+    """},
+    {"role": "user", "content": "How should I manage global state?"}
+]
+
+# ═══ ReAct — Reasoning + Action loop ═══
+messages = [
+    {"role": "system", "content": """
+        Use this format:
+        Thought: [analyze what you need to do]
+        Action: [tool_name(parameters)]
+        Observation: [result from the tool]
+        ... repeat until done ...
+        Final Answer: [your response]
+    """},
+    {"role": "user", "content": "What is the weather in NYC and should I bring an umbrella?"}
+]`,
+        },
+      },
+      // ─── SECTION 4: RAG ───
+      {
+        heading: "RAG — Retrieval Augmented Generation (Most Asked!)",
+        content:
+          "RAG is the #1 most asked GenAI interview topic. It combines a retrieval system with an LLM — instead of relying solely on the model's training data, RAG fetches relevant documents from your own knowledge base and includes them in the prompt. This dramatically reduces hallucination and keeps answers grounded in real data.\n\nKey interview questions:\n1) What problem does RAG solve?\n2) How does the retrieval pipeline work?\n3) What are embeddings and vector similarity?\n4) How do you chunk documents?\n5) What is the difference between RAG and fine-tuning?\n6) How do you evaluate RAG accuracy?",
+        diagram: `graph TD
+  User["User Query:<br/>'What is our refund policy?'"] --> Embed1["1. Embed Query<br/>Convert to vector"]
+  Embed1 --> Search["2. Vector Search<br/>Find similar documents"]
+  Search --> VDB["Vector Database<br/>(Pinecone, Chroma, Weaviate)"]
+  VDB --> TopK["3. Top-K Results<br/>Most relevant chunks"]
+  TopK --> Prompt["4. Build Prompt<br/>Context + Query"]
+  Prompt --> LLM["5. LLM Generates Answer<br/>Grounded in retrieved docs"]
+  LLM --> Response["6. Response<br/>'Our refund policy states...'"]
+
+  Docs["Your Documents<br/>PDFs, DBs, APIs"] --> Chunk["Chunk Documents<br/>Split into passages"]
+  Chunk --> Embed2["Generate Embeddings<br/>OpenAI, Cohere, etc."]
+  Embed2 --> VDB
+
+  style User fill:#38bdf8,color:#000
+  style VDB fill:#a78bfa,color:#fff
+  style LLM fill:#22c55e,color:#000
+  style Response fill:#f59e0b,color:#000`,
+      },
+      {
+        heading: "RAG Pipeline — Step-by-Step Code",
+        content:
+          "Here is a complete RAG implementation you can walk through in an interview. This uses OpenAI embeddings and a simple in-memory vector store. In production you would use Pinecone, Chroma, or Weaviate.",
+        codeSnippet: {
+          language: "python",
+          code: `# ═══ STEP 1: Install dependencies ═══
+# pip install openai chromadb langchain tiktoken
+
+# ═══ STEP 2: Document Loading & Chunking ═══
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+documents = [
+    "Our refund policy allows returns within 30 days of purchase.",
+    "Shipping takes 5-7 business days for standard delivery.",
+    "Premium members get free shipping on all orders.",
+]
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=200,       # Max characters per chunk
+    chunk_overlap=20,     # Overlap between chunks for context
+    separators=["\\n\\n", "\\n", ". ", " "]  # Split priorities
+)
+chunks = splitter.create_documents(documents)
+
+# ═══ STEP 3: Generate Embeddings & Store ═══
+import chromadb
+from chromadb.utils import embedding_functions
+
+# Create embedding function (uses OpenAI ada-002)
+openai_ef = embedding_functions.OpenAIEmbeddingFunction(
+    api_key="your-api-key",
+    model_name="text-embedding-3-small"
+)
+
+# Create vector database collection
+client = chromadb.Client()
+collection = client.create_collection(
+    name="company_docs",
+    embedding_function=openai_ef
+)
+
+# Add documents to vector store
+collection.add(
+    documents=[chunk.page_content for chunk in chunks],
+    ids=[f"doc_{i}" for i in range(len(chunks))]
+)
+
+# ═══ STEP 4: Query — Retrieve Relevant Documents ═══
+results = collection.query(
+    query_texts=["What is the refund policy?"],
+    n_results=3  # Top 3 most similar chunks
+)
+# results["documents"] → [["Our refund policy allows returns..."]]
+
+# ═══ STEP 5: Build Prompt with Context ═══
+context = "\\n".join(results["documents"][0])
+prompt = f"""Answer based ONLY on the following context.
+If the answer is not in the context, say "I don't know."
+
+Context:
+{context}
+
+Question: What is the refund policy?
+Answer:"""
+
+# ═══ STEP 6: Generate Response ═══
+import openai
+
+response = openai.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "Answer questions using only the provided context."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.1  # Low temp for factual answers
+)
+print(response.choices[0].message.content)
+# → "The refund policy allows returns within 30 days of purchase."`,
+        },
+      },
+      {
+        heading: "RAG — Chunking Strategies & Embeddings Deep Dive",
+        content:
+          "How you chunk documents dramatically affects RAG quality. Too small = missing context. Too large = diluted relevance. Embeddings convert text into high-dimensional vectors where semantically similar text is close together.",
+        diagram: `graph TD
+  subgraph Chunking["Document Chunking Strategies"]
+    C1["Fixed Size<br/>500 chars each"]
+    C2["Recursive<br/>Split by paragraphs, sentences"]
+    C3["Semantic<br/>Split by meaning change"]
+    C4["Document-Aware<br/>Respect headers, sections"]
+  end
+
+  subgraph Embeddings["How Embeddings Work"]
+    T1["'King' → [0.2, 0.8, 0.1, ...]"]
+    T2["'Queen' → [0.21, 0.79, 0.12, ...]"]
+    T3["'Apple' → [0.9, 0.1, 0.7, ...]"]
+    T1 -.->|"Close in<br/>vector space"| T2
+    T1 -.->|"Far apart"| T3
+  end
+
+  subgraph Similarity["Similarity Search"]
+    Q["Query vector"] --> Cos["Cosine Similarity<br/>cos(A, B) = A.B / |A||B|"]
+    Cos --> Top["Top-K closest<br/>documents returned"]
+  end
+
+  style C2 fill:#22c55e,color:#000
+  style C3 fill:#38bdf8,color:#000
+  style Cos fill:#a78bfa,color:#fff`,
+        comparison: {
+          title: "Embedding Models Compared",
+          headers: ["Model", "Provider / Dimensions / Cost"],
+          rows: [
+            ["text-embedding-3-small", "OpenAI", "1536D / $0.02/1M tokens"],
+            ["text-embedding-3-large", "OpenAI", "3072D / $0.13/1M tokens"],
+            ["Cohere embed-v3", "Cohere", "1024D / $0.10/1M tokens"],
+            ["all-MiniLM-L6-v2", "Open Source", "384D / FREE (local)"],
+            ["BGE-large-en", "Open Source", "1024D / FREE (local)"],
+            ["Voyage-2", "Voyage AI", "1024D / $0.10/1M tokens"],
+          ],
+        },
+      },
+      // ─── SECTION 5: RAG vs Fine-Tuning ───
+      {
+        heading: "RAG vs Fine-Tuning vs Prompt Engineering",
+        content:
+          "This comparison is asked in EVERY GenAI interview. Know when to use which approach:",
+        comparison: {
+          title: "RAG vs Fine-Tuning vs Prompt Engineering",
+          headers: ["Aspect", "Prompt Eng / RAG / Fine-Tune"],
+          rows: [
+            ["Cost", "$0 (just text)", "Low (embed+VDB) / High ($100s+ GPU)"],
+            ["Setup Time", "Minutes", "Hours-Days / Days-Weeks"],
+            ["Data Needed", "0 examples", "100+ documents / 1000+ labeled examples"],
+            ["Up-to-date Data", "No (manual updates)", "Yes (real-time) / No (retrain needed)"],
+            ["Hallucination", "High risk", "Low (grounded) / Medium"],
+            ["Domain Knowledge", "General only", "Your specific docs / Deep domain behavior"],
+            ["Best For", "Simple tasks, prototyping", "Knowledge bases, Q&A / Tone, specialization"],
+            ["Latency", "Fastest", "Medium (retrieval step) / Same as base model"],
+            ["Can Combine?", "Yes — always start here", "Yes — all three can combine"],
+          ],
+        },
+        diagram: `graph LR
+  Start["Need AI for your data?"] --> Q1{"Data changes<br/>frequently?"}
+  Q1 -- Yes --> RAG["Use RAG"]
+  Q1 -- No --> Q2{"Need specific tone<br/>or behavior?"}
+  Q2 -- Yes --> FT["Fine-Tune"]
+  Q2 -- No --> Q3{"Complex reasoning<br/>needed?"}
+  Q3 -- Yes --> CoT["Prompt Engineering<br/>(Chain of Thought)"]
+  Q3 -- No --> PE["Prompt Engineering<br/>(Zero/Few-shot)"]
+
+  style RAG fill:#22c55e,color:#000
+  style FT fill:#ef4444,color:#fff
+  style CoT fill:#38bdf8,color:#000
+  style PE fill:#f59e0b,color:#000`,
+      },
+      // ─── SECTION 6: AI Agents ───
+      {
+        heading: "AI Agents — Autonomous Task Execution",
+        content:
+          "An AI Agent is an LLM that can autonomously decide WHAT to do, WHICH tools to use, and WHEN to stop. Unlike a simple chatbot that responds to one prompt, an agent reasons, plans, takes actions, observes results, and iterates until the task is complete.\n\nKey interview questions:\n1) What is the difference between a chatbot and an agent?\n2) What is the ReAct pattern?\n3) How does an agent decide which tool to use?\n4) What is the agent loop (plan-execute-observe)?\n5) What are multi-agent systems?\n6) How do you prevent infinite loops in agents?",
+        diagram: `graph TD
+  User["User: 'Book me a flight<br/>to NYC next Friday'"] --> Agent["AI Agent<br/>(LLM + Tools + Memory)"]
+  Agent --> Think["1. THINK<br/>'I need to search flights,<br/>check prices, book one'"]
+  Think --> Plan["2. PLAN<br/>Step 1: Search flights<br/>Step 2: Compare prices<br/>Step 3: Book cheapest"]
+  Plan --> Act["3. ACT<br/>Call flight_search() tool"]
+  Act --> Tool["Tool Execution<br/>API call to airline"]
+  Tool --> Observe["4. OBSERVE<br/>'Found 5 flights, cheapest $299'"]
+  Observe --> Think2["5. THINK AGAIN<br/>'$299 is good, book it'"]
+  Think2 --> Act2["6. ACT<br/>Call book_flight() tool"]
+  Act2 --> Done["7. RESPOND<br/>'Booked NYC flight for $299<br/>on Friday 6:30 AM'"]
+
+  style Agent fill:#a78bfa,color:#fff
+  style Think fill:#38bdf8,color:#000
+  style Act fill:#22c55e,color:#000
+  style Observe fill:#f59e0b,color:#000
+  style Done fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Building an AI Agent — Line by Line",
+        content:
+          "Here is a complete AI Agent implementation explained line by line for interview preparation. This agent can search the web, do math, and answer questions by reasoning through tools:",
+        codeSnippet: {
+          language: "python",
+          code: `import openai
+import json
+
+# ═══ STEP 1: Define the tools the agent can use ═══
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "search_web",
+            "description": "Search the web for current information",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "Search query"}
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "calculator",
+            "description": "Perform mathematical calculations",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "expression": {"type": "string", "description": "Math expression"}
+                },
+                "required": ["expression"]
+            }
+        }
+    }
+]
+
+# ═══ STEP 2: Implement the actual tool functions ═══
+def search_web(query: str) -> str:
+    # In production: call Google/Bing API
+    return f"Search results for '{query}': React 19 was released in Dec 2024..."
+
+def calculator(expression: str) -> str:
+    try:
+        return str(eval(expression))  # In production: use safe math parser
+    except:
+        return "Error in calculation"
+
+# Map tool names to functions
+tool_map = {
+    "search_web": search_web,
+    "calculator": calculator,
+}
+
+# ═══ STEP 3: The Agent Loop — this is the core! ═══
+def run_agent(user_message: str, max_iterations: int = 5):
+    messages = [
+        {"role": "system", "content": """You are a helpful AI agent.
+You have access to tools. Use them when needed.
+Think step by step before acting.
+If you have enough information, respond directly."""},
+        {"role": "user", "content": user_message}
+    ]
+
+    for i in range(max_iterations):  # Prevent infinite loops!
+        # Call LLM with tools
+        response = openai.chat.completions.create(
+            model="gpt-4",
+            messages=messages,
+            tools=tools,
+            tool_choice="auto"  # Let model decide
+        )
+
+        message = response.choices[0].message
+
+        # If model wants to call a tool
+        if message.tool_calls:
+            messages.append(message)  # Add assistant's decision
+
+            for tool_call in message.tool_calls:
+                func_name = tool_call.function.name
+                func_args = json.loads(tool_call.function.arguments)
+
+                print(f"🔧 Agent calling: {func_name}({func_args})")
+
+                # Execute the tool
+                result = tool_map[func_name](**func_args)
+
+                # Add tool result back to conversation
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": result
+                })
+
+        else:
+            # Model is done — return final answer
+            print(f"✅ Agent answer: {message.content}")
+            return message.content
+
+    return "Agent reached max iterations without completing."
+
+# ═══ STEP 4: Run the agent ═══
+run_agent("What is 25% of the mass of Jupiter in kg?")
+# 🔧 Agent calling: search_web({"query": "mass of Jupiter in kg"})
+# 🔧 Agent calling: calculator({"expression": "1.898e27 * 0.25"})
+# ✅ Agent answer: "25% of Jupiter's mass is 4.745 × 10²⁶ kg"`,
+        },
+      },
+      {
+        heading: "Agent Architecture — Visual Deep Dive",
+        content:
+          "Here is the complete agent architecture showing all the components: the LLM brain, tool registry, memory system, and the reasoning loop. Understanding this diagram will let you answer any agent-related interview question.",
+        diagram: `graph TD
+  subgraph Agent["AI Agent Architecture"]
+    LLM["LLM Brain<br/>(GPT-4, Claude)"]
+    Memory["Memory<br/>Short-term: conversation<br/>Long-term: vector DB"]
+    Tools["Tool Registry<br/>search, calc, code, API"]
+    Planner["Planner<br/>Break task into steps"]
+  end
+
+  subgraph Loop["Agent Loop (ReAct)"]
+    R1["1. Receive Task"] --> R2["2. Reason/Think"]
+    R2 --> R3["3. Select Tool"]
+    R3 --> R4["4. Execute Tool"]
+    R4 --> R5["5. Observe Result"]
+    R5 --> R6{"Task Complete?"}
+    R6 -- No --> R2
+    R6 -- Yes --> R7["6. Return Answer"]
+  end
+
+  LLM --> R2
+  Tools --> R4
+  Memory --> R2
+  R5 --> Memory
+
+  style LLM fill:#38bdf8,color:#000
+  style Memory fill:#a78bfa,color:#fff
+  style Tools fill:#22c55e,color:#000
+  style Planner fill:#f59e0b,color:#000
+  style R7 fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "Multi-Agent Systems",
+        content:
+          "In complex scenarios, multiple agents collaborate — each specialised for a different task. One agent plans, another researches, another writes code. This is the architecture behind advanced AI systems like AutoGPT, CrewAI, and Microsoft AutoGen.",
+        diagram: `graph TD
+  User["User Task:<br/>'Build a landing page'"] --> Orchestrator["Orchestrator Agent<br/>Plans and delegates"]
+  Orchestrator --> Researcher["Researcher Agent<br/>Finds best practices"]
+  Orchestrator --> Coder["Coder Agent<br/>Writes React code"]
+  Orchestrator --> Reviewer["Reviewer Agent<br/>Reviews and tests code"]
+
+  Researcher -->|"research results"| Coder
+  Coder -->|"code output"| Reviewer
+  Reviewer -->|"feedback"| Coder
+  Reviewer -->|"approved"| Orchestrator
+  Orchestrator --> User2["Final: Landing Page Code"]
+
+  style Orchestrator fill:#f59e0b,color:#000
+  style Researcher fill:#38bdf8,color:#000
+  style Coder fill:#22c55e,color:#000
+  style Reviewer fill:#a78bfa,color:#fff`,
+        comparison: {
+          title: "Single Agent vs Multi-Agent",
+          headers: ["Aspect", "Single Agent / Multi-Agent"],
+          rows: [
+            ["Complexity", "Simple", "Complex orchestration"],
+            ["Tasks", "One domain", "Cross-domain collaboration"],
+            ["Quality", "Good for simple tasks", "Better for complex tasks"],
+            ["Cost", "Lower (1 LLM call loop)", "Higher (multiple LLM calls)"],
+            ["Frameworks", "LangChain, OpenAI", "CrewAI, AutoGen, LangGraph"],
+            ["Use Case", "Q&A, search, calc", "Code gen, research, analysis"],
+          ],
+        },
+      },
+      // ─── SECTION 7: Function Calling / Tool Use ───
+      {
+        heading: "Function Calling — How LLMs Use Tools",
+        content:
+          "Function calling (or tool use) is how an LLM interacts with external systems. The model doesn't execute code — it outputs a structured JSON specifying which function to call and with what arguments. Your application then executes the function and feeds the result back to the model.\n\nKey interview questions:\n1) Does the LLM actually run the function? (No! Your code does.)\n2) How does the model know which function to pick?\n3) What is the difference between tool_choice 'auto' and 'required'?\n4) How do you handle errors in function execution?",
+        diagram: `sequenceDiagram
+  participant User
+  participant App as Your Application
+  participant LLM as LLM (GPT-4)
+  participant API as External API
+
+  User->>App: "What's the weather in NYC?"
+  App->>LLM: messages + tools definition
+  LLM-->>App: tool_call: get_weather(city="NYC")
+  Note over LLM: Model does NOT call the API!
+  App->>API: GET /weather?city=NYC
+  API-->>App: { temp: 72, condition: "sunny" }
+  App->>LLM: tool result: "72F, sunny"
+  LLM-->>App: "It's 72F and sunny in NYC today!"
+  App->>User: Display response`,
+      },
+      // ─── SECTION 8: MCP Server ───
+      {
+        heading: "MCP — Model Context Protocol (Newest!)",
+        content:
+          "MCP (Model Context Protocol) is an open protocol by Anthropic that standardises how AI models connect to external data sources and tools. Think of it as a USB-C port for AI — one standard interface that works with any model and any tool.\n\nKey interview questions:\n1) What problem does MCP solve? (Standardisation — every tool had its own integration format.)\n2) What are MCP servers and clients?\n3) How is MCP different from function calling? (MCP is the protocol/transport, function calling is the mechanism.)\n4) What are Resources, Tools, and Prompts in MCP?\n5) How does an MCP server expose capabilities?",
+        diagram: `graph TD
+  subgraph Clients["MCP Clients"]
+    C1["Claude Desktop"]
+    C2["VS Code Copilot"]
+    C3["Custom App"]
+  end
+
+  subgraph Protocol["MCP Protocol Layer"]
+    P["Standardised JSON-RPC<br/>over stdio or HTTP/SSE"]
+  end
+
+  subgraph Servers["MCP Servers (Tools)"]
+    S1["GitHub MCP Server<br/>repos, issues, PRs"]
+    S2["Database MCP Server<br/>query, insert, update"]
+    S3["Slack MCP Server<br/>messages, channels"]
+    S4["File System MCP Server<br/>read, write, search"]
+    S5["Custom MCP Server<br/>your business logic"]
+  end
+
+  C1 --> P
+  C2 --> P
+  C3 --> P
+  P --> S1
+  P --> S2
+  P --> S3
+  P --> S4
+  P --> S5
+
+  style P fill:#a78bfa,color:#fff
+  style C1 fill:#38bdf8,color:#000
+  style C2 fill:#38bdf8,color:#000
+  style S5 fill:#22c55e,color:#000`,
+      },
+      {
+        heading: "MCP Server — Building One from Scratch",
+        content:
+          "Here is a complete MCP server implementation that exposes a weather tool. This is the code-level understanding interviewers expect. The server defines its capabilities (tools, resources, prompts), and any MCP-compatible client can connect to it.",
+        codeSnippet: {
+          language: "typescript",
+          code: `// ═══ MCP Server — weather-mcp-server/index.ts ═══
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
+
+// 1. Create the MCP server
+const server = new McpServer({
+  name: "weather-server",       // Server identity
+  version: "1.0.0",
+});
+
+// 2. Define a TOOL — callable by the AI model
+server.tool(
+  "get_weather",                          // Tool name
+  "Get current weather for a city",       // Description (helps LLM decide when to use it)
+  {
+    city: z.string().describe("City name, e.g. 'New York'"),
+    units: z.enum(["celsius", "fahrenheit"]).default("celsius"),
+  },
+  async ({ city, units }) => {
+    // In production: call real weather API
+    const temp = units === "celsius" ? 22 : 72;
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify({
+          city,
+          temperature: temp,
+          units,
+          condition: "sunny",
+        })
+      }]
+    };
+  }
+);
+
+// 3. Define a RESOURCE — data the model can read
+server.resource(
+  "weather://cities",                     // URI pattern
+  "List of supported cities",             // Description
+  async () => ({
+    contents: [{
+      uri: "weather://cities",
+      text: JSON.stringify(["New York", "London", "Tokyo", "Mumbai"]),
+      mimeType: "application/json",
+    }]
+  })
+);
+
+// 4. Define a PROMPT — reusable prompt template
+server.prompt(
+  "weather_report",
+  "Generate a formatted weather report",
+  [{ name: "city", description: "City name", required: true }],
+  async ({ city }) => ({
+    messages: [{
+      role: "user",
+      content: {
+        type: "text",
+        text: \`Generate a detailed weather report for \${city}. 
+Include temperature, humidity, wind, and a 3-day forecast.\`
+      }
+    }]
+  })
+);
+
+// 5. Start the server using stdio transport
+const transport = new StdioServerTransport();
+await server.connect(transport);
+console.error("Weather MCP server running on stdio");`,
+        },
+      },
+      {
+        heading: "MCP Architecture — Complete Flow",
+        content:
+          "Here is how MCP works end-to-end: the client discovers servers, the server advertises its capabilities (tools, resources, prompts), and the LLM uses them through the standardised protocol.",
+        diagram: `sequenceDiagram
+  participant User
+  participant Client as MCP Client (Claude)
+  participant Protocol as MCP Protocol
+  participant Server as MCP Server
+  participant API as External Service
+
+  User->>Client: "What's the weather in Mumbai?"
+
+  Note over Client,Server: 1. DISCOVERY — Client learns server capabilities
+  Client->>Protocol: initialize()
+  Protocol->>Server: initialize()
+  Server-->>Protocol: capabilities: tools, resources, prompts
+  Protocol-->>Client: Server has "get_weather" tool
+
+  Note over Client,Server: 2. TOOL CALL — LLM decides to use tool
+  Client->>Protocol: tools/call: get_weather({city: "Mumbai"})
+  Protocol->>Server: Execute get_weather
+  Server->>API: Fetch weather data
+  API-->>Server: {temp: 32, condition: "humid"}
+  Server-->>Protocol: {content: [{type: "text", text: "32C, humid"}]}
+  Protocol-->>Client: Tool result
+
+  Note over Client,Server: 3. RESPONSE — LLM generates answer
+  Client->>User: "It's 32C and humid in Mumbai today!"`,
+      },
+      {
+        heading: "MCP vs Function Calling vs REST API",
+        content:
+          "Understanding how MCP differs from other integration patterns is a key interview differentiator:",
+        comparison: {
+          title: "MCP vs Function Calling vs REST API",
+          headers: ["Aspect", "MCP / Func Calling / REST"],
+          rows: [
+            ["What It Is", "Open protocol (transport)", "LLM feature / Web standard (HTTP)"],
+            ["Standardised", "Yes — universal spec", "Per-provider format / Yes — HTTP verbs"],
+            ["Discovery", "Auto — server advertises", "Manual (define tools) / Manual (swagger)"],
+            ["Transport", "stdio, HTTP/SSE", "Within LLM API call / HTTP"],
+            ["State", "Persistent connection", "Stateless per call / Stateless"],
+            ["Who Defines It", "Anthropic (open spec)", "OpenAI/Anthropic/Google / Industry std"],
+            ["Use Case", "Universal AI tool integration", "One-off tool calls / App-to-app comm"],
+            ["Analogy", "USB-C (universal port)", "A specific USB device / Ethernet cable"],
+          ],
+        },
+      },
+      // ─── SECTION 9: Vector Databases ───
+      {
+        heading: "Vector Databases — The Backbone of RAG",
+        content:
+          "Vector databases store high-dimensional vectors (embeddings) and enable fast similarity search. They are essential for RAG, recommendation systems, and semantic search. Unlike traditional databases that search by exact match, vector DBs search by meaning.\n\nKey interview questions:\n1) What is a vector embedding?\n2) How does cosine similarity work?\n3) What indexing algorithms do vector DBs use (HNSW, IVF)?\n4) When would you use a vector DB vs a traditional DB?",
+        diagram: `graph TD
+  subgraph Traditional["Traditional DB (SQL)"]
+    TQ["SELECT * FROM docs<br/>WHERE title = 'React'"]
+    TR["Exact match only"]
+  end
+
+  subgraph Vector["Vector DB"]
+    VQ["query: 'How does React work?'<br/>→ [0.2, 0.8, 0.1, ...]"]
+    VS["Find nearest vectors<br/>by cosine similarity"]
+    VR["Returns: React docs,<br/>Virtual DOM article,<br/>JSX tutorial"]
+  end
+
+  VQ --> VS --> VR
+
+  style Traditional fill:#ef4444,color:#fff
+  style Vector fill:#22c55e,color:#000
+  style VS fill:#38bdf8,color:#000`,
+        comparison: {
+          title: "Vector Database Options",
+          headers: ["Database", "Type / Pricing / Best For"],
+          rows: [
+            ["Pinecone", "Managed cloud", "Free tier 100K vectors / Production RAG"],
+            ["ChromaDB", "Open source (local)", "FREE / Prototyping, small projects"],
+            ["Weaviate", "Open source + cloud", "Free tier / Hybrid search (vector + keyword)"],
+            ["Qdrant", "Open source + cloud", "Free tier / High-performance, Rust-based"],
+            ["Milvus", "Open source", "FREE / Large-scale, distributed"],
+            ["pgvector", "PostgreSQL extension", "FREE / Already using PostgreSQL"],
+            ["Azure AI Search", "Managed cloud", "Pay-as-you-go / Azure ecosystem"],
+          ],
+        },
+      },
+      // ─── SECTION 10: Fine-Tuning ───
+      {
+        heading: "Fine-Tuning — When RAG Isn't Enough",
+        content:
+          "Fine-tuning modifies the model's weights using your own data to change its behavior, tone, or specialization. It's more expensive than RAG but gives deeper customization.\n\nKey interview questions:\n1) When should you fine-tune vs use RAG?\n2) What is LoRA and QLoRA?\n3) What is RLHF (Reinforcement Learning from Human Feedback)?\n4) How much data do you need to fine-tune?",
+        diagram: `graph TD
+  FT["Fine-Tuning Methods"] --> Full["Full Fine-Tune<br/>Update ALL weights<br/>Expensive, powerful"]
+  FT --> LoRA["LoRA<br/>Low-Rank Adaptation<br/>Update small matrices"]
+  FT --> QLoRA["QLoRA<br/>4-bit quantized LoRA<br/>Fits on consumer GPU"]
+  FT --> RLHF["RLHF<br/>Human feedback reward<br/>Used by ChatGPT"]
+  FT --> DPO["DPO<br/>Direct Preference<br/>Simpler than RLHF"]
+
+  Full --> Cost1["Cost: $$$$$"]
+  LoRA --> Cost2["Cost: $$"]
+  QLoRA --> Cost3["Cost: $"]
+  RLHF --> Cost4["Cost: $$$$"]
+
+  style Full fill:#ef4444,color:#fff
+  style LoRA fill:#38bdf8,color:#000
+  style QLoRA fill:#22c55e,color:#000
+  style RLHF fill:#a78bfa,color:#fff`,
+        codeSnippet: {
+          language: "python",
+          code: `# ═══ Fine-tuning with OpenAI (simplest approach) ═══
+# Step 1: Prepare training data (JSONL format)
+# training_data.jsonl:
+# {"messages": [{"role": "system", "content": "You are a CodingInvent tutor."},
+#               {"role": "user", "content": "What is React?"},
+#               {"role": "assistant", "content": "React is a JavaScript library..."}]}
+
+# Step 2: Upload file
+import openai
+
+file = openai.files.create(
+    file=open("training_data.jsonl", "rb"),
+    purpose="fine-tune"
+)
+
+# Step 3: Create fine-tuning job
+job = openai.fine_tuning.jobs.create(
+    training_file=file.id,
+    model="gpt-4o-mini",           # Base model
+    hyperparameters={
+        "n_epochs": 3,              # Training passes
+        "batch_size": "auto",
+        "learning_rate_multiplier": "auto"
+    }
+)
+
+# Step 4: Use your fine-tuned model
+response = openai.chat.completions.create(
+    model="ft:gpt-4o-mini:your-org::job-id",  # Your model!
+    messages=[{"role": "user", "content": "Explain useState"}]
+)
+
+# ═══ LoRA with Hugging Face (open source) ═══
+# from peft import LoraConfig, get_peft_model
+# config = LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj", "v_proj"])
+# model = get_peft_model(base_model, config)
+# # Trainable params: ~0.1% of total! (vs 100% for full fine-tune)`,
+        },
+      },
+      // ─── SECTION 11: Frameworks ───
+      {
+        heading: "LangChain vs LlamaIndex vs Semantic Kernel",
+        content:
+          "These frameworks simplify building LLM applications. Knowing when to use which is a practical interview question:",
+        comparison: {
+          title: "LLM Framework Comparison",
+          headers: ["Framework", "Best For / Language / Key Feature"],
+          rows: [
+            ["LangChain", "General LLM apps", "Python, JS / Chains, agents, tools"],
+            ["LlamaIndex", "RAG / data indexing", "Python / Best document loading + indexing"],
+            ["Semantic Kernel", "Enterprise (.NET/Azure)", "C#, Python / Microsoft ecosystem"],
+            ["Haystack", "Production NLP pipelines", "Python / Pipeline-based, modular"],
+            ["CrewAI", "Multi-agent systems", "Python / Role-based agents"],
+            ["AutoGen", "Agent conversations", "Python / Microsoft, multi-agent chat"],
+            ["LangGraph", "Stateful agent workflows", "Python / Graph-based agent orchestration"],
+          ],
+        },
+        diagram: `graph TD
+  Task["Your AI Task"] --> Q1{"Need RAG?"}
+  Q1 -- Yes --> Q2{"Simple or<br/>complex pipeline?"}
+  Q2 -- Simple --> LI["LlamaIndex"]
+  Q2 -- Complex --> LC["LangChain"]
+  Q1 -- No --> Q3{"Need agents?"}
+  Q3 -- Single --> LC2["LangChain"]
+  Q3 -- Multi-agent --> Q4{"Framework?"}
+  Q4 --> Crew["CrewAI"]
+  Q4 --> AG["AutoGen"]
+  Q3 -- No --> Q5{"Enterprise/.NET?"}
+  Q5 -- Yes --> SK["Semantic Kernel"]
+  Q5 -- No --> LC3["LangChain"]
+
+  style LI fill:#22c55e,color:#000
+  style LC fill:#38bdf8,color:#000
+  style Crew fill:#a78bfa,color:#fff
+  style SK fill:#f59e0b,color:#000`,
+      },
+      // ─── SECTION 12: Evaluation & Hallucination ───
+      {
+        heading: "Hallucination & Evaluation — How to Measure AI Quality",
+        content:
+          "Hallucination is when an LLM confidently generates false information. Evaluation is how you measure and prevent it. This is critical for production AI systems.\n\nTypes of hallucination:\n1) Factual hallucination — states incorrect facts.\n2) Faithful hallucination — contradicts the provided context.\n3) Fabrication — invents sources, citations, or data.\n\nEvaluation metrics:\n1) BLEU/ROUGE — text overlap with reference (automated).\n2) BERTScore — semantic similarity (better than BLEU).\n3) Faithfulness — does the answer stick to the context? (RAG eval).\n4) Relevance — is the retrieved context actually relevant?\n5) Human evaluation — still the gold standard.",
+        diagram: `graph TD
+  H["Hallucination Prevention"] --> G["Grounding<br/>RAG with source docs"]
+  H --> T["Temperature<br/>Lower = more factual"]
+  H --> S["System Prompt<br/>Say 'I don't know'"]
+  H --> V["Verification<br/>Fact-check with tools"]
+  H --> C["Citation<br/>Require sources"]
+  H --> Guard["Guardrails<br/>NeMo Guardrails,<br/>Llama Guard"]
+
+  Eval["Evaluation Methods"] --> Auto["Automated"]
+  Eval --> Human["Human Eval"]
+  Auto --> BLEU["BLEU/ROUGE"]
+  Auto --> BERT["BERTScore"]
+  Auto --> RAGAS["RAGAS Framework<br/>(RAG evaluation)"]
+  Human --> Rating["1-5 Rating"]
+  Human --> AB["A/B Testing"]
+
+  style G fill:#22c55e,color:#000
+  style Guard fill:#ef4444,color:#fff
+  style RAGAS fill:#38bdf8,color:#000`,
+      },
+      // ─── SECTION 13: Safety & Ethics ───
+      {
+        heading: "AI Safety, Ethics & Guardrails",
+        content:
+          "Every production AI system needs safety measures. Interviewers ask about these to test if you can build responsible AI:\n1) Prompt injection — user tricks the model into ignoring instructions.\n2) Jailbreaking — bypassing safety filters.\n3) Data privacy — PII in training data or user inputs.\n4) Bias — model reflects training data biases.\n5) Output filtering — block harmful, inappropriate content.\n6) Rate limiting — prevent abuse and cost overruns.",
+        diagram: `graph TD
+  Threats["AI Safety Threats"] --> PI["Prompt Injection<br/>'Ignore all instructions...'"]
+  Threats --> Jail["Jailbreaking<br/>'Pretend you are DAN...'"]
+  Threats --> PII["Data Leakage<br/>PII in outputs"]
+  Threats --> Bias["Bias<br/>Gender, racial, cultural"]
+
+  Defenses["Defenses"] --> Guard["Input Guardrails<br/>Filter malicious prompts"]
+  Defenses --> Out["Output Guardrails<br/>Block harmful content"]
+  Defenses --> Audit["Audit Logging<br/>Track all interactions"]
+  Defenses --> RBAC["Access Control<br/>Role-based permissions"]
+  Defenses --> Monitor["Monitoring<br/>Alert on anomalies"]
+
+  style PI fill:#ef4444,color:#fff
+  style Jail fill:#ef4444,color:#fff
+  style Guard fill:#22c55e,color:#000
+  style Out fill:#22c55e,color:#000`,
+      },
+      // ─── SECTION 14: All Interview Questions ───
+      {
+        heading: "Complete GenAI Interview Questions Checklist",
+        content:
+          "Here are ALL the questions you should be able to answer, organised by topic:\n\nLLM Fundamentals:\n1) What is a Transformer and how does self-attention work?\n2) What is tokenization and why does it matter?\n3) What is the context window and what happens when you exceed it?\n4) What is temperature, top-p, top-k sampling?\n5) What is the difference between encoder (BERT) and decoder (GPT) models?\n\nPrompt Engineering:\n6) What is zero-shot vs few-shot vs chain-of-thought prompting?\n7) What is a system prompt and how do you structure it?\n8) What is the ReAct prompting pattern?\n\nRAG:\n9) Explain the complete RAG pipeline from document to answer.\n10) What are embeddings and how do they capture meaning?\n11) What chunking strategies are there and what are the trade-offs?\n12) How do you evaluate RAG quality (faithfulness, relevance)?\n13) What is hybrid search (vector + keyword)?\n\nAgents:\n14) What is the difference between a chatbot and an AI agent?\n15) Explain the ReAct agent loop: reason-act-observe.\n16) How do you prevent infinite loops in agents?\n17) What are multi-agent systems and when do you use them?\n\nMCP:\n18) What is MCP and what problem does it solve?\n19) What are MCP tools, resources, and prompts?\n20) How is MCP different from function calling?\n\nFine-Tuning:\n21) When should you fine-tune vs use RAG?\n22) What is LoRA/QLoRA and why is it cheaper?\n23) What is RLHF and how was it used to train ChatGPT?\n\nProduction:\n24) How do you prevent hallucination in production?\n25) What is prompt injection and how do you defend against it?\n26) How do you monitor and evaluate LLM applications?\n27) What are guardrails and how do you implement them?\n28) What is the cost structure of LLM APIs?",
+      },
+      // ─── SECTION 15: Pros & Cons ───
+      {
+        heading: "Pros & Cons of Every GenAI Approach",
+        content:
+          "Know the trade-offs of each approach — interviewers love candidates who can discuss when NOT to use something.",
+        comparison: {
+          title: "GenAI Approaches — Pros & Cons",
+          headers: ["Approach", "Pros / Cons"],
+          rows: [
+            ["LLM (Direct)", "Fast, easy, no setup", "Hallucination, no custom data, expensive at scale"],
+            ["Prompt Engineering", "Free, fast iteration, no training", "Limited by model knowledge, brittle, prompt-dependent"],
+            ["RAG", "Grounded answers, up-to-date, auditable", "Retrieval latency, chunk quality matters, complex pipeline"],
+            ["Fine-Tuning", "Deep customisation, better tone/behavior", "Expensive, needs data, can overfit, hard to update"],
+            ["AI Agents", "Autonomous, can use tools, flexible", "Unpredictable, expensive (many LLM calls), debugging hard"],
+            ["MCP", "Standardised, reusable, vendor-agnostic", "New protocol, limited adoption, setup overhead"],
+            ["Vector DB", "Semantic search, scalable", "Embedding quality dependent, cost at scale"],
+          ],
+        },
+      },
+      // ─── SECTION 16: Common Mistakes ───
+      {
+        heading: "Common Interview Mistakes in GenAI",
+        content:
+          "These are the red flags that interviewers look for:\n1) Saying 'LLMs understand language' — they don't. They predict tokens based on statistical patterns. Never anthropomorphise.\n2) Not knowing when RAG fails — RAG fails when the answer isn't in your documents, when chunks are too large/small, or when embeddings don't capture the right semantics.\n3) Confusing fine-tuning with RAG — fine-tuning changes behavior/tone, RAG adds knowledge. They solve different problems.\n4) Saying 'agents are just chatbots' — agents have autonomy, tool use, and a reasoning loop. Chatbots just respond.\n5) Not mentioning hallucination prevention — any GenAI answer that doesn't address hallucination is incomplete.\n6) Ignoring cost — every LLM call costs money. Agents with loops can be very expensive. Caching, smaller models, and RAG reduce cost.\n7) Not knowing MCP — it's the newest standard and shows you stay current. At minimum explain: 'MCP standardises how AI models connect to external tools and data.'\n8) Forgetting evaluation — if you can't measure it, you can't improve it. Mention RAGAS, BERTScore, or human evaluation.\n9) No security awareness — never mention GenAI without discussing prompt injection, PII, and guardrails.\n10) Only knowing one framework — know LangChain for general, LlamaIndex for RAG, CrewAI for agents, and Semantic Kernel for enterprise.",
+      },
+      // ─── SECTION 17: Interview Tips ───
+      {
+        heading: "Interview Tips — How to Ace GenAI Questions",
+        content:
+          "Your strategy for GenAI interviews:\n1) ALWAYS draw diagrams — sketch the RAG pipeline, agent loop, or MCP architecture on a whiteboard. Visual explanations win.\n2) Start with the problem, not the solution — 'The problem with LLMs alone is hallucination. RAG solves this by grounding answers in real documents.'\n3) Show the decision tree — 'First I try prompt engineering. If that's not enough, I add RAG. If I need behavior changes, I fine-tune. If I need autonomy, I use agents.'\n4) Mention trade-offs for everything — cost, latency, accuracy, maintenance.\n5) Have a project story — 'I built a RAG system for internal docs using LangChain + Pinecone + GPT-4. We reduced support tickets by 40%.'\n6) Know the cost math — GPT-4: ~$30/1M input tokens, $60/1M output. An agent with 5 tool calls = ~5x cost of a single call.\n7) Stay current — mention MCP, function calling, multi-agent systems, and the latest models.\n8) Discuss production concerns — monitoring, evaluation, guardrails, scaling, caching.\n9) Show breadth AND depth — know all the topics at surface level, and go deep on 2-3 (RAG + Agents + one more).\n10) End with ethics — mention responsible AI, bias mitigation, and data privacy. This shows maturity.\n\nThis guide covers everything you need to ace any GenAI interview from startup to FAANG.",
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
