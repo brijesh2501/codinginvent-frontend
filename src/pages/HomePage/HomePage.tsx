@@ -20,6 +20,61 @@ interface Testimonial {
   text: string;
 }
 
+/* ── Trainer data ─────────────────────────────────────────── */
+interface Trainer {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+  photo: string;
+  specialties: string[];
+  experience: string;
+  linkedin?: string;
+}
+
+const trainers: Trainer[] = [
+  {
+    id: 1,
+    name: "Rajesh Kumar",
+    role: "Lead Full-Stack Instructor",
+    bio: "12+ years building enterprise apps with React, Node.js, and cloud platforms. Ex-Microsoft, passionate about making complex topics simple.",
+    photo: "/images/trainers/trainer-1.svg",
+    specialties: ["React", "Node.js", "Azure", "System Design"],
+    experience: "12+ Years",
+    linkedin: "#",
+  },
+  {
+    id: 2,
+    name: "Priya Venkatesh",
+    role: "AI & Machine Learning Instructor",
+    bio: "AI researcher turned educator. Specialises in LLMs, RAG pipelines, and agentic workflows. Published 15+ papers on applied AI.",
+    photo: "/images/trainers/trainer-2.svg",
+    specialties: ["GenAI", "LangChain", "Python", "MLOps"],
+    experience: "10+ Years",
+    linkedin: "#",
+  },
+  {
+    id: 3,
+    name: "Amit Deshmukh",
+    role: "DevOps & Cloud Instructor",
+    bio: "AWS & Azure certified architect. Built CI/CD pipelines for Fortune 500 companies. Believes in learning by deploying real projects.",
+    photo: "/images/trainers/trainer-3.svg",
+    specialties: ["Docker", "Kubernetes", "AWS", "CI/CD"],
+    experience: "9+ Years",
+    linkedin: "#",
+  },
+  {
+    id: 4,
+    name: "Sneha Patil",
+    role: "Java & .NET Instructor",
+    bio: "Enterprise backend specialist with deep expertise in Spring Boot, .NET Core, and microservices architecture. Mentored 5000+ students.",
+    photo: "/images/trainers/trainer-4.svg",
+    specialties: ["Java", ".NET", "Spring Boot", "Microservices"],
+    experience: "11+ Years",
+    linkedin: "#",
+  },
+];
+
 const testimonials: Testimonial[] = [
   {
     id: 1,
@@ -175,6 +230,51 @@ export default function HomePage() {
         <div className="ci-home__stat">
           <span className="ci-home__stat-value">19,700+</span>
           <span className="ci-home__stat-label">Students</span>
+        </div>
+      </section>
+
+      {/* ── Trainers ──────────────────────────────────────────── */}
+      <section className="ci-trainers">
+        <div className="ci-trainers__header">
+          <span className="ci-trainers__badge">👨‍🏫 Expert Trainers</span>
+          <h2 className="ci-trainers__title">Learn from Industry Veterans</h2>
+          <p className="ci-trainers__subtitle">
+            Our trainers bring real-world experience from top tech companies —
+            not just theory, but battle-tested knowledge.
+          </p>
+        </div>
+
+        <div className="ci-trainers__grid">
+          {trainers.map((t) => (
+            <div key={t.id} className="ci-trainer-card">
+              <div className="ci-trainer-card__img-wrapper">
+                <img
+                  src={t.photo}
+                  alt={t.name}
+                  className="ci-trainer-card__img"
+                />
+                <span className="ci-trainer-card__exp">{t.experience}</span>
+              </div>
+              <h3 className="ci-trainer-card__name">{t.name}</h3>
+              <span className="ci-trainer-card__role">{t.role}</span>
+              <p className="ci-trainer-card__bio">{t.bio}</p>
+              <div className="ci-trainer-card__specialties">
+                {t.specialties.map((s) => (
+                  <span key={s} className="ci-trainer-card__tag">{s}</span>
+                ))}
+              </div>
+              {t.linkedin && (
+                <a
+                  href={t.linkedin}
+                  className="ci-trainer-card__linkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Connect on LinkedIn →
+                </a>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
