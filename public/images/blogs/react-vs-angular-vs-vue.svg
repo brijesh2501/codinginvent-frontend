@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="react-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#61dafb"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="angular-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dd0031"/>
+      <stop offset="100%" stop-color="#c3002f"/>
+    </linearGradient>
+    <linearGradient id="vue-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#42b883"/>
+      <stop offset="100%" stop-color="#35495e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- Grid pattern -->
+  <g opacity="0.05" stroke="#38bdf8" stroke-width="0.5">
+    <line x1="0" y1="0" x2="800" y2="400"/>
+    <line x1="200" y1="0" x2="800" y2="300"/>
+    <line x1="0" y1="100" x2="600" y2="400"/>
+    <line x1="800" y1="0" x2="0" y2="400"/>
+  </g>
+  <!-- React atom -->
+  <g transform="translate(160,200)">
+    <ellipse cx="0" cy="0" rx="70" ry="28" fill="none" stroke="url(#react-g)" stroke-width="2.5" opacity="0.9"/>
+    <ellipse cx="0" cy="0" rx="70" ry="28" fill="none" stroke="url(#react-g)" stroke-width="2.5" opacity="0.9" transform="rotate(60)"/>
+    <ellipse cx="0" cy="0" rx="70" ry="28" fill="none" stroke="url(#react-g)" stroke-width="2.5" opacity="0.9" transform="rotate(-60)"/>
+    <circle cx="0" cy="0" r="8" fill="#61dafb"/>
+    <text y="110" text-anchor="middle" fill="#61dafb" font-family="system-ui,sans-serif" font-size="22" font-weight="700">React</text>
+  </g>
+  <!-- Angular shield -->
+  <g transform="translate(400,200)">
+    <path d="M0,-75 L65,- 50 L55,40 L0,70 L-55,40 L-65,-50 Z" fill="none" stroke="url(#angular-g)" stroke-width="2.5" opacity="0.9"/>
+    <path d="M0,-45 L0,35 M-30,-10 L30,-10" stroke="#dd0031" stroke-width="3" opacity="0.8"/>
+    <text y="110" text-anchor="middle" fill="#dd0031" font-family="system-ui,sans-serif" font-size="22" font-weight="700">Angular</text>
+  </g>
+  <!-- Vue chevron -->
+  <g transform="translate(640,200)">
+    <path d="M0,-70 L55,-70 L0,10 L-55,-70 Z" fill="none" stroke="#42b883" stroke-width="2.5" opacity="0.9"/>
+    <path d="M0,-40 L30,-70 L-30,-70 Z" fill="none" stroke="#35495e" stroke-width="2" opacity="0.7"/>
+    <text y="110" text-anchor="middle" fill="#42b883" font-family="system-ui,sans-serif" font-size="22" font-weight="700">Vue</text>
+  </g>
+  <!-- VS labels -->
+  <text x="280" y="208" text-anchor="middle" fill="#64748b" font-family="system-ui,sans-serif" font-size="28" font-weight="800">VS</text>
+  <text x="520" y="208" text-anchor="middle" fill="#64748b" font-family="system-ui,sans-serif" font-size="28" font-weight="800">VS</text>
+  <!-- Glow effects -->
+  <circle cx="160" cy="200" r="100" fill="#61dafb" opacity="0.04"/>
+  <circle cx="400" cy="200" r="100" fill="#dd0031" opacity="0.04"/>
+  <circle cx="640" cy="200" r="100" fill="#42b883" opacity="0.04"/>
+</svg>

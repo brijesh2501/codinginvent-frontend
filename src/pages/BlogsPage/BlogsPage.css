@@ -108,12 +108,21 @@
 }
 
 .ci-blog-card__thumb {
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.5rem;
+  height: 180px;
+  overflow: hidden;
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(37, 99, 235, 0.15));
+}
+
+.ci-blog-card__cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.ci-blog-card:hover .ci-blog-card__cover-img {
+  transform: scale(1.05);
 }
 
 .ci-blog-card__body {

@@ -99,6 +99,15 @@ export default function BlogDetailPage() {
           ← All Blogs
         </Link>
 
+        {/* Cover Image */}
+        <div className="ci-blog-detail__cover">
+          <img
+            src={blog.coverImage}
+            alt={blog.title}
+            className="ci-blog-detail__cover-img"
+          />
+        </div>
+
         {/* Hero */}
         <header className="ci-blog-detail__hero">
           <span className="ci-blog-detail__category">{blog.category}</span>
@@ -184,9 +193,11 @@ export default function BlogDetailPage() {
                   key={b.id}
                   className="ci-blog-detail__more-card"
                 >
-                  <span className="ci-blog-detail__more-thumb">
-                    {b.thumbnail}
-                  </span>
+                  <img
+                    src={b.coverImage}
+                    alt={b.title}
+                    className="ci-blog-detail__more-img"
+                  />
                   <span className="ci-blog-detail__more-title">{b.title}</span>
                 </Link>
               ))}

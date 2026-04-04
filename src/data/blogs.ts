@@ -11,6 +11,7 @@ export const blogs: Blog[] = [
     description:
       "A deep-dive comparison of the three most popular frontend frameworks with visual diagrams and side-by-side feature tables.",
     thumbnail: "⚛️",
+    coverImage: "/images/blogs/react-vs-angular-vs-vue.svg",
     category: "Frontend",
     tags: ["React", "Angular", "Vue", "JavaScript"],
     author: "CodingInvent",
@@ -96,6 +97,7 @@ export const blogs: Blog[] = [
     description:
       "Understand when to use relational vs non-relational databases with visual comparison tables and architecture diagrams.",
     thumbnail: "🗄️",
+    coverImage: "/images/blogs/sql-vs-nosql.svg",
     category: "Database",
     tags: ["SQL", "NoSQL", "MongoDB", "PostgreSQL"],
     author: "CodingInvent",
@@ -155,6 +157,7 @@ export const blogs: Blog[] = [
     description:
       "Compare three popular API paradigms with architecture diagrams and practical use-case analysis.",
     thumbnail: "🔌",
+    coverImage: "/images/blogs/rest-vs-graphql-vs-grpc.svg",
     category: "Backend",
     tags: ["REST", "GraphQL", "gRPC", "API"],
     author: "CodingInvent",
@@ -222,6 +225,7 @@ export const blogs: Blog[] = [
     description:
       "Learn the trade-offs between monolithic and microservice architectures with visual diagrams.",
     thumbnail: "🏗️",
+    coverImage: "/images/blogs/monolith-vs-microservices.svg",
     category: "System Design",
     tags: ["Microservices", "Monolith", "Architecture", "Docker"],
     author: "CodingInvent",
@@ -285,6 +289,7 @@ export const blogs: Blog[] = [
     description:
       "Understand containers and orchestration with clear diagrams showing how Docker and Kubernetes work together.",
     thumbnail: "🐳",
+    coverImage: "/images/blogs/docker-vs-kubernetes.svg",
     category: "DevOps",
     tags: ["Docker", "Kubernetes", "DevOps", "Containers"],
     author: "CodingInvent",
@@ -347,6 +352,7 @@ export const blogs: Blog[] = [
     description:
       "Compare token-based and session-based auth with sequence diagrams showing the complete authentication flow.",
     thumbnail: "🔐",
+    coverImage: "/images/blogs/jwt-vs-session-authentication.svg",
     category: "Security",
     tags: ["JWT", "Session", "Authentication", "Security"],
     author: "CodingInvent",
@@ -417,6 +423,7 @@ export const blogs: Blog[] = [
     description:
       "Learn how to build a reusable accordion component where each item works independently. A common frontend interview question with full code walkthrough and visual diagrams.",
     thumbnail: "🪗",
+    coverImage: "/images/blogs/generic-accordion-react.svg",
     category: "Frontend",
     tags: ["React", "JavaScript", "Interview", "Components", "useState"],
     author: "CodingInvent",
@@ -744,6 +751,7 @@ body {
     description:
       "A complete guide to flattening deeply nested arrays in JavaScript using three approaches: recursion, iteration with a stack, and built-in Array.flat(). Includes visual diagrams, code for every method, and a side-by-side comparison.",
     thumbnail: "📦",
+    coverImage: "/images/blogs/flatten-array-javascript.svg",
     category: "JavaScript",
     tags: ["JavaScript", "Arrays", "Recursion", "Interview", "DSA"],
     author: "CodingInvent",
@@ -940,6 +948,7 @@ console.log(flatOne([1, [2, [3, [4]], 5]]));
     description:
       "Master React Context: understand the problem it solves, how createContext + Provider + useContext work, when to use it vs props vs state management libraries, and build a real Theme + Auth context from scratch.",
     thumbnail: "🌐",
+    coverImage: "/images/blogs/react-context-provider.svg",
     category: "React",
     tags: ["React", "Context API", "useContext", "State Management", "Interview"],
     author: "CodingInvent",
@@ -1266,6 +1275,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     description:
       "A comprehensive guide to writing test cases in JavaScript & React. Covers every Jest matcher, mock function, RTL query, async testing pattern, and the most common interview mistakes — with real code examples and visual diagrams.",
     thumbnail: "🧪",
+    coverImage: "/images/blogs/javascript-testing-deep-dive.svg",
     category: "Testing",
     tags: ["Jest", "React Testing Library", "Unit Testing", "TDD", "Interview"],
     author: "CodingInvent",
@@ -1639,6 +1649,7 @@ describe("UserProfile (async)", () => {
     description:
       "A deep-dive into TypeScript covering type vs interface, generics, utility types, type narrowing, discriminated unions, and the most common interview mistakes — with code examples, visual diagrams, and comparison tables.",
     thumbnail: "🔷",
+    coverImage: "/images/blogs/typescript-knowledge-check.svg",
     category: "TypeScript",
     tags: ["TypeScript", "Generics", "Utility Types", "Type Guard", "Interview"],
     author: "CodingInvent",
@@ -1994,6 +2005,7 @@ type Plain = UnwrapPromise<number>;            // number`,
     description:
       "Understand the exact difference between useEffect and useLayoutEffect, when each fires in the React lifecycle, real-world use cases for each, common interview mistakes, and a visual timeline of the render + commit + paint cycle.",
     thumbnail: "⚡",
+    coverImage: "/images/blogs/useeffect-vs-uselayouteffect.svg",
     category: "React",
     tags: ["React", "Hooks", "useEffect", "useLayoutEffect", "Interview", "Performance"],
     author: "CodingInvent",
@@ -2343,6 +2355,7 @@ function useCSS(rule: string) {
     description:
       "Understand exactly what JavaScript hoists and what it doesn't. Visual execution diagrams, the Temporal Dead Zone, real interview traps, and the difference between var/let/const hoisting — all with code examples.",
     thumbnail: "🏗️",
+    coverImage: "/images/blogs/javascript-hoisting.svg",
     category: "JavaScript",
     tags: ["JavaScript", "Hoisting", "var", "let", "const", "Interview", "ES6"],
     author: "CodingInvent",
@@ -2653,6 +2666,7 @@ console.log(bar());    // 1`,
     description:
       "Master all the ways to create objects in JavaScript: object literals, constructor functions, Object.create(), ES6 classes, factory functions, and the prototype chain. With visual inheritance diagrams, comparison tables, and interview tips.",
     thumbnail: "🧱",
+    coverImage: "/images/blogs/javascript-object-creation.svg",
     category: "JavaScript",
     tags: ["JavaScript", "Objects", "Prototype", "Classes", "OOP", "Interview"],
     author: "CodingInvent",
@@ -3099,6 +3113,7 @@ Object.is(NaN, NaN);                    // true (unlike ===)`,
     description:
       "The ultimate GenAI interview preparation guide covering LLMs, RAG pipelines, AI Agents, MCP servers, function calling, vector databases, embeddings, fine-tuning, LangChain, evaluation metrics, hallucination handling — with visual diagrams for every concept, code examples, pros/cons, and interview tips.",
     thumbnail: "🤖",
+    coverImage: "/images/blogs/genai-complete-interview-guide.svg",
     category: "GenAI",
     tags: ["GenAI", "LLM", "RAG", "AI Agents", "MCP", "LangChain", "Interview", "Prompt Engineering"],
     author: "CodingInvent",
@@ -4082,6 +4097,7 @@ response = openai.chat.completions.create(
     description:
       "Master GitHub Copilot from zero to hero. Every feature, keyboard shortcut, prompt technique, and real-world best practice explained with examples.",
     thumbnail: "🤖",
+    coverImage: "/images/blogs/github-copilot-complete-guide-best-practices.svg",
     category: "AI Tools",
     tags: [
       "GitHub Copilot",
@@ -4223,6 +4239,7 @@ response = openai.chat.completions.create(
     description:
       "Master Cursor AI editor from zero to hero. Every feature, keyboard shortcut, prompt technique, and power-user workflow explained with real examples.",
     thumbnail: "🖱️",
+    coverImage: "/images/blogs/cursor-complete-guide-best-practices.svg",
     category: "AI Tools",
     tags: [
       "Cursor",
@@ -4336,6 +4353,7 @@ response = openai.chat.completions.create(
     description:
       "An exhaustive side-by-side comparison of GitHub Copilot and Cursor. Features, pricing, performance, workflows, and which one you should choose.",
     thumbnail: "⚔️",
+    coverImage: "/images/blogs/github-copilot-vs-cursor-complete-comparison.svg",
     category: "AI Tools",
     tags: [
       "GitHub Copilot",
@@ -4505,6 +4523,7 @@ response = openai.chat.completions.create(
     description:
       "Is it still worth learning a programming language from scratch when AI can generate code? We break down what's essential, what's changed, and the exact strategy that makes you unstoppable.",
     thumbnail: "🧠",
+    coverImage: "/images/blogs/learn-coding-from-scratch-or-use-ai-gen-ai-era-guide.svg",
     category: "Career & Learning",
     tags: [
       "Gen AI",
@@ -4656,6 +4675,7 @@ response = openai.chat.completions.create(
     description:
       "A concise comparison of Vite and Webpack — with the full build-tool landscape, head-to-head benchmarks, and migration guidance.",
     thumbnail: "⚡",
+    coverImage: "/images/blogs/vite-vs-webpack.svg",
     category: "Frontend",
     tags: ["Vite", "Webpack", "Build Tools", "Bundler", "JavaScript", "esbuild"],
     author: "CodingInvent",
@@ -4761,6 +4781,7 @@ response = openai.chat.completions.create(
     description:
       "The 10 biggest time-wasters in IT teams and how Agentic AI workflows automate each one — with existing tools, a LangGraph code sample, and ROI metrics.",
     thumbnail: "🤖",
+    coverImage: "/images/blogs/automate-repetitive-it-work-agentic-ai.svg",
     category: "GenAI",
     tags: [
       "Agentic AI",
@@ -4951,6 +4972,7 @@ app = wf.compile()
     description:
       "A concise guide to using Agentic AI for job search automation — top tools, workflow patterns, a LangGraph code sample, and ethical guardrails.",
     thumbnail: "🤖",
+    coverImage: "/images/blogs/agentic-ai-job-search-automation.svg",
     category: "GenAI",
     tags: [
       "Agentic AI",

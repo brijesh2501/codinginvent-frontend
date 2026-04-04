@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1a0a2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- Job search pipeline -->
+  <g transform="translate(400,190)">
+    <!-- Pipeline steps -->
+    <g transform="translate(-250,0)">
+      <rect x="-55" y="-30" width="110" height="60" rx="10" fill="#3b82f6" opacity="0.1" stroke="#3b82f6" stroke-width="2"/>
+      <text y="-5" text-anchor="middle" fill="#3b82f6" font-family="system-ui,sans-serif" font-size="12" font-weight="700">🔍 Scan</text>
+      <text y="15" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="9">Job Boards</text>
+    </g>
+    <line x1="-190" y1="0" x2="-140" y2="0" stroke="#475569" stroke-width="1.5" stroke-dasharray="4"/>
+    <g transform="translate(-80,0)">
+      <rect x="-55" y="-30" width="110" height="60" rx="10" fill="#a855f7" opacity="0.1" stroke="#a855f7" stroke-width="2"/>
+      <text y="-5" text-anchor="middle" fill="#a855f7" font-family="system-ui,sans-serif" font-size="12" font-weight="700">📝 Tailor</text>
+      <text y="15" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="9">Resume + CL</text>
+    </g>
+    <line x1="-20" y1="0" x2="30" y2="0" stroke="#475569" stroke-width="1.5" stroke-dasharray="4"/>
+    <g transform="translate(90,0)">
+      <rect x="-55" y="-30" width="110" height="60" rx="10" fill="#22c55e" opacity="0.1" stroke="#22c55e" stroke-width="2"/>
+      <text y="-5" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="12" font-weight="700">📧 Apply</text>
+      <text y="15" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="9">Auto-submit</text>
+    </g>
+    <line x1="150" y1="0" x2="200" y2="0" stroke="#475569" stroke-width="1.5" stroke-dasharray="4"/>
+    <g transform="translate(260,0)">
+      <rect x="-55" y="-30" width="110" height="60" rx="10" fill="#f59e0b" opacity="0.1" stroke="#f59e0b" stroke-width="2"/>
+      <text y="-5" text-anchor="middle" fill="#f59e0b" font-family="system-ui,sans-serif" font-size="12" font-weight="700">📊 Track</text>
+      <text y="15" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="9">Follow-ups</text>
+    </g>
+    <!-- AI agent in center -->
+    <text y="-70" text-anchor="middle" fill="#ec4899" font-family="system-ui,sans-serif" font-size="36">🤖</text>
+    <text y="-90" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="18" font-weight="800">Agentic AI Job Search</text>
+    <!-- Bottom stats -->
+    <text y="70" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13">Automate your entire job search pipeline</text>
+    <g transform="translate(0,100)" fill="#64748b" font-family="monospace" font-size="11">
+      <text x="-180" text-anchor="middle">100+ apps/week</text>
+      <text x="0" text-anchor="middle">AI-tailored resumes</text>
+      <text x="180" text-anchor="middle">Smart follow-ups</text>
+    </g>
+  </g>
+</svg>

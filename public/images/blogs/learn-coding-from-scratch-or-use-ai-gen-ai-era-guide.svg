@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- Brain + Code crossover -->
+  <g transform="translate(400,175)">
+    <!-- Brain side -->
+    <g transform="translate(-130,0)">
+      <circle r="70" fill="none" stroke="#14b8a6" stroke-width="2" opacity="0.5"/>
+      <text y="-20" text-anchor="middle" fill="#14b8a6" font-family="system-ui,sans-serif" font-size="40">🧠</text>
+      <text y="20" text-anchor="middle" fill="#14b8a6" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Learn</text>
+      <text y="40" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Fundamentals</text>
+      <text y="55" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Problem Solving</text>
+    </g>
+    <!-- AI side -->
+    <g transform="translate(130,0)">
+      <circle r="70" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.5"/>
+      <text y="-20" text-anchor="middle" fill="#a855f7" font-family="system-ui,sans-serif" font-size="40">🤖</text>
+      <text y="20" text-anchor="middle" fill="#a855f7" font-family="system-ui,sans-serif" font-size="14" font-weight="700">AI Tools</text>
+      <text y="40" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">Copilot / Cursor</text>
+      <text y="55" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="10">10x Productivity</text>
+    </g>
+    <!-- Overlap -->
+    <ellipse cx="0" cy="0" rx="35" ry="50" fill="#22c55e" opacity="0.08" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4"/>
+    <text y="5" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="11" font-weight="700">Both</text>
+    <!-- Question -->
+    <text y="110" text-anchor="middle" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="18" font-weight="800">Learn Coding or Use AI?</text>
+    <text y="135" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13">The Complete Guide for the GenAI Era</text>
+  </g>
+  <circle cx="400" cy="175" r="160" fill="#14b8a6" opacity="0.02"/>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- Docker whale shape -->
+  <g transform="translate(230,180)">
+    <rect x="-90" y="-30" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7"/>
+    <rect x="-48" y="-30" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7"/>
+    <rect x="-6" y="-30" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7"/>
+    <rect x="-90" y="8" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+    <rect x="-48" y="8" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+    <rect x="-6" y="8" width="35" height="30" rx="3" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+    <text y="-50" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="700">Containers</text>
+    <text y="75" text-anchor="middle" fill="#38bdf8" font-family="system-ui,sans-serif" font-size="24" font-weight="800">Docker</text>
+  </g>
+  <!-- VS -->
+  <text x="400" y="195" text-anchor="middle" fill="#475569" font-family="system-ui,sans-serif" font-size="30" font-weight="800">VS</text>
+  <!-- Kubernetes cluster -->
+  <g transform="translate(570,180)">
+    <circle cx="0" cy="-10" r="65" fill="none" stroke="#326ce5" stroke-width="2.5" opacity="0.8"/>
+    <!-- K8s helm wheel -->
+    <g stroke="#326ce5" stroke-width="2" opacity="0.7">
+      <line x1="0" y1="-35" x2="0" y2="15"/>
+      <line x1="-22" y1="-22" x2="22" y2="2"/>
+      <line x1="22" y1="-22" x2="-22" y2="2"/>
+    </g>
+    <circle cx="0" cy="-10" r="8" fill="#326ce5" opacity="0.6"/>
+    <!-- Pods -->
+    <circle cx="-50" cy="50" r="12" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="0" cy="60" r="12" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="50" cy="50" r="12" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/>
+    <text x="-50" y="54" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="8">Pod</text>
+    <text x="0" y="64" text-anchor="middle" fill="#f59e0b" font-family="monospace" font-size="8">Pod</text>
+    <text x="50" y="54" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="8">Pod</text>
+    <text y="110" text-anchor="middle" fill="#326ce5" font-family="system-ui,sans-serif" font-size="24" font-weight="800">Kubernetes</text>
+  </g>
+  <!-- Glows -->
+  <circle cx="230" cy="180" r="120" fill="#38bdf8" opacity="0.03"/>
+  <circle cx="570" cy="180" r="120" fill="#326ce5" opacity="0.04"/>
+</svg>

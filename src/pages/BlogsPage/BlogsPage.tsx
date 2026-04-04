@@ -51,7 +51,13 @@ export default function BlogsPage() {
             key={blog.id}
             className="ci-blog-card"
           >
-            <div className="ci-blog-card__thumb">{blog.thumbnail}</div>
+            <div className="ci-blog-card__thumb">
+              <img
+                src={blog.coverImage}
+                alt={blog.title}
+                className="ci-blog-card__cover-img"
+              />
+            </div>
             <div className="ci-blog-card__body">
               <span className="ci-blog-card__category">{blog.category}</span>
               <h3 className="ci-blog-card__title">{blog.title}</h3>

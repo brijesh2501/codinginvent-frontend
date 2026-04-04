@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- REST box -->
+  <g transform="translate(130,190)">
+    <rect x="-80" y="-65" width="160" height="130" rx="14" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.85"/>
+    <text y="-35" text-anchor="middle" fill="#3b82f6" font-family="system-ui,sans-serif" font-size="22" font-weight="800">REST</text>
+    <text y="0" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">GET /api/users</text>
+    <text y="22" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">POST /api/users</text>
+    <text y="44" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">{ JSON }</text>
+  </g>
+  <!-- GraphQL box -->
+  <g transform="translate(400,190)">
+    <rect x="-80" y="-65" width="160" height="130" rx="14" fill="none" stroke="#e535ab" stroke-width="2.5" opacity="0.85"/>
+    <text y="-35" text-anchor="middle" fill="#e535ab" font-family="system-ui,sans-serif" font-size="22" font-weight="800">GraphQL</text>
+    <text y="0" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">query {</text>
+    <text y="22" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">  user { name }</text>
+    <text y="44" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">}</text>
+  </g>
+  <!-- gRPC box -->
+  <g transform="translate(670,190)">
+    <rect x="-80" y="-65" width="160" height="130" rx="14" fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.85"/>
+    <text y="-35" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="22" font-weight="800">gRPC</text>
+    <text y="0" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">service User {</text>
+    <text y="22" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">  rpc Get(Req)</text>
+    <text y="44" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="11">} // protobuf</text>
+  </g>
+  <!-- VS -->
+  <text x="265" y="198" text-anchor="middle" fill="#475569" font-family="system-ui,sans-serif" font-size="24" font-weight="800">VS</text>
+  <text x="535" y="198" text-anchor="middle" fill="#475569" font-family="system-ui,sans-serif" font-size="24" font-weight="800">VS</text>
+  <!-- Arrows -->
+  <g opacity="0.15">
+    <circle cx="130" cy="190" r="110" fill="#3b82f6"/>
+    <circle cx="400" cy="190" r="110" fill="#e535ab"/>
+    <circle cx="670" cy="190" r="110" fill="#22c55e"/>
+  </g>
+</svg>

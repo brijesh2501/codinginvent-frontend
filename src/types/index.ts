@@ -92,6 +92,7 @@ export interface Blog {
   title: string;
   description: string;
   thumbnail: string;
+  coverImage: string;
   category: string;
   tags: string[];
   author: string;

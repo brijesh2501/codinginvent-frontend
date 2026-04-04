@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#bg)"/>
+  <!-- GitHub Copilot icon feel -->
+  <g transform="translate(400,170)">
+    <!-- Copilot glasses shape -->
+    <ellipse cx="-40" cy="0" rx="50" ry="35" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.7"/>
+    <ellipse cx="40" cy="0" rx="50" ry="35" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.7"/>
+    <line x1="-10" y1="-5" x2="10" y2="-5" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+    <!-- Sparkle dots -->
+    <circle cx="-40" cy="0" r="4" fill="#38bdf8" opacity="0.5"/>
+    <circle cx="40" cy="0" r="4" fill="#38bdf8" opacity="0.5"/>
+    <!-- Code lines flowing in -->
+    <g opacity="0.3">
+      <rect x="-220" y="-60" width="80" height="8" rx="4" fill="#64748b"/>
+      <rect x="-220" y="-45" width="55" height="8" rx="4" fill="#38bdf8"/>
+      <rect x="-220" y="-30" width="70" height="8" rx="4" fill="#64748b"/>
+    </g>
+    <!-- AI suggested code -->
+    <g opacity="0.4">
+      <rect x="140" y="-60" width="80" height="8" rx="4" fill="#22c55e"/>
+      <rect x="140" y="-45" width="60" height="8" rx="4" fill="#22c55e"/>
+      <rect x="140" y="-30" width="75" height="8" rx="4" fill="#22c55e"/>
+    </g>
+    <!-- Arrows -->
+    <line x1="-130" y1="-40" x2="-100" y2="-10" stroke="#475569" stroke-width="1" stroke-dasharray="4"/>
+    <line x1="100" y1="-10" x2="130" y2="-40" stroke="#22c55e" stroke-width="1" stroke-dasharray="4"/>
+    <!-- Labels -->
+    <text x="-180" y="-75" fill="#64748b" font-family="monospace" font-size="11">Your Code</text>
+    <text x="150" y="-75" fill="#22c55e" font-family="monospace" font-size="11">AI Suggestion</text>
+    <text y="80" text-anchor="middle" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="22" font-weight="800">GitHub Copilot</text>
+    <text y="105" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="14">Complete Guide &amp; Best Practices</text>
+  </g>
+  <circle cx="400" cy="170" r="150" fill="#38bdf8" opacity="0.02"/>
+</svg>
