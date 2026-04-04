@@ -7,10 +7,10 @@ import {
   Loader,
   ErrorMessage,
   SearchBar,
-} from "../components/shared";
-import { getQuestions } from "../services";
-import { questionCategories } from "../data";
-import { useAsync } from "../hooks";
+} from "../../components/shared";
+import { getQuestions } from "../../services";
+import { questionCategories } from "../../data";
+import { useAsync } from "../../hooks";
 import "./InterviewQuestionsPage.css";
 
 export default function InterviewQuestionsPage() {

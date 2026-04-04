@@ -6,8 +6,8 @@
 // ============================================================
 import { useState, type FormEvent } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { submitLead } from "../services";
-import { courses } from "../data";
+import { submitLead } from "../../services";
+import { courses } from "../../data";
 import "./ContactPage.css";
 
 // Form field initial state

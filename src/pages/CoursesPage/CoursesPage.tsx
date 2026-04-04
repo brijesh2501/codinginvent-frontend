@@ -2,9 +2,9 @@
 // CoursesPage — browse all courses with search + filter
 // ============================================================
 import { useState, useMemo } from "react";
-import { CourseCard, Loader, ErrorMessage, SearchBar } from "../components/shared";
-import { getCourses } from "../services";
-import { useAsync } from "../hooks";
+import { CourseCard, Loader, ErrorMessage, SearchBar } from "../../components/shared";
+import { getCourses } from "../../services";
+import { useAsync } from "../../hooks";
 import "./CoursesPage.css";
 
 export default function CoursesPage() {

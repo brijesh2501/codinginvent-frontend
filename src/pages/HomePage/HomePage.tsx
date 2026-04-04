@@ -3,10 +3,10 @@
 // ============================================================
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { CourseCard, HeroBanner, Loader, ErrorMessage } from "../components/shared";
-import { getCourses } from "../services";
-import { useAsync } from "../hooks";
-import type { Course } from "../types";
+import { CourseCard, HeroBanner, Loader, ErrorMessage } from "../../components/shared";
+import { getCourses } from "../../services";
+import { useAsync } from "../../hooks";
+import type { Course } from "../../types";
 import "./HomePage.css";
 
 /* ── Testimonial data ─────────────────────────────────────── */

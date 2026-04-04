@@ -3,12 +3,12 @@
 // ============================================================
 import { lazy, Suspense } from "react";
 import { useParams, Link } from "react-router-dom";
-import { blogs } from "../data/blogs";
-import ComparisonTable from "../components/shared/ComparisonTable";
+import { blogs } from "../../data/blogs";
+import ComparisonTable from "../../components/shared/ComparisonTable/ComparisonTable";
 import "./BlogDetailPage.css";
 
 const MermaidDiagram = lazy(
-  () => import("../components/shared/MermaidDiagram"),
+  () => import("../../components/shared/MermaidDiagram/MermaidDiagram"),
 );
 
 /**

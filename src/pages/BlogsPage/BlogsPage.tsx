@@ -3,7 +3,7 @@
 // ============================================================
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { blogs, blogCategories } from "../data/blogs";
+import { blogs, blogCategories } from "../../data/blogs";
 import "./BlogsPage.css";
 
 const allCategories = ["All", ...blogCategories];

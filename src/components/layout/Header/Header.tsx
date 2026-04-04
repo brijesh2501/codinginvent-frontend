@@ -3,7 +3,7 @@
 // ============================================================
 import { useState, useCallback, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Logo } from "../shared";
+import { Logo } from "../../shared";
 import "./Header.css";
 
 const navLinks = [

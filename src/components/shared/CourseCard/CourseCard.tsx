@@ -2,7 +2,7 @@
 // CourseCard — AI-native card for displaying a course summary
 // ============================================================
 import { Link } from "react-router-dom";
-import type { Course } from "../../types";
+import type { Course } from "../../../types";
 import "./CourseCard.css";
 
 interface CourseCardProps {

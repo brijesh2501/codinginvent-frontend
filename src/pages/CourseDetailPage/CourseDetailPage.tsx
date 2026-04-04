@@ -5,9 +5,9 @@
 // and a "Contact / Enroll" CTA that links to the Contact page.
 // ============================================================
 import { useParams, Link } from "react-router-dom";
-import { Loader, ErrorMessage } from "../components/shared";
-import { getCourseBySlug } from "../services";
-import { useAsync } from "../hooks";
+import { Loader, ErrorMessage } from "../../components/shared";
+import { getCourseBySlug } from "../../services";
+import { useAsync } from "../../hooks";
 import "./CourseDetailPage.css";
 
 export default function CourseDetailPage() {

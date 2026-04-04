@@ -2,9 +2,9 @@
 // DashboardPage — user dashboard with enrolled courses
 // ============================================================
 import { Link } from "react-router-dom";
-import { Loader, ErrorMessage } from "../components/shared";
-import { getCurrentUser, getEnrollmentsByUser, getCourses } from "../services";
-import { useAsync } from "../hooks";
+import { Loader, ErrorMessage } from "../../components/shared";
+import { getCurrentUser, getEnrollmentsByUser, getCourses } from "../../services";
+import { useAsync } from "../../hooks";
 import "./DashboardPage.css";
 
 export default function DashboardPage() {

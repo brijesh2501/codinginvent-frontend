@@ -15,11 +15,11 @@ import docker from "react-syntax-highlighter/dist/esm/languages/prism/docker";
 import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
 import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import type { InterviewQuestion } from "../../types";
+import type { InterviewQuestion } from "../../../types";
 import "./QuestionAccordion.css";
 
 // Lazy-load MermaidDiagram (mermaid.js is heavy)
-const MermaidDiagram = lazy(() => import("./MermaidDiagram"));
+const MermaidDiagram = lazy(() => import("../MermaidDiagram/MermaidDiagram"));
 
 // Register only the languages we need (PrismLight is tree-shakable)
 SyntaxHighlighter.registerLanguage("javascript", javascript);

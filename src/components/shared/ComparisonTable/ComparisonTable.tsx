@@ -1,7 +1,7 @@
 // ============================================================
 // ComparisonTable — reusable side-by-side comparison table
 // ============================================================
-import type { BlogComparison } from "../../types";
+import type { BlogComparison } from "../../../types";
 import "./ComparisonTable.css";
 
 interface Props {

@@ -1,7 +1,9 @@
-export { default as CourseCard } from "./CourseCard";
-export { default as HeroBanner } from "./HeroBanner";
-export { default as QuestionAccordion } from "./QuestionAccordion";
-export { default as Loader } from "./Loader";
-export { default as ErrorMessage } from "./ErrorMessage";
-export { default as SearchBar } from "./SearchBar";
-export { default as Logo } from "./Logo";
+export { default as CourseCard } from "./CourseCard/CourseCard";
+export { default as HeroBanner } from "./HeroBanner/HeroBanner";
+export { default as QuestionAccordion } from "./QuestionAccordion/QuestionAccordion";
+export { default as Loader } from "./Loader/Loader";
+export { default as ErrorMessage } from "./ErrorMessage/ErrorMessage";
+export { default as SearchBar } from "./SearchBar/SearchBar";
+export { default as Logo } from "./Logo/Logo";
+export { default as ComparisonTable } from "./ComparisonTable/ComparisonTable";
+export { default as MermaidDiagram } from "./MermaidDiagram/MermaidDiagram";
