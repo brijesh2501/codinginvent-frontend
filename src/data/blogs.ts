@@ -5529,6 +5529,1148 @@ result = app.invoke({
       },
     ],
   },
+
+  // ── Blog 22 ─────────────────────────────────────────────────
+  {
+    id: "22",
+    slug: "agentic-ai-job-search-automation",
+    title:
+      "Land Your Next Job with Agentic AI — Tools, Workflows & Automation for Job Seekers in 2026",
+    description:
+      "A complete guide to using Agentic AI for automating every stage of the job search — from resume tailoring and job discovery to outreach, interview prep, and offer negotiation. Covers 60+ existing tools, ready-made agentic workflows, and how to build your own.",
+    thumbnail: "🤖",
+    category: "GenAI",
+    tags: [
+      "Agentic AI",
+      "Job Search",
+      "Automation",
+      "LangGraph",
+      "Resume AI",
+      "Career",
+      "LLM Agents",
+      "Productivity",
+    ],
+    author: "CodingInvent",
+    publishedAt: "2026-04-04",
+    readTime: "22 min",
+    sections: [
+      // ── 1. Introduction ───────────────────────────────────────
+      {
+        heading: "Why the Traditional Job Search Is Broken",
+        content: `The average job seeker spends **11 hours per week** on applications and lands an interview from only **2-3%** of submissions. Here's the brutal reality of a manual job search in 2026:
+
+• **Copy-paste cycle** — Manually tweaking the same resume for every application.
+• **Black-hole applications** — Submitting into ATS systems that auto-reject 75% of resumes before a human ever sees them.
+• **Spray-and-pray networking** — Sending generic LinkedIn messages that get <5% response rates.
+• **Interview whack-a-mole** — Scrambling to research companies the night before.
+• **Offer blindness** — Accepting the first offer without data on market compensation.
+
+Agentic AI changes all of this. Instead of a single chatbot prompt, an **AI agent** can autonomously plan, research, execute, and iterate — running a multi-step job-search workflow **24/7** on your behalf.
+
+This blog covers:
+1. The 8 stages of a job search you can automate today
+2. 60+ existing tools and platforms already doing this
+3. Ready-made agentic workflows you can deploy
+4. How to build your own custom Job Search Agent with LangGraph
+5. Ethical guardrails and what NOT to automate`,
+        diagram: `graph TD
+  MANUAL["Traditional Job Search"] --> P1["Find Jobs Manually"]
+  MANUAL --> P2["Tailor Resume by Hand"]
+  MANUAL --> P3["Apply One-by-One"]
+  MANUAL --> P4["Wait & Hope"]
+  MANUAL --> P5["Prep Night Before Interview"]
+
+  AI["Agentic AI Job Search"] --> A1["Auto-Discover Matching Jobs 24/7"]
+  AI --> A2["AI-Tailored Resume per Job"]
+  AI --> A3["Bulk Smart Applications"]
+  AI --> A4["Automated Follow-ups & Tracking"]
+  AI --> A5["Deep Company & Interviewer Research"]
+
+  MANUAL --> RESULT1["2-3% Interview Rate"]
+  AI --> RESULT2["15-25% Interview Rate"]`,
+      },
+
+      // ── 2. The 8 Stages ───────────────────────────────────────
+      {
+        heading: "The 8 Stages of Job Search You Can Automate",
+        content: `Every job search follows these stages. Agentic AI can help at **every single one**:
+
+**Stage 1 — Self-Assessment & Goal Setting**
+AI analyzes your resume, GitHub, LinkedIn, and portfolio to identify your strongest skills, gaps, and ideal role matches. It benchmarks you against current job market demand.
+
+**Stage 2 — Job Discovery & Matching**
+Agents crawl LinkedIn, Indeed, Glassdoor, Y Combinator, AngelList, and company career pages. They score jobs against your profile using semantic matching — not just keyword grep.
+
+**Stage 3 — Resume & Cover Letter Tailoring**
+For each target job, the agent rewrites your resume to mirror the job description's language, highlights matching keywords for ATS optimization, and generates a tailored cover letter.
+
+**Stage 4 — Application Submission**
+Auto-fill and submit applications across platforms. Agents handle the repetitive form-filling — education, experience, projects — and track which version of your resume was sent where.
+
+**Stage 5 — Networking & Outreach**
+AI identifies hiring managers, alumni, and mutual connections. It drafts personalized outreach messages, schedules follow-ups, and tracks engagement.
+
+**Stage 6 — Interview Preparation**
+Agents research the company, recent news, interviewer backgrounds, Glassdoor interview questions, and role-specific technical topics. They create custom prep packages.
+
+**Stage 7 — Interview Practice & Feedback**
+AI conducts mock interviews (behavioral + technical), scores your answers, and provides real-time feedback on STAR structure, technical depth, and communication.
+
+**Stage 8 — Offer Evaluation & Negotiation**
+Agents pull compensation data from Levels.fyi, Glassdoor, Blind, and Payscale. They model total comp (base + bonus + equity + benefits) and draft negotiation scripts.`,
+        diagram: `graph LR
+  S1["1. Self-Assessment"] --> S2["2. Job Discovery"]
+  S2 --> S3["3. Resume Tailoring"]
+  S3 --> S4["4. Application"]
+  S4 --> S5["5. Networking"]
+  S5 --> S6["6. Interview Prep"]
+  S6 --> S7["7. Mock Interviews"]
+  S7 --> S8["8. Offer Negotiation"]
+
+  S1 -.- T1["AI Profile Analysis"]
+  S2 -.- T2["Semantic Job Matching"]
+  S3 -.- T3["ATS Optimizer Agent"]
+  S4 -.- T4["Auto-Apply Bot"]
+  S5 -.- T5["Outreach Drip Agent"]
+  S6 -.- T6["Company Research Agent"]
+  S7 -.- T7["Mock Interview Agent"]
+  S8 -.- T8["Comp Negotiation Agent"]`,
+      },
+
+      // ── 3. Existing Tools ─────────────────────────────────────
+      {
+        heading:
+          "60+ Existing Tools & Platforms — AI Job Search Landscape in 2026",
+        content: `You don't need to build everything from scratch. Here's a comprehensive map of existing tools organized by job-search stage:
+
+**🔍 Stage 1 — Self-Assessment & Skill Analysis**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **LinkedIn Skills Assessment** | Tests and validates your skills with badges | Free |
+| **Jobscan** | Compares your resume against job descriptions, shows match % and missing keywords | Freemium ($49/mo Pro) |
+| **Resumatch** | AI-powered skill gap analysis against target roles | Free tier available |
+| **SkillSyncer** | Maps your skills to in-demand job requirements | Freemium |
+| **Pathrise** | AI career coaching with skill benchmarking | Income Share Agreement |
+
+**🎯 Stage 2 — Job Discovery & Matching**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **LinkedIn AI Jobs** | AI-matched job recommendations based on profile | Free (Premium for InMail) |
+| **Indeed Smart Search** | ML-ranked results based on resume and behavior | Free |
+| **Otta** | AI job matching for tech roles, curated daily | Free |
+| **Wellfound (AngelList)** | Startup-focused job matching | Free |
+| **Simplify** | Auto-discovers and bookmarks matching jobs across 100+ boards | Free extension |
+| **Careerflow** | AI job tracker + recommendations across platforms | Freemium |
+| **LazyApply** | Discovers + auto-applies to matching jobs in bulk | $99/mo |
+| **Sonara** | Fully autonomous job discovery + apply agent | $29/mo |
+| **LoopCV** | Upload resume → auto-applies to matching jobs daily | Freemium |
+| **Massive (by Huge)** | AI agent that continuously searches & applies | Beta/Waitlist |
+
+**📝 Stage 3 — Resume & Cover Letter**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **Teal** | AI resume builder + job tracking + keyword matching | Freemium ($9/wk Pro) |
+| **Kickresume** | AI resume writer with ATS templates | Freemium ($19/mo) |
+| **Resume.io** | Professional resume builder with AI suggestions | $2.95/wk |
+| **Rezi** | AI resume builder specifically for ATS optimization | Freemium ($29/mo) |
+| **Resumaker.ai** | GPT-4 powered resume from LinkedIn import | $7.99/mo |
+| **CoverDoc.ai** | AI cover letter generator tailored to each JD | Freemium |
+| **Jasper** | AI content writer — cover letters, bios, summaries | $49/mo |
+| **ChatGPT / Claude** | Manual prompting for resume + cover letter rewriting | Freemium |
+
+**🚀 Stage 4 — Auto-Application**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **LazyApply** | Auto-applies to jobs on LinkedIn, Indeed, ZipRecruiter | $99/mo |
+| **Sonara** | Autonomous agent — finds + applies while you sleep | $29/mo |
+| **LoopCV** | Daily auto-apply based on your preferences | Freemium |
+| **Simplify Copilot** | Chrome extension auto-fills application forms | Free |
+| **Autoapply.jobs** | AI agent applies to 100s of jobs per day | $49/mo |
+| **Massive** | End-to-end agent — discover, tailor, apply | Beta |
+| **JobRight.ai** | AI matching + auto-apply + insider connections | Freemium |
+
+**🤝 Stage 5 — Networking & Outreach**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **LinkedIn AI Messaging** | AI-drafted connection requests and InMails | Premium ($59/mo) |
+| **Hirect** | AI-matched direct chat with CTOs/hiring managers | Free |
+| **Dux-Soup** | LinkedIn automation — visit, connect, message at scale | $14.99/mo |
+| **Phantombuster** | Scrapes profiles, auto-sends personalized messages | $69/mo |
+| **Apollo.io** | B2B outreach — find emails, automate drip sequences | Freemium |
+| **Hunter.io** | Find verified professional email addresses | Freemium |
+| **Lusha** | Contact info finder for hiring managers | Freemium |
+
+**📚 Stage 6 — Interview Preparation**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **InterviewBuddy** | AI + human mock interviews with feedback | $19/session |
+| **Pramp** | Free peer-to-peer mock interviews (tech) | Free |
+| **InterviewGPT.ai** | AI interviewer with role-specific questions | Freemium |
+| **Glassdoor Interview Section** | Real interview questions from past candidates | Free |
+| **Blind** | Anonymous intel on company culture, comp, process | Free |
+| **Levels.fyi** | Compensation benchmarks across tech companies | Free |
+| **Crunchbase** | Company research — funding, team, news | Freemium |
+
+**🎤 Stage 7 — Mock Interview & Practice**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **Interviewing.io** | Anonymous mock interviews with real engineers | Free (paid for guaranteed) |
+| **Final Round AI** | Real-time AI copilot during live interviews (screen overlay) | $96/mo |
+| **Yoodli** | AI speech coach — analyzes filler words, pacing, clarity | Freemium |
+| **Google Interview Warmup** | AI-analyzed practice for common interview questions | Free |
+| **Huru** | AI mock interviews with video analysis | Freemium |
+| **Big Interview** | STAR method trainer with AI feedback | $79/mo |
+
+**💰 Stage 8 — Offer & Negotiation**
+| Tool | What It Does | Pricing |
+|------|-------------|---------|
+| **Levels.fyi** | Total comp data — base, bonus, equity, refresh | Free |
+| **Glassdoor Salaries** | Salary ranges by company, role, and location | Free |
+| **Payscale** | Personalized salary report based on your profile | Freemium |
+| **Blind** | Anonymous verified compensation discussions | Free |
+| **Candor** | Negotiation scripts and salary data for top companies | Free guides |
+| **Rora** | Professional negotiation service — AI-informed strategy | Commission-based |`,
+        comparison: {
+          title: "AI Job Search Tools — Category Comparison",
+          headers: ["Category", "Best For"],
+          rows: [
+            ["Job Discovery", "Sonara — fully autonomous find + apply", "Free discovery: Otta, Simplify"],
+            ["Resume Tailoring", "Teal — best all-in-one free tier", "ATS focus: Rezi, Jobscan"],
+            ["Auto-Apply", "LazyApply — widest platform coverage", "Budget: LoopCV, Sonara"],
+            ["Networking", "Apollo.io — best outreach automation", "Free: Hirect, Hunter.io"],
+            ["Interview Prep", "Final Round AI — real-time live copilot", "Free: Google Warmup, Pramp"],
+            ["Salary Data", "Levels.fyi — most accurate tech comp", "Free: Glassdoor, Blind"],
+            ["End-to-End Agent", "Sonara / Massive — closest to full agent", "DIY: LangGraph custom agent"],
+          ],
+        },
+      },
+
+      // ── 4. Agentic Workflows ──────────────────────────────────
+      {
+        heading: "Agentic AI Workflows for Job Search — Architecture Patterns",
+        content: `Unlike simple AI chatbots, **agentic workflows** involve multiple specialized sub-agents that collaborate, share memory, and iterate autonomously. Here are 5 battle-tested patterns for job search:
+
+**Pattern 1 — The Daily Job Scout Pipeline**
+A scheduled agent runs daily:
+1. \`JobDiscoveryAgent\` scrapes 10+ job boards using your saved criteria
+2. \`MatchScoringAgent\` scores each job against your profile (skills, location, salary)
+3. \`FilterAgent\` removes duplicates, already-applied, and low-score (<70%) jobs
+4. \`NotificationAgent\` sends you a ranked digest via email/Slack/Telegram
+→ *Tools: Apify/Playwright for scraping, OpenAI Embeddings for matching, SendGrid for notifications*
+
+**Pattern 2 — The Tailored Application Factory**
+Triggered when you approve a job from the Scout:
+1. \`JDAnalyzerAgent\` extracts key requirements, tech stack, and culture signals
+2. \`ResumeTailorAgent\` rewrites your master resume to match the JD
+3. \`CoverLetterAgent\` generates a compelling, personalized cover letter
+4. \`ATSCheckerAgent\` validates ATS compatibility score (target >85%)
+5. \`ApplyAgent\` submits the application via API or browser automation
+→ *Tools: GPT-4o/Claude for rewriting, Puppeteer for form-filling, Jobscan API for ATS check*
+
+**Pattern 3 — The Networking Multiplier**
+Runs in parallel with applications:
+1. \`CompanyGraphAgent\` maps the org chart — identifies hiring manager, recruiters, team leads
+2. \`ConnectionFinderAgent\` checks LinkedIn for mutual connections or alumni
+3. \`MessageDraftAgent\` creates 3 outreach variants (casual, professional, referral-ask)
+4. \`SchedulerAgent\` queues and sends with natural delays (avoids spam detection)
+5. \`FollowUpAgent\` sends polite follow-ups after 3 and 7 days
+→ *Tools: Apollo.io + Hunter.io for contacts, LinkedIn API (unofficial), GPT-4o for drafting*
+
+**Pattern 4 — The Interview War Room**
+Triggered when you get an interview call:
+1. \`CompanyResearchAgent\` pulls recent news, earnings, product launches, Glassdoor reviews
+2. \`InterviewerProfileAgent\` researches interviewers on LinkedIn, GitHub, Twitter
+3. \`QuestionPredictorAgent\` generates likely questions based on JD + company + interviewer background
+4. \`AnswerCoachAgent\` drafts STAR-format answers tailored to your experience
+5. \`MockInterviewAgent\` conducts a timed practice session with scoring
+→ *Tools: Crunchbase API, LinkedIn scraper, GPT-4o for Q&A generation, Whisper for speech analysis*
+
+**Pattern 5 — The Offer War Room**
+Triggered when you receive an offer:
+1. \`CompDataAgent\` pulls salary ranges from Levels.fyi, Glassdoor, Payscale, Blind
+2. \`OfferAnalyzerAgent\` models total comp (base + bonus + equity + benefits + WLB)
+3. \`NegotiationCoachAgent\` generates counter-offer scripts with anchoring strategies
+4. \`ComparisonAgent\` builds a side-by-side matrix if you have multiple offers
+→ *Tools: Levels.fyi scraper, GPT-4o for strategy, Google Sheets API for offer matrix*`,
+        diagram: `graph TD
+  subgraph "Pattern 1: Job Scout"
+    JS1["Scrape Job Boards"] --> JS2["Score & Match"]
+    JS2 --> JS3["Filter Duplicates"]
+    JS3 --> JS4["Notify via Slack/Email"]
+  end
+
+  subgraph "Pattern 2: Application Factory"
+    AF1["Analyze JD"] --> AF2["Tailor Resume"]
+    AF2 --> AF3["Generate Cover Letter"]
+    AF3 --> AF4["ATS Check ≥85%"]
+    AF4 --> AF5["Submit Application"]
+  end
+
+  subgraph "Pattern 3: Networking Multiplier"
+    NM1["Map Org Chart"] --> NM2["Find Connections"]
+    NM2 --> NM3["Draft Messages"]
+    NM3 --> NM4["Schedule & Send"]
+    NM4 --> NM5["Auto Follow-up"]
+  end
+
+  subgraph "Pattern 4: Interview War Room"
+    IW1["Research Company"] --> IW2["Profile Interviewers"]
+    IW2 --> IW3["Predict Questions"]
+    IW3 --> IW4["Coach Answers"]
+    IW4 --> IW5["Mock Interview"]
+  end
+
+  subgraph "Pattern 5: Offer War Room"
+    OW1["Pull Comp Data"] --> OW2["Analyze Offer"]
+    OW2 --> OW3["Generate Counter-Offer"]
+    OW3 --> OW4["Compare Offers"]
+  end`,
+      },
+
+      // ── 5. Build Your Own Agent ───────────────────────────────
+      {
+        heading:
+          "Build Your Own Job Search Agent — LangGraph Implementation",
+        content: `Ready to build a custom agent? Here's a production-grade implementation using **LangGraph** (LangChain's agent orchestration framework):
+
+**Architecture:**
+- **Orchestrator**: LangGraph StateGraph with conditional routing
+- **LLM**: GPT-4o or Claude 3.5 Sonnet (via LangChain)
+- **Tools**: Browser automation (Playwright), Web scraping (BeautifulSoup), Email (SendGrid)
+- **Memory**: Redis for job tracking state, ChromaDB for resume/JD embeddings
+- **Scheduler**: APScheduler or Celery Beat for daily runs`,
+        codeSnippet: { language: "python", code: `# job_search_agent.py — LangGraph Agentic Job Search
+import os
+from typing import TypedDict, Annotated, Literal
+from langgraph.graph import StateGraph, END
+from langgraph.prebuilt import ToolNode
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_community.tools import TavilySearchResults
+from langchain.tools import tool
+
+# ── State Schema ──────────────────────────────────────────────
+class JobSearchState(TypedDict):
+    target_role: str
+    skills: list[str]
+    resume_text: str
+    discovered_jobs: list[dict]      # raw scraped jobs
+    scored_jobs: list[dict]          # jobs with match scores
+    tailored_resumes: dict           # job_id → tailored resume
+    applications_sent: list[dict]    # tracking submitted apps
+    messages: Annotated[list, "chat_history"]
+
+# ── Tools ─────────────────────────────────────────────────────
+search_tool = TavilySearchResults(max_results=10)
+
+@tool
+def scrape_job_boards(query: str, location: str) -> list[dict]:
+    """Scrape LinkedIn, Indeed, and Otta for matching jobs."""
+    from playwright.sync_api import sync_playwright
+    jobs = []
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        # LinkedIn Jobs (simplified)
+        page.goto(f"https://www.linkedin.com/jobs/search/?keywords={query}&location={location}")
+        cards = page.query_selector_all(".job-card-container")
+        for card in cards[:20]:
+            title = card.query_selector(".job-card-list__title")
+            company = card.query_selector(".job-card-container__company-name")
+            if title and company:
+                jobs.append({
+                    "title": title.inner_text(),
+                    "company": company.inner_text(),
+                    "source": "LinkedIn",
+                    "url": card.query_selector("a").get_attribute("href"),
+                })
+        browser.close()
+    return jobs
+
+@tool
+def score_job_match(job: dict, skills: list[str], target_role: str) -> dict:
+    """Score a job against candidate profile using embeddings."""
+    from langchain_openai import OpenAIEmbeddings
+    from numpy import dot
+    from numpy.linalg import norm
+
+    embeddings = OpenAIEmbeddings()
+    profile_text = f"{target_role} with skills: {', '.join(skills)}"
+    job_text = f"{job['title']} at {job['company']}"
+
+    prof_vec = embeddings.embed_query(profile_text)
+    job_vec = embeddings.embed_query(job_text)
+
+    similarity = dot(prof_vec, job_vec) / (norm(prof_vec) * norm(job_vec))
+    job["match_score"] = round(similarity * 100, 1)
+    return job
+
+@tool
+def tailor_resume(resume_text: str, job_description: str) -> str:
+    """Rewrite resume sections to match a specific job description."""
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.3)
+    prompt = f"""You are an expert resume writer and ATS optimizer.
+    
+    ORIGINAL RESUME:
+    {resume_text}
+    
+    TARGET JOB DESCRIPTION:
+    {job_description}
+    
+    INSTRUCTIONS:
+    1. Mirror keywords from the JD in the resume
+    2. Reorder bullet points to prioritize relevant experience
+    3. Quantify achievements where possible
+    4. Keep it under 2 pages
+    5. Ensure ATS compatibility (no tables, columns, or graphics)
+    
+    Return the optimized resume text."""
+    
+    response = llm.invoke([HumanMessage(content=prompt)])
+    return response.content
+
+@tool
+def submit_application(job_url: str, resume: str, cover_letter: str) -> dict:
+    """Auto-submit a job application via browser automation."""
+    # In production, use Playwright to fill forms
+    return {
+        "status": "submitted",
+        "url": job_url,
+        "timestamp": "2026-04-04T10:30:00Z",
+    }
+
+# ── Agent Nodes ───────────────────────────────────────────────
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
+
+def discover_jobs(state: JobSearchState) -> JobSearchState:
+    """Node: Discover matching jobs from multiple sources."""
+    jobs = scrape_job_boards.invoke({
+        "query": state["target_role"],
+        "location": "Remote",
+    })
+    state["discovered_jobs"] = jobs
+    return state
+
+def score_and_rank(state: JobSearchState) -> JobSearchState:
+    """Node: Score all discovered jobs and rank by match."""
+    scored = []
+    for job in state["discovered_jobs"]:
+        scored_job = score_job_match.invoke({
+            "job": job,
+            "skills": state["skills"],
+            "target_role": state["target_role"],
+        })
+        scored.append(scored_job)
+    state["scored_jobs"] = sorted(scored, key=lambda j: j["match_score"], reverse=True)
+    return state
+
+def tailor_and_apply(state: JobSearchState) -> JobSearchState:
+    """Node: Tailor resume for top jobs and submit applications."""
+    top_jobs = [j for j in state["scored_jobs"] if j["match_score"] >= 75]
+    for job in top_jobs[:5]:  # Apply to top 5
+        tailored = tailor_resume.invoke({
+            "resume_text": state["resume_text"],
+            "job_description": f"{job['title']} at {job['company']}",
+        })
+        state["tailored_resumes"][job["url"]] = tailored
+        result = submit_application.invoke({
+            "job_url": job["url"],
+            "resume": tailored,
+            "cover_letter": "Generated cover letter...",
+        })
+        state["applications_sent"].append(result)
+    return state
+
+def should_continue(state: JobSearchState) -> Literal["apply", "done"]:
+    """Route: Apply if good matches found, else stop."""
+    good_matches = [j for j in state["scored_jobs"] if j["match_score"] >= 75]
+    return "apply" if good_matches else "done"
+
+# ── Graph Assembly ────────────────────────────────────────────
+workflow = StateGraph(JobSearchState)
+
+workflow.add_node("discover", discover_jobs)
+workflow.add_node("score", score_and_rank)
+workflow.add_node("apply", tailor_and_apply)
+
+workflow.set_entry_point("discover")
+workflow.add_edge("discover", "score")
+workflow.add_conditional_edges("score", should_continue, {
+    "apply": "apply",
+    "done": END,
+})
+workflow.add_edge("apply", END)
+
+# ── Run the Agent ─────────────────────────────────────────────
+app = workflow.compile()
+
+result = app.invoke({
+    "target_role": "Senior Full Stack Developer",
+    "skills": ["React", "TypeScript", "Node.js", "Python", "AWS"],
+    "resume_text": "Your master resume text here...",
+    "discovered_jobs": [],
+    "scored_jobs": [],
+    "tailored_resumes": {},
+    "applications_sent": [],
+    "messages": [],
+})
+
+print(f"Applied to {len(result['applications_sent'])} jobs!")
+for app_result in result["applications_sent"]:
+    print(f"  ✓ {app_result['url']} — {app_result['status']}")`},
+      },
+
+      // ── 6. Resume Agent Deep Dive ─────────────────────────────
+      {
+        heading: "Deep Dive — The AI Resume Tailoring Agent",
+        content: `The single highest-ROI agent you can build is the **Resume Tailoring Agent**. Here's why and how:
+
+**Why Resume Tailoring Matters:**
+- ATS systems use keyword matching — a generic resume scores 30-40%, a tailored one scores 85%+
+- Recruiters spend **6-7 seconds** scanning a resume — relevance must jump off the page
+- One tailored application is worth 10 generic ones
+
+**The Agent's Decision Loop:**
+1. **Extract** — Parse the JD into: required skills, preferred skills, responsibilities, company values
+2. **Map** — Match your experience to each requirement (semantic, not keyword-only)
+3. **Rewrite** — Reorder sections, reword bullets to mirror JD language, add missing keywords
+4. **Validate** — Run through ATS simulator, ensure score ≥ 85%
+5. **Iterate** — If score < 85%, agent loops back to Step 3 with new approach
+
+**Key Technique — Keyword Injection Without Keyword Stuffing:**
+The agent uses semantic understanding to naturally incorporate JD keywords. Instead of blindly inserting "microservices" 5 times, it rewrites:
+- ❌ "Built backend systems" → ✅ "Architected scalable microservices handling 50K RPM using Node.js and Kubernetes"
+- ❌ "Worked on CI/CD" → ✅ "Designed CI/CD pipelines with GitHub Actions, reducing deployment time by 65%"`,
+        diagram: `graph TD
+  JD["Job Description"] --> EXTRACT["Extract Requirements"]
+  RESUME["Master Resume"] --> MAP["Map Experience to Requirements"]
+  EXTRACT --> MAP
+  MAP --> REWRITE["Rewrite & Optimize"]
+  REWRITE --> ATS["ATS Score Check"]
+  ATS -->|"Score ≥ 85%"| SUBMIT["Submit Application"]
+  ATS -->|"Score < 85%"| REWRITE
+  REWRITE --> VALIDATE["Human Review Optional"]
+  VALIDATE --> SUBMIT`,
+      },
+
+      // ── 7. Networking Agent ────────────────────────────────────
+      {
+        heading: "The AI Networking Agent — Stop Cold-Messaging, Start Smart Outreach",
+        content: `Cold outreach has a 3-5% response rate. AI-powered **warm outreach** gets 20-40%. Here's the difference:
+
+**Cold vs. AI-Warm Outreach:**
+
+❌ **Cold**: "Hi [Name], I saw your profile and I'm interested in opportunities at [Company]. Can we connect?"
+
+✅ **AI-Warm**: "Hi Sarah — I noticed your talk at ReactConf on micro-frontends. I've been implementing a similar architecture at [Company] using Module Federation. I'd love to exchange notes, and I'm also exploring opportunities on your team. Would a 15-min chat work this week?"
+
+**How the Networking Agent Works:**
+1. **Target Identification** — Identifies the hiring manager, 2nd-degree connections, and alumni at the target company
+2. **Deep Research** — Reads their recent LinkedIn posts, tweets, conference talks, blog posts, and GitHub contributions
+3. **Common Ground Detection** — Finds shared interests, technologies, alma maters, or mutual connections
+4. **Message Crafting** — Generates 3 variants: (a) Peer-to-peer technical, (b) Referral request, (c) Informational interview ask
+5. **Timing Optimization** — Sends during optimal engagement windows (Tue-Thu, 9-11 AM recipient's timezone)
+6. **Follow-up Cadence** — Day 3: soft bump, Day 7: value-add (share an article), Day 14: final ask
+
+**Ethical Boundary**: Always disclose you're a real person — never let AI impersonate you in real-time conversation. Use AI to **draft**, not to **pretend**.`,
+        comparison: {
+          title: "Cold Outreach vs. AI-Powered Warm Outreach",
+          headers: ["Metric", "Cold Outreach"],
+          rows: [
+            ["Response Rate", "3-5%", "20-40%"],
+            ["Time per Message", "15-20 min", "2 min (AI draft + human review)"],
+            ["Personalization", "Generic template", "Deep research-backed"],
+            ["Follow-up", "Manual, often forgotten", "Automated cadence"],
+            ["Scale", "5-10/day max", "50-100/day with quality"],
+            ["Connection Quality", "Low — feels spammy", "High — genuine value exchange"],
+          ],
+        },
+      },
+
+      // ── 8. Interview Prep Agent ────────────────────────────────
+      {
+        heading: "The AI Interview Preparation Agent — Your Personal Interview Coach",
+        content: `Imagine having a research team that spends 10 hours prepping you for every interview. That's what an Interview Prep Agent does in 10 minutes:
+
+**What the Agent Generates (per interview):**
+
+📋 **Company Brief** (1 page)
+- Mission, values, recent news, funding stage, tech stack
+- Key products, competitors, and market position
+- Glassdoor ratings, culture highlights, and red flags
+
+👤 **Interviewer Profiles** (per interviewer)
+- Role, tenure, background, publications, recent posts
+- Likely interview style (behavioral vs. technical)
+- Topics they care about (inferred from their content)
+
+❓ **Predicted Questions** (15-20 questions)
+- 5 behavioral questions tailored to company values
+- 5 technical questions based on JD requirements
+- 5 system design questions based on company's tech challenges
+- Bonus: "curveball" questions from Glassdoor interview reviews
+
+✅ **STAR-Format Answer Drafts**
+- Each answer uses YOUR actual experience
+- Quantified results (metrics, percentages, dollar amounts)
+- Structured: Situation → Task → Action → Result
+
+🎯 **Practice Session Plan**
+- 30-min mock interview script
+- Scoring rubric for self-assessment
+- Top 3 areas to focus on based on gap analysis`,
+        codeSnippet: { language: "python", code: `# interview_prep_agent.py — Automated Interview Preparation
+from langchain_openai import ChatOpenAI
+from langchain_community.tools import TavilySearchResults
+from langchain.tools import tool
+from langgraph.graph import StateGraph, END
+from typing import TypedDict
+
+class InterviewPrepState(TypedDict):
+    company: str
+    role: str
+    interviewers: list[str]
+    resume_text: str
+    company_brief: str
+    interviewer_profiles: list[dict]
+    predicted_questions: list[dict]
+    answer_drafts: list[dict]
+
+llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+search = TavilySearchResults(max_results=5)
+
+def research_company(state: InterviewPrepState) -> InterviewPrepState:
+    """Deep research on the company."""
+    results = search.invoke(
+        f"{state['company']} company tech stack culture 2026"
+    )
+    brief = llm.invoke([{
+        "role": "user",
+        "content": f"""Create a 1-page company brief for interview prep:
+        Company: {state['company']}
+        Role: {state['role']}
+        Research: {results}
+        
+        Include: mission, tech stack, recent news, culture, competitors."""
+    }])
+    state["company_brief"] = brief.content
+    return state
+
+def research_interviewers(state: InterviewPrepState) -> InterviewPrepState:
+    """Profile each interviewer."""
+    profiles = []
+    for name in state["interviewers"]:
+        results = search.invoke(
+            f"{name} {state['company']} LinkedIn background"
+        )
+        profile = llm.invoke([{
+            "role": "user",
+            "content": f"""Profile this interviewer for prep:
+            Name: {name}, Company: {state['company']}
+            Research: {results}
+            Include: role, background, likely interview style, topics."""
+        }])
+        profiles.append({"name": name, "profile": profile.content})
+    state["interviewer_profiles"] = profiles
+    return state
+
+def generate_questions(state: InterviewPrepState) -> InterviewPrepState:
+    """Predict interview questions."""
+    response = llm.invoke([{
+        "role": "user",
+        "content": f"""Generate 20 predicted interview questions:
+        Company: {state['company']}
+        Role: {state['role']}
+        Brief: {state['company_brief']}
+        Interviewers: {state['interviewer_profiles']}
+        
+        Categories: 5 behavioral, 5 technical, 5 system design, 5 curveball.
+        Format: [{{"category": "...", "question": "...", "why": "..."}}]"""
+    }])
+    state["predicted_questions"] = eval(response.content)
+    return state
+
+def draft_answers(state: InterviewPrepState) -> InterviewPrepState:
+    """Draft STAR-format answers using candidate's experience."""
+    answers = []
+    for q in state["predicted_questions"]:
+        answer = llm.invoke([{
+            "role": "user",
+            "content": f"""Draft a STAR-format answer:
+            Question: {q['question']}
+            Resume: {state['resume_text']}
+            Use REAL experience from the resume. Quantify results."""
+        }])
+        answers.append({
+            "question": q["question"],
+            "answer": answer.content,
+        })
+    state["answer_drafts"] = answers
+    return state
+
+# Build the graph
+graph = StateGraph(InterviewPrepState)
+graph.add_node("research_company", research_company)
+graph.add_node("research_interviewers", research_interviewers)
+graph.add_node("generate_questions", generate_questions)
+graph.add_node("draft_answers", draft_answers)
+
+graph.set_entry_point("research_company")
+graph.add_edge("research_company", "research_interviewers")
+graph.add_edge("research_interviewers", "generate_questions")
+graph.add_edge("generate_questions", "draft_answers")
+graph.add_edge("draft_answers", END)
+
+agent = graph.compile()
+# Run: agent.invoke({...})`},
+      },
+
+      // ── 9. Full Autonomous Pipeline ───────────────────────────
+      {
+        heading: "The Full Autonomous Job Search Pipeline — End-to-End Architecture",
+        content: `Here's the complete architecture for a fully autonomous job search system. You configure it once and it runs daily:
+
+**System Components:**
+
+🗄️ **Data Layer**
+- \`PostgreSQL\` — Job tracking, application status, contact CRM
+- \`ChromaDB\` — Vector store for resume embeddings and JD matching
+- \`Redis\` — Caching scraped results, rate limiting
+
+⚙️ **Agent Layer** (LangGraph)
+- \`OrchestratorAgent\` — Routes tasks to specialized sub-agents
+- \`JobScoutAgent\` — Scrapes and scores jobs
+- \`ResumeTailorAgent\` — Customizes resume per application
+- \`ApplicationAgent\` — Fills and submits forms
+- \`NetworkingAgent\` — Manages outreach campaigns
+- \`InterviewPrepAgent\` — Generates prep packages
+- \`OfferAnalysisAgent\` — Evaluates compensation
+
+🔗 **Integration Layer**
+- \`Playwright\` — Browser automation for job sites
+- \`SendGrid\` — Email outreach and follow-ups
+- \`Telegram Bot\` — Real-time notifications and approval prompts
+- \`Google Sheets API\` — Shared tracking spreadsheet
+- \`Notion API\` — Interview notes and prep docs
+
+⏰ **Scheduler**
+- Daily 6 AM: Job discovery + scoring
+- Daily 9 AM: Send networking messages
+- On-demand: Resume tailoring + application (human-approved)
+- Triggered: Interview prep (when interview scheduled)
+
+**Human-in-the-Loop Checkpoints:**
+Even with full automation, keep humans in control of:
+1. ✅ Which jobs to actually apply to (after scoring)
+2. ✅ Final review of tailored resumes
+3. ✅ Approval of outreach messages before sending
+4. ✅ Actual interview conversations (never automate these)
+5. ✅ Offer acceptance and negotiation decisions`,
+        diagram: `graph TD
+  SCHEDULER["⏰ Daily Scheduler"] --> SCOUT["🔍 Job Scout Agent"]
+  SCOUT --> SCORE["📊 Score & Rank"]
+  SCORE --> HUMAN1["👤 Human: Approve Jobs"]
+  HUMAN1 --> TAILOR["📝 Resume Tailor Agent"]
+  TAILOR --> HUMAN2["👤 Human: Review Resume"]
+  HUMAN2 --> APPLY["🚀 Application Agent"]
+  APPLY --> TRACK["📋 Job Tracker DB"]
+
+  SCORE --> NETWORK["🤝 Networking Agent"]
+  NETWORK --> HUMAN3["👤 Human: Approve Messages"]
+  HUMAN3 --> SEND["📧 Send Outreach"]
+
+  TRACK --> INTERVIEW["📅 Interview Scheduled?"]
+  INTERVIEW -->|Yes| PREP["📚 Interview Prep Agent"]
+  PREP --> HUMAN4["👤 Human: Do Interview"]
+  HUMAN4 --> OFFER["💰 Offer Received?"]
+  OFFER -->|Yes| ANALYZE["📈 Offer Analysis Agent"]
+  ANALYZE --> HUMAN5["👤 Human: Negotiate & Decide"]
+
+  TRACK --> DASHBOARD["📊 Real-time Dashboard"]`,
+      },
+
+      // ── 10. No-Code / Low-Code Options ────────────────────────
+      {
+        heading: "No-Code & Low-Code Alternatives — Automate Without Writing Code",
+        content: `Not a developer? You can still build powerful job search automation using these no-code/low-code platforms:
+
+**🔧 Zapier + ChatGPT**
+- Trigger: New job posted on LinkedIn (via RSS or Zapier LinkedIn integration)
+- Action 1: Send JD to ChatGPT API → get match score + tailored summary
+- Action 2: If score > 80%, add to Google Sheet + send Slack notification
+- Action 3: Auto-draft a cover letter and save to Google Drive
+- Cost: ~$20/month (Zapier Starter + OpenAI API)
+
+**🔧 Make.com (Integromat) + Claude API**
+- More complex workflows than Zapier with better branching
+- Connect: LinkedIn → Make.com → Claude API → Google Sheets → Gmail
+- Build visual pipelines for each job search stage
+- Cost: ~$16/month
+
+**🔧 n8n (Self-Hosted, Free)**
+- Open-source workflow automation
+- Host on a free Oracle Cloud VM
+- Full control, no monthly fees (just API costs)
+- Best for developers who want free + flexible
+
+**🔧 Bardeen.ai**
+- Browser-based automation — no code needed
+- Pre-built "Playbooks" for job search:
+  - Auto-save LinkedIn jobs to Google Sheets
+  - Enrich contacts with email addresses
+  - Auto-send personalized outreach
+- Cost: Free tier available
+
+**🔧 Notion AI + Notion Automations**
+- Use Notion as your job search CRM
+- Notion AI summarizes job descriptions and companies
+- Automations move items through pipeline stages
+- Templates: Job Application Tracker, Interview Prep, Offer Comparison
+
+**Quick Setup — The 30-Minute Free Stack:**
+1. \`Google Sheets\` — Job tracking spreadsheet (free)
+2. \`Simplify Chrome Extension\` — Auto-discovers & saves jobs (free)
+3. \`ChatGPT Free\` — Resume + cover letter tailoring (free)
+4. \`Google Alerts\` — Company news monitoring (free)
+5. \`Notion Free\` — Interview prep notes & CRM (free)
+Total cost: $0/month`,
+        comparison: {
+          title: "No-Code Job Search Automation Platforms",
+          headers: ["Platform", "Ease of Use"],
+          rows: [
+            ["Zapier", "⭐⭐⭐⭐⭐ Easiest", "$20/mo — Best for beginners"],
+            ["Make.com", "⭐⭐⭐⭐ Easy", "$16/mo — More complex workflows"],
+            ["n8n", "⭐⭐⭐ Medium", "Free (self-hosted) — Best for devs"],
+            ["Bardeen", "⭐⭐⭐⭐⭐ Easiest", "Free tier — Browser automation"],
+            ["Custom LangGraph", "⭐⭐ Advanced", "API costs only — Full control"],
+          ],
+        },
+      },
+
+      // ── 11. Prompt Library ─────────────────────────────────────
+      {
+        heading: "The Ultimate Prompt Library for Job Search AI",
+        content: `Even without building agents, you can 10x your job search with the right prompts. Here are battle-tested prompts for ChatGPT/Claude:
+
+**🎯 Resume Tailoring Prompt:**
+\`\`\`
+You are an expert ATS resume optimizer. Here is my master resume:
+[paste resume]
+
+Here is the job description I'm applying to:
+[paste JD]
+
+Tasks:
+1. Identify the top 10 keywords/phrases from the JD missing from my resume
+2. Rewrite my Professional Summary to mirror the JD's language
+3. Reorder my bullet points — most relevant to THIS role first
+4. Add quantified metrics where possible (%, $, time saved)
+5. Ensure the format is ATS-friendly (no tables, no columns)
+6. Target an ATS match score of 85%+
+\`\`\`
+
+**🤝 Networking Message Prompt:**
+\`\`\`
+Write 3 LinkedIn outreach messages to [Name], [Title] at [Company].
+Context: I'm a [your role] with [X years] experience in [technologies].
+Their background: [paste LinkedIn summary or posts]
+Goal: Request a 15-minute informational chat about the [Role] opening.
+Variant A: Peer-to-peer tech connection
+Variant B: Referral request (mention mutual connection: [name])
+Variant C: Thoughtful cold outreach (reference their recent post about...)
+Tone: Professional but genuine. Max 150 words each.
+\`\`\`
+
+**🎤 Interview Prep Prompt:**
+\`\`\`
+I have an interview at [Company] for [Role]. Here's the JD:
+[paste JD]
+
+Generate:
+1. 5 behavioral questions they'll likely ask (based on company values)
+2. 5 technical questions (based on JD requirements)
+3. 3 system design questions (based on company's scale)
+4. For each question, draft a STAR-format answer using this experience:
+[paste relevant resume bullets]
+\`\`\`
+
+**💰 Offer Negotiation Prompt:**
+\`\`\`
+I received an offer for [Role] at [Company]:
+- Base: $X | Bonus: $X | Equity: $X/year | Sign-on: $X
+
+Market data:
+- Levels.fyi range for this role: $X-$Y
+- I have [X competing offers / Y years experience]
+
+Draft a counter-offer email that:
+1. Expresses genuine enthusiasm for the role
+2. Anchors to the 75th percentile of market data
+3. Asks for specific increases in [base/equity/sign-on]
+4. Provides a reasonable justification (experience, competing offers)
+5. Maintains a collaborative tone — not adversarial
+\`\`\`
+
+**📊 Company Research Prompt:**
+\`\`\`
+Research [Company] for my upcoming interview:
+1. Company mission and core values
+2. Main products/services and revenue model
+3. Tech stack and engineering culture
+4. Recent news (last 6 months)
+5. Key competitors and market position
+6. Glassdoor pros/cons summary
+7. 3 intelligent questions I should ask the interviewer
+\`\`\``,
+      },
+
+      // ── 12. GitHub Open Source Projects ────────────────────────
+      {
+        heading: "Open Source Projects — Build On Top of These",
+        content: `The open-source community is actively building job search agents. Here are the most promising projects you can fork, contribute to, or learn from:
+
+**🔥 Top GitHub Repositories:**
+
+| Repository | Stars | What It Does |
+|-----------|-------|-------------|
+| **\`linkedIn-auto-apply-bot\`** | 3.2K+ | Python bot that auto-applies to LinkedIn Easy Apply jobs |
+| **\`Auto_Jobs_Applier_AIHawk\`** | 22K+ | AI-powered LinkedIn auto-apply with resume tailoring |
+| **\`JobFunnel\`** | 1.8K+ | Scrapes Indeed, GlassDoor, LinkedIn into a CSV + deduplication |
+| **\`boss-machine\`** | 500+ | Full agentic job search pipeline with LangChain |
+| **\`resume-matcher\`** | 4.5K+ | NLP resume-to-JD matching with score + keyword extraction |
+| **\`open-resume\`** | 6K+ | Open-source resume builder with ATS parser |
+| **\`LazyApply\`** | 2K+ | Multi-platform auto-apply (LinkedIn, Indeed, ZipRecruiter) |
+| **\`ai-interview-coach\`** | 800+ | LLM-powered mock interview with evaluation |
+| **\`job-search-agent\`** | 1K+ | LangGraph-based autonomous job search agent |
+
+**How to Get Started:**
+1. Star and fork the repo that matches your need
+2. Set up API keys (OpenAI/Anthropic) and LinkedIn credentials
+3. Configure your profile and target roles
+4. Run locally or deploy to a cloud VM (Oracle Free Tier = $0)
+5. Monitor via logs or build a simple dashboard
+
+**⚠️ Important Caveats:**
+- LinkedIn automation violates LinkedIn's ToS — use at your own risk
+- Rate-limit all scrapers (2-3 second delays between requests)
+- Never auto-apply without human review of the tailored resume
+- Keep your master resume and real data in a private fork, not public`,
+        diagram: `graph LR
+  YOU["You (Fork & Configure)"] --> REPO["Open Source Repo"]
+  REPO --> CONFIG["Set API Keys + Profile"]
+  CONFIG --> LOCAL["Run Locally"]
+  CONFIG --> CLOUD["Deploy to Cloud VM"]
+  LOCAL --> MONITOR["Dashboard + Logs"]
+  CLOUD --> MONITOR
+  MONITOR --> REVIEW["Human Review Queue"]
+  REVIEW --> APPLY["Approved → Auto-Apply"]`,
+      },
+
+      // ── 13. Metrics & ROI ──────────────────────────────────────
+      {
+        heading: "Metrics & ROI — Measuring Your AI Job Search Performance",
+        content: `Track these metrics to optimize your AI-powered job search:
+
+**📊 Key Performance Indicators (KPIs):**
+
+| Metric | Manual Baseline | With AI Agents | Improvement |
+|--------|----------------|----------------|-------------|
+| Jobs discovered/week | 20-30 | 200-500 | **10-15x** |
+| Applications/week | 10-15 | 50-100 | **5-7x** |
+| Resume-to-interview rate | 2-3% | 12-18% | **5-6x** |
+| Time per application | 30-45 min | 5-8 min | **5-6x** |
+| Networking messages/week | 5-10 | 50-100 | **10x** |
+| Outreach response rate | 3-5% | 20-35% | **5-7x** |
+| Interview prep time | 3-5 hours | 30 min | **6-10x** |
+| Time to offer (weeks) | 12-20 | 4-8 | **2-3x** |
+| Total hours/week spent | 15-25 | 3-5 | **5x** |
+
+**💰 Cost-Benefit Analysis:**
+
+Monthly tool costs (mid-tier stack):
+- OpenAI API: ~$15-30
+- Sonara or LazyApply: ~$30-100
+- LinkedIn Premium: ~$60
+- Zapier/Make.com: ~$20
+- **Total: ~$125-210/month**
+
+Monthly value (conservative):
+- 80+ hours saved × $50/hr opportunity cost = **$4,000/month in saved time**
+- Faster placement = 1-3 months sooner × monthly salary = **$5,000-$15,000 in earlier income**
+- Better offers (AI-negotiated) = **$5,000-$20,000 more in annual comp**
+
+**ROI: 20-100x on tool investment**
+
+**📈 What to Track in Your Dashboard:**
+1. Applications pipeline (discovered → applied → phone screen → interview → offer)
+2. Conversion rates at each stage
+3. Resume match scores (track which tailoring strategies work)
+4. Response rates by outreach variant
+5. Time-to-response by company
+6. Comp ranges across offers`,
+        diagram: `graph LR
+  subgraph "Pipeline Funnel"
+    D["500 Discovered"] --> A["100 Applied"]
+    A --> PS["15 Phone Screens"]
+    PS --> I["8 Interviews"]
+    I --> O["3 Offers"]
+    O --> ACC["1 Accepted"]
+  end
+
+  subgraph "Conversion Rates"
+    D --> |"20%"| A
+    A --> |"15%"| PS
+    PS --> |"53%"| I
+    I --> |"38%"| O
+  end`,
+      },
+
+      // ── 14. Ethical Boundaries ─────────────────────────────────
+      {
+        heading: "Ethical Guardrails — What to Automate and What NOT To",
+        content: `AI job search automation is powerful — but it comes with real ethical and practical risks. Follow these guidelines:
+
+**✅ AUTOMATE These (Low Risk, High Value):**
+- Job discovery and matching
+- Resume keyword optimization
+- ATS score checking
+- Company and interviewer research
+- Interview question prediction
+- Salary benchmarking and comp analysis
+- Application tracking and status management
+
+**⚠️ AUTOMATE WITH CAUTION (Medium Risk):**
+- Cover letter generation — always review before sending
+- LinkedIn outreach messages — human-approve every message
+- Application submission — review tailored resume before each submit
+- Follow-up emails — ensure tone is appropriate
+
+**🚫 NEVER AUTOMATE (High Risk):**
+- **Actual interview conversations** — AI copilots during interviews (like Final Round AI) are increasingly being detected. Many companies now use AI-detection tools and consider it cheating. Getting caught = instant rejection + reputation damage.
+- **Take-home assignments** — Submitting AI-generated code as your own is dishonest. You'll fail the follow-up discussion.
+- **Reference conversations** — Never use AI to impersonate references or answer reference-check calls.
+- **Background checks** — Never fabricate or embellish experience, education, or credentials.
+- **Contract signing** — Always review offers, contracts, and NDAs yourself (or with a lawyer).
+
+**🔒 Privacy & Security:**
+- Never paste proprietary code from your current employer into AI tools
+- Use separate API keys for job search (not your employer's)
+- Review AI-generated messages for hallucinations (fake achievements, wrong company names)
+- Store credentials (LinkedIn login, API keys) in environment variables, never in code
+- Be transparent with employers — if asked about AI usage, be honest
+
+**The Golden Rule:**
+Use AI to **amplify your real self**, not to create a fake version. The goal is to present your genuine experience, skills, and personality more effectively — not to fabricate qualifications you don't have. You still need to **be the person described in your resume** when you show up to work.`,
+      },
+
+      // ── 15. 30-Day Action Plan ─────────────────────────────────
+      {
+        heading: "Your 30-Day AI Job Search Action Plan",
+        content: `Here's a concrete, week-by-week plan to launch your AI-powered job search:
+
+**📅 Week 1 — Foundation Setup**
+- Day 1: Audit your LinkedIn profile, resume, and GitHub. Run through Jobscan to get a baseline ATS score.
+- Day 2: Create a master resume document with ALL your experience, projects, and metrics.
+- Day 3: Install Simplify extension + set up Teal account (free). Start capturing jobs.
+- Day 4: Set up a Notion or Google Sheets job tracker with columns: Company, Role, Status, Score, Date Applied, Follow-up Date.
+- Day 5: Write your "Master Prompt Set" — customize the prompts from Section 11 with your details.
+- Weekend: Tailor and submit 5 high-quality applications using AI-assisted resume optimization.
+
+**📅 Week 2 — Automation Layer**
+- Day 8: Set up a Zapier/Make.com workflow: Job alert → AI scoring → Google Sheets.
+- Day 9: Configure LoopCV or Sonara for daily auto-discovery + scoring.
+- Day 10: Build your networking target list — 50 people at top 10 target companies.
+- Day 11: Draft outreach messages using AI. Human-review and send 10.
+- Day 12: Set up Google Alerts for all target companies.
+- Weekend: Review pipeline, refine scoring criteria, submit 10 more applications.
+
+**📅 Week 3 — Agent Development (Optional)**
+- Day 15: Fork an open-source job search agent from GitHub.
+- Day 16: Configure it with your profile, API keys, and target criteria.
+- Day 17: Run the job scout pipeline locally. Review results.
+- Day 18: Build the resume tailoring agent (highest ROI).
+- Day 19: Connect to Telegram/Slack for notifications.
+- Weekend: Full system test — discover → score → tailor → human-review → apply.
+
+**📅 Week 4 — Interview & Optimize**
+- Day 22: You should be getting interview calls by now. Run the Interview Prep Agent for each.
+- Day 23: Do AI-powered mock interviews (Google Warmup, Pramp, or custom agent).
+- Day 24: Analyze your pipeline conversion rates. Which companies respond? Which resume variants work?
+- Day 25: Double down on what's working. Adjust scoring criteria based on data.
+- Day 26-28: Interviews, follow-ups, and offer analysis.
+- Day 29-30: Negotiate offers using comp data and AI-drafted scripts.
+
+**🎯 Target Outcomes After 30 Days:**
+- 200+ targeted applications sent
+- 15-25 phone screens
+- 8-12 interviews
+- 2-4 offers
+- 1 accepted offer at market rate or above
+- Total time invested: ~40-60 hours (vs. 150+ hours manually)`,
+        diagram: `graph TD
+  W1["Week 1: Foundation"] --> W2["Week 2: Automation"]
+  W2 --> W3["Week 3: Agent Dev"]
+  W3 --> W4["Week 4: Interview & Close"]
+
+  W1 --> W1A["Audit Profile & Resume"]
+  W1 --> W1B["Set Up Tracking Tools"]
+  W1 --> W1C["5 Quality Applications"]
+
+  W2 --> W2A["Zapier/Make Workflows"]
+  W2 --> W2B["Auto-Discovery Running"]
+  W2 --> W2C["Networking Campaign"]
+
+  W3 --> W3A["Fork + Configure Agent"]
+  W3 --> W3B["Resume Tailor Agent"]
+  W3 --> W3C["Full Pipeline Test"]
+
+  W4 --> W4A["Interview Prep Agent"]
+  W4 --> W4B["Mock Interviews"]
+  W4 --> W4C["Negotiate & Accept Offer"]`,
+      },
+
+      // ── 16. Future of AI Job Search ────────────────────────────
+      {
+        heading: "The Future — Where AI Job Search Is Heading (2026-2028)",
+        content: `The AI job search space is evolving rapidly. Here's what's coming:
+
+**🔮 Near-Term (2026):**
+- **AI-native job platforms** — Platforms built from the ground up with AI agents (not just search + filters). Think: "Describe your ideal job in natural language" → agent finds, applies, and negotiates.
+- **Employer AI vs. Candidate AI** — Companies are deploying AI screeners. Candidates are deploying AI optimizers. This creates an "arms race" that ultimately pushes both toward more authentic, skills-based hiring.
+- **Video interview AI** — Real-time transcription + sentiment analysis during video interviews. Candidates use AI for post-interview analysis.
+
+**🔮 Mid-Term (2027):**
+- **Agent-to-Agent hiring** — Your job search agent negotiates directly with a company's hiring agent. Structured protocols (like APIs) replace unstructured job applications.
+- **Skill verification agents** — Instead of resume parsing, AI agents verify skills through code challenges, portfolio analysis, and GitHub contribution assessment — automatically.
+- **Continuous career agents** — Agents that don't just search for jobs but monitor the market continuously, alert you to better opportunities, and keep your profile optimized even when you're not looking.
+
+**🔮 Long-Term (2028+):**
+- **Dynamic employment** — AI agents manage a portfolio of freelance, contract, and full-time opportunities simultaneously. The concept of "job search" evolves into "career management."
+- **Reputation graphs** — Decentralized, verified professional reputation systems that make resumes obsolete. Your agent maintains and presents your reputation.
+- **Universal income negotiation** — AI levels the information asymmetry in compensation. Every candidate has access to the same comp data and negotiation strategies as top executives.
+
+**The Bottom Line:**
+The job search of 2028 looks nothing like 2024. AI doesn't just help you find a job — it transforms how work is discovered, evaluated, and compensated. The candidates who adopt AI-enhanced job search strategies today will have a **massive competitive advantage** over those who don't.
+
+Start today. Deploy an agent. Land your dream job faster.`,
+        diagram: `graph TD
+  NOW["2026: AI-Assisted Search"] --> NEXT["2027: Agent-to-Agent Hiring"]
+  NEXT --> FUTURE["2028+: Continuous Career AI"]
+
+  NOW --> N1["Resume optimization"]
+  NOW --> N2["Auto-apply bots"]
+  NOW --> N3["AI mock interviews"]
+
+  NEXT --> X1["Agent negotiation protocols"]
+  NEXT --> X2["Skill verification agents"]
+  NEXT --> X3["Always-on career monitoring"]
+
+  FUTURE --> F1["Portfolio career management"]
+  FUTURE --> F2["Reputation graphs"]
+  FUTURE --> F3["Universal comp transparency"]`,
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
