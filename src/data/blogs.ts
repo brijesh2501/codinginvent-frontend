@@ -5268,6 +5268,248 @@ print(f"Applied to {len(result['applications_sent'])} jobs!")`},
       },
     ],
   },
+
+  // ── 23. Node.js Event Loop Explained ──────────────────────
+  {
+    id: "23",
+    slug: "nodejs-event-loop-explained",
+    title:
+      "How Node.js Works — Event Loop & Event Queue Explained with Diagrams",
+    description:
+      "A visual guide to Node.js internals — Event Loop, Event Queue, Call Stack, Microtask Queue, libuv thread pool, and all six phases explained with diagrams and code examples.",
+    thumbnail: "🟢",
+    coverImage: "/images/blogs/nodejs-event-loop-explained.svg",
+    category: "Backend",
+    tags: [
+      "Node.js",
+      "Event Loop",
+      "JavaScript",
+      "Backend",
+      "V8",
+      "libuv",
+      "Async",
+    ],
+    author: "CodingInvent",
+    publishedAt: "2026-04-13",
+    readTime: "8 min",
+    sections: [
+      // ── 1. What is Node.js & Why It's Fast ──────────────────
+      {
+        heading: "What is Node.js & Why It's Fast",
+        content: `Node.js is a **JavaScript runtime** built on V8 + libuv that runs JS outside the browser. It's **single-threaded**, **non-blocking**, and **event-driven**.
+
+Traditional servers spawn **one thread per request** — 10K users = 10K threads = huge overhead. Node.js uses **one main thread** + an **event loop** + a **libuv thread pool** to handle **100K+ concurrent connections** with minimal memory.
+
+• Incoming requests hit the main thread
+• Blocking work (file I/O, DNS, crypto) → offloaded to libuv thread pool (4 threads default)
+• Completed callbacks → pushed to the Event Queue → picked up by the Event Loop`,
+        diagram: `graph LR
+  subgraph "Traditional (Threaded)"
+    R1["Request 1"] --> T1["Thread 1"]
+    R2["Request 2"] --> T2["Thread 2"]
+    R3["Request N"] --> TN["Thread N"]
+  end
+
+  subgraph "Node.js (Event-Driven)"
+    RN1["Request 1"] --> EL["Event Loop"]
+    RN2["Request 2"] --> EL
+    RN3["Request N"] --> EL
+    EL --> TP["Thread Pool (libuv)"]
+    TP --> CB["Callbacks → Event Queue"]
+    CB --> EL
+  end`,
+      },
+
+      // ── 2. Call Stack & Event Queue ─────────────────────────
+      {
+        heading: "Call Stack & Event Queue",
+        content: `**Call Stack** — tracks function execution (LIFO). Functions are pushed on call, popped on return. If the stack is busy, the Event Loop **waits**.
+
+**Event Queue** (Callback Queue) — stores callbacks from completed async operations (\`setTimeout\`, I/O, \`setImmediate\`).
+
+**Flow:** Async op starts → offloaded to libuv → completes → callback enters Event Queue → Event Loop checks "Call Stack empty?" → if yes, pushes callback to stack → executes.
+
+⚠️ If you block the Call Stack (heavy sync work), queued callbacks pile up and the server becomes unresponsive.`,
+        codeSnippet: {
+          language: "javascript",
+          code: `const fs = require("fs");
+
+console.log("1. Before read");       // → Call Stack → executes
+
+fs.readFile("data.json", "utf8", (err, data) => {
+  console.log("3. File read complete"); // → Event Queue → Call Stack
+});
+
+console.log("2. After read");        // → Call Stack → executes
+
+// Output:
+// 1. Before read       ← sync (Call Stack)
+// 2. After read        ← sync (Call Stack)
+// 3. File read complete ← async (Event Queue → Call Stack)`,
+        },
+        diagram: `graph TD
+  A["Async Operation Starts"] --> B["Offloaded to libuv / OS"]
+  B --> C["Operation Completes"]
+  C --> D["Callback → Event Queue"]
+  D --> E{"Call Stack Empty?"}
+  E -->|Yes| F["Push callback to Call Stack"]
+  E -->|No| G["Wait..."]
+  G --> E
+  F --> H["Callback Executes"]`,
+      },
+
+      // ── 3. The Event Loop & Microtask Queue ────────────────
+      {
+        heading: "The Event Loop & Microtask Queue",
+        content: `The **Event Loop** is the traffic controller — it coordinates the Call Stack, Event Queue, and Microtask Queue.
+
+Node.js has **two** callback queues with different priorities:
+
+**Microtask Queue (higher priority):**
+• \`process.nextTick()\` — highest priority of all
+• \`Promise.then()\` / \`catch()\` / \`finally()\`
+
+**Event Queue / Macro-task Queue (lower priority):**
+• \`setTimeout\` / \`setInterval\` / I/O callbacks / \`setImmediate\`
+
+**Order:** Call Stack → drain ALL nextTick → drain ALL Promise microtasks → ONE macro-task → repeat.
+
+⚠️ Recursive \`process.nextTick()\` starves the Event Queue — I/O and timers never run!`,
+        codeSnippet: {
+          language: "javascript",
+          code: `setTimeout(() => console.log("1. setTimeout"), 0);
+setImmediate(() => console.log("2. setImmediate"));
+Promise.resolve().then(() => console.log("3. Promise.then"));
+process.nextTick(() => console.log("4. process.nextTick"));
+console.log("5. Synchronous");
+
+// Output:
+// 5. Synchronous        ← Call Stack
+// 4. process.nextTick   ← Microtask (highest)
+// 3. Promise.then       ← Microtask (after nextTick)
+// 1. setTimeout         ← Macro-task (Timers phase)
+// 2. setImmediate       ← Macro-task (Check phase)`,
+        },
+        diagram: `graph TD
+  CS["Execute Call Stack"] --> MQ{"Microtask Queue empty?"}
+  MQ -->|No| EXEC_MQ["Execute ALL microtasks"]
+  EXEC_MQ --> MQ
+  MQ -->|Yes| EQ{"Event Queue empty?"}
+  EQ -->|No| DEQUEUE["Dequeue callback → Call Stack"]
+  DEQUEUE --> CS
+  EQ -->|Yes| PENDING{"Pending async ops?"}
+  PENDING -->|Yes| WAIT["Wait for completion"]
+  WAIT --> CS
+  PENDING -->|No| EXIT["Process Exits"]`,
+      },
+
+      // ── 4. The 6 Phases of the Event Loop ─────────────────
+      {
+        heading: "The 6 Phases of the Event Loop",
+        content: `The Event Loop cycles through **6 phases**, each with its own queue. Between every phase, all \`process.nextTick()\` and Promise microtasks are drained.
+
+**1. Timers** ⏱️ — \`setTimeout()\` / \`setInterval()\` callbacks
+**2. Pending Callbacks** 📋 — deferred I/O callbacks (e.g., TCP errors)
+**3. Idle / Prepare** ⚙️ — internal libuv housekeeping
+**4. Poll** 📡 — retrieves new I/O events; **blocks here** if idle with no timers pending
+**5. Check** ✅ — \`setImmediate()\` callbacks (always after Poll)
+**6. Close Callbacks** 🔒 — cleanup like \`socket.on('close')\``,
+        diagram: `graph TD
+  T["1. Timers\nsetTimeout / setInterval"] --> PC["2. Pending Callbacks\nDeferred I/O"]
+  PC --> IP["3. Idle / Prepare\nInternal"]
+  IP --> POLL["4. Poll\nI/O events (blocks if idle)"]
+  POLL --> CHECK["5. Check\nsetImmediate()"]
+  CHECK --> CLOSE["6. Close Callbacks\nsocket.on('close')"]
+  CLOSE --> T
+
+  MT["Microtask Queue\nnextTick + Promise.then"] -.->|"Drained between\nevery phase"| T
+  MT -.-> POLL
+  MT -.-> CHECK`,
+      },
+
+      // ── 5. libuv Thread Pool & Async I/O ──────────────────
+      {
+        heading: "libuv Thread Pool & Async I/O",
+        content: `While JS runs on one thread, libuv maintains a **thread pool** (default 4, max 1024 via \`UV_THREADPOOL_SIZE\`).
+
+**Thread pool:** fs operations, \`dns.lookup()\`, crypto (\`pbkdf2\`), zlib compression
+**OS async (no pool):** Network I/O (epoll/kqueue/IOCP), timers, \`dns.resolve()\`
+
+If 4 heavy file reads fill the pool, the 5th waits. Increase pool size or use streaming (\`fs.createReadStream\`) for I/O-heavy apps.`,
+        diagram: `graph TD
+  JS["JS Thread"] --> EL["Event Loop"]
+  EL --> TP["Thread Pool (4 default)"]
+  EL --> OS["OS Async (epoll/kqueue/IOCP)"]
+  TP --> FS["fs / dns.lookup / crypto / zlib"]
+  OS --> NET["Network I/O / Timers / dns.resolve"]
+  FS --> CB["Callback → Event Queue"]
+  NET --> CB
+  CB --> EL`,
+      },
+
+      // ── 6. setTimeout vs setImmediate vs nextTick ─────────
+      {
+        heading: "setTimeout vs setImmediate vs process.nextTick",
+        content: `These three are commonly confused:`,
+        comparison: {
+          title: "setTimeout vs setImmediate vs process.nextTick",
+          headers: ["Feature", "setTimeout(fn, 0)"],
+          rows: [
+            ["Queue", "Macro-task (Timers)", "Macro-task (Check) / Microtask"],
+            ["Phase", "Timers phase", "Check phase / Between phases"],
+            ["Priority", "Low", "Medium / Highest"],
+            ["Use case", "Delayed execution", "After I/O / Immediate async"],
+            ["Starvation risk", "No", "No / YES (recursive nextTick)"],
+          ],
+        },
+        codeSnippet: {
+          language: "javascript",
+          code: `const fs = require("fs");
+
+// Inside I/O callback: setImmediate ALWAYS before setTimeout
+fs.readFile("file.txt", () => {
+  setTimeout(() => console.log("setTimeout"), 0);
+  setImmediate(() => console.log("setImmediate"));
+});
+// Output: setImmediate → setTimeout (guaranteed)
+
+// Outside I/O: order is NON-DETERMINISTIC
+setTimeout(() => console.log("timeout"), 0);
+setImmediate(() => console.log("immediate"));
+// Could be either order!`,
+        },
+      },
+
+      // ── 7. Summary — Quick Reference ──────────────────────
+      {
+        heading: "Summary — Quick Reference",
+        content: `| Concept | Description |
+|---------|-------------|
+| **Node.js** | JS runtime = V8 + libuv + core modules |
+| **Call Stack** | Executes functions (LIFO) |
+| **Event Queue** | Stores callbacks from async operations |
+| **Microtask Queue** | nextTick & Promise.then (higher priority) |
+| **Event Loop** | Moves callbacks from queues → Call Stack |
+| **6 Phases** | Timers → Pending → Idle → Poll → Check → Close |
+| **Thread Pool** | 4 threads default (fs, dns.lookup, crypto, zlib) |
+
+**Execution Priority:** Sync code → \`process.nextTick()\` → Promise microtasks → Macro-tasks
+
+**Pitfalls:** Don't block the event loop with sync work • Don't recurse \`nextTick\` • Handle promise rejections • Stream large files instead of reading whole
+
+**Golden Rule:** Never block the Event Loop.`,
+        diagram: `graph LR
+  REQ["Request"] --> CS["Call Stack"]
+  CS --> SYNC{"Sync?"}
+  SYNC -->|Yes| EXEC["Execute"]
+  SYNC -->|No| OFFLOAD["libuv"]
+  OFFLOAD --> BG["Background"]
+  BG --> EQ["Event Queue"]
+  EQ --> EL["Event Loop"]
+  EL --> CS`,
+      },
+    ],
+  },
 ];
 
 export const blogCategories: string[] = [
