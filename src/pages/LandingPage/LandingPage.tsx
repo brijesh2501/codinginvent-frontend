@@ -65,21 +65,24 @@ export default function LandingPage() {
     <div className="ci-lp">
       {/* ── Top announcement bar ───────────────────────── */}
       <div className="ci-lp__topbar">
-        🎯 Next FREE Live Demo Batch Starts Soon — Limited Seats
+        🎯 Next FREE Live Demo Batch Starts Soon — Hindi Live Classes + Limited Seats
       </div>
 
       {/* ── 1. HERO ────────────────────────────────────── */}
       <section className="ci-lp__hero">
         <div className="ci-lp__hero-inner">
           <div className="ci-lp__hero-copy">
-            <span className="ci-lp__pill">Live • Practice-First • 1:1 Mentorship</span>
+            <span className="ci-lp__pill">Live • Hindi Medium • Practice-First • 1:1 Mentorship</span>
             <h1 className="ci-lp__h1">
               Become a <span className="ci-lp__accent">Job-Ready Developer</span> with
               Daily Live Coding, 1:1 Mentorship &amp; Real Practice
             </h1>
             <p className="ci-lp__sub">
               No recorded videos. Learn by doing — live classes, pair programming
-              with a mentor, and real projects every single day.
+              with a mentor, and real projects every single day. Classes,
+              interview preparation, and mock interviews are conducted in English.
+              Our courses are structured from basic to advanced and aligned with
+              current industry standards.
             </p>
 
             <ul className="ci-lp__highlights">
@@ -88,6 +91,8 @@ export default function LandingPage() {
               <li>✅ Pair Programming with Mentor</li>
               <li>✅ Real Projects + Assignments</li>
               <li>✅ Progress Tracking Dashboard</li>
+              <li>✅ Interview Preparation in English</li>
+              <li>✅ AI Tools: Copilot + Cursor for 10x Productivity</li>
             </ul>
 
             <div className="ci-lp__cta-row">
@@ -180,6 +185,8 @@ export default function LandingPage() {
                   <option value="Get first IT job">Get my first IT job</option>
                   <option value="Switch to coding career">Switch to coding career</option>
                   <option value="Learn full-stack development">Learn full-stack development</option>
+                  <option value="Interview prep in English">Interview prep in English</option>
+                  <option value="Learn Copilot/Cursor for coding">Learn Copilot/Cursor for coding</option>
                   <option value="Learn Generative AI">Learn Generative AI</option>
                   <option value="Just exploring">Just exploring</option>
                 </select>
@@ -244,13 +251,14 @@ export default function LandingPage() {
             We Train You Like a Developer — Not Just Teach Theory
           </h2>
           <p className="ci-lp__lead">
-            Our program is designed like a real IT work environment.
+            Our program is designed like a real IT work environment, with a
+            basic-to-advanced curriculum that matches industry standards.
           </p>
           <div className="ci-lp__grid-3">
             <div className="ci-lp__feat">
               <span className="ci-lp__feat-icon">🎥</span>
               <h4>Live Daily Coding</h4>
-              <p>Code along with your mentor in real time — not passive videos.</p>
+              <p>Code along with your mentor in real time in Hindi, not passive videos.</p>
             </div>
             <div className="ci-lp__feat">
               <span className="ci-lp__feat-icon">💪</span>
@@ -273,9 +281,9 @@ export default function LandingPage() {
               <p>Ship real projects to showcase in interviews.</p>
             </div>
             <div className="ci-lp__feat">
-              <span className="ci-lp__feat-icon">📊</span>
-              <h4>Progress Dashboard</h4>
-              <p>Track classes, assignments and assessments in one portal.</p>
+              <span className="ci-lp__feat-icon">🤖</span>
+              <h4>Copilot + Cursor Workflow</h4>
+              <p>After basics, learn GitHub Copilot and Cursor workflows to build faster and become 10x productive.</p>
             </div>
           </div>
         </div>
@@ -308,8 +316,8 @@ export default function LandingPage() {
             </div>
             <div className="ci-lp__step">
               <span className="ci-lp__step-num">5</span>
-              <h4>Track Your Progress</h4>
-              <p>Monitor improvement through your personal dashboard.</p>
+              <h4>Copilot/Cursor Productivity Layer</h4>
+              <p>After fundamentals, use Copilot and Cursor the right way to ship projects faster.</p>
             </div>
           </div>
         </div>
@@ -344,20 +352,284 @@ export default function LandingPage() {
         <div className="ci-lp__wrap">
           <h2 className="ci-lp__h2">What You'll Get</h2>
           <ul className="ci-lp__benefits">
-            <li>✅ Live Interactive Classes</li>
+            <li>✅ Live Interactive Classes in Hindi</li>
             <li>✅ Lifetime Access to Recordings</li>
             <li>✅ Daily Practice Assignments</li>
             <li>✅ Real Projects for Portfolio</li>
             <li>✅ 1:1 Mentorship</li>
             <li>✅ Pair Programming Sessions</li>
-            <li>✅ Interview Preparation</li>
+            <li>✅ Interview Preparation in English</li>
+            <li>✅ Mock Interviews in English</li>
+            <li>✅ Copilot/Cursor Training After Basics</li>
+            <li>✅ 10x Productivity Workflows for Companies</li>
             <li>✅ Progress Tracking Portal</li>
             <li>✅ Certificate of Completion</li>
           </ul>
         </div>
       </section>
 
-      {/* ── 7. PRICING ─────────────────────────────────── */}
+      {/* ── 7. REAL-WORLD PRODUCTS ─────────────────────── */}
+      <section className="ci-lp__section">
+        <div className="ci-lp__wrap">
+          <h2 className="ci-lp__h2">Company-Centric Portfolio Products You Will Build</h2>
+          <p className="ci-lp__lead">
+            These are high-impact, real-world products that help students get
+            shortlisted and hired. We build like industry teams, not college assignments.
+          </p>
+
+          <div className="ci-lp__signals">
+            <span className="ci-lp__signal">✅ Problem-solving</span>
+            <span className="ci-lp__signal">✅ Real-world use cases</span>
+            <span className="ci-lp__signal">✅ End-to-end ownership</span>
+            <span className="ci-lp__signal">✅ Code quality &amp; architecture</span>
+            <span className="ci-lp__signal">✅ Deployment &amp; documentation</span>
+          </div>
+
+          <h3 className="ci-lp__product-category">1) Full-Stack Web Products</h3>
+          <div className="ci-lp__products-grid">
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🧭</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80"
+                alt="Job application tracking dashboard"
+              />
+              <h4>Job Application Tracking System (ATS-like)</h4>
+              <p>Real hiring workflow product with status tracking and analytics.</p>
+              <ul>
+                <li>✔ Login + auth (JWT/OAuth)</li>
+                <li>✔ Applied → Interview → Offer flow</li>
+                <li>✔ Resume upload, tagging, dashboard</li>
+                <li>✔ Bonus: role-based Admin/HR panels</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🎓</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
+                alt="Learning platform with online classes"
+              />
+              <h4>Learning Management System (Mini Coursera)</h4>
+              <p>End-to-end learning platform with student progress and assessments.</p>
+              <ul>
+                <li>✔ Course creation + video lessons</li>
+                <li>✔ Progress tracking + quizzes + results</li>
+                <li>✔ Certificate generation</li>
+                <li>✔ Bonus: plagiarism-safe assessments</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">💼</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80"
+                alt="Expense dashboard and finance reports"
+              />
+              <h4>Expense Tracker for Teams</h4>
+              <p>Corporate-style expense system with approvals and reporting.</p>
+              <ul>
+                <li>✔ Multi-user expense entries</li>
+                <li>✔ Approval workflow + admin controls</li>
+                <li>✔ Monthly reports + CSV export</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3 className="ci-lp__product-category">2) React / Frontend-Focused Products</h3>
+          <div className="ci-lp__products-grid">
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🧪</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80"
+                alt="Students preparing for coding interviews"
+              />
+              <h4>Interview Preparation Platform</h4>
+              <p>Placement-focused platform with coding practice and analytics.</p>
+              <ul>
+                <li>✔ Topic-wise question bank</li>
+                <li>✔ Monaco code editor + timed tests</li>
+                <li>✔ Progress analytics + bookmarks + notes</li>
+                <li>✔ Bonus: AI hints for code improvement</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">📄</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=900&q=80"
+                alt="Resume analysis and document review"
+              />
+              <h4>Resume Analyzer &amp; Builder</h4>
+              <p>Practical product students can use immediately for job applications.</p>
+              <ul>
+                <li>✔ Resume upload + ATS score</li>
+                <li>✔ Smart improvement suggestions</li>
+                <li>✔ Industry-based resume templates</li>
+                <li>✔ Bonus: parsing + scoring engine</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3 className="ci-lp__product-category">3) Backend / System Design Products</h3>
+          <div className="ci-lp__products-grid">
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🔗</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+                alt="Backend infrastructure and link analytics"
+              />
+              <h4>URL Shortener (Bitly-style)</h4>
+              <p>Simple idea with strong backend architecture opportunities.</p>
+              <ul>
+                <li>✔ Rate limiting + URL expiration</li>
+                <li>✔ Analytics dashboard</li>
+                <li>✔ Redis caching + load testing</li>
+                <li>✔ Architecture explained in README</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">📣</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80"
+                alt="Notification and messaging system dashboard"
+              />
+              <h4>Notification System (Email/SMS/Push)</h4>
+              <p>Core SaaS infrastructure system used by almost every product company.</p>
+              <ul>
+                <li>✔ Queue-based processing + retry logic</li>
+                <li>✔ Email + SMS integrations</li>
+                <li>✔ Event-driven architecture</li>
+                <li>✔ Bonus: Kafka / RabbitMQ</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3 className="ci-lp__product-category">4) AI / GenAI High-Demand Products</h3>
+          <p className="ci-lp__category-note">
+            Companies now demand LLM agent based automation that can handle daily
+            repetitive workflows with minimal manual effort.
+          </p>
+          <div className="ci-lp__products-grid">
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🎯</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80"
+                alt="AI interview coach with feedback screen"
+              />
+              <h4>AI Interview Coach</h4>
+              <p>High-demand product for 2026 interview readiness and feedback.</p>
+              <ul>
+                <li>✔ Mock interview questions</li>
+                <li>✔ Voice/text input with AI feedback</li>
+                <li>✔ Scorecard + improvement suggestions</li>
+                <li>✔ OpenAI/Azure OpenAI + prompt engineering</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🤖</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=900&q=80"
+                alt="Smart chatbot and AI assistant interface"
+              />
+              <h4>Smart Chatbot for College / Company</h4>
+              <p>Deployable support chatbot with context-aware responses.</p>
+              <ul>
+                <li>✔ FAQ assistant with document upload</li>
+                <li>✔ Context-aware response system</li>
+                <li>✔ Admin training panel</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">🧾</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=900&q=80"
+                alt="LLM agent automating support ticket workflows"
+              />
+              <h4>Support Ticket Resolution Agent</h4>
+              <p>
+                Build an LLM agent that classifies, prioritizes, drafts responses,
+                and escalates support tickets automatically.
+              </p>
+              <ul>
+                <li>✔ Intent + urgency classification</li>
+                <li>✔ Suggested replies with approval workflow</li>
+                <li>✔ Human-in-the-loop escalation</li>
+                <li>✔ SLA tracking dashboard</li>
+              </ul>
+            </article>
+
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">⚙️</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80"
+                alt="AI operations agent automating repetitive business tasks"
+              />
+              <h4>Business Ops Automation Agent</h4>
+              <p>
+                Create an agent that automates recurring ops tasks like status
+                updates, report generation, and follow-up reminders.
+              </p>
+              <ul>
+                <li>✔ Multi-step agent workflows</li>
+                <li>✔ Tool calling with Sheets/CRM APIs</li>
+                <li>✔ Daily summary + action recommendations</li>
+                <li>✔ Audit logs for enterprise use</li>
+              </ul>
+            </article>
+          </div>
+
+          <h3 className="ci-lp__product-category">5) Optional Mobile Product</h3>
+          <div className="ci-lp__products-grid">
+            <article className="ci-lp__product-card">
+              <span className="ci-lp__product-icon">📱</span>
+              <img
+                className="ci-lp__product-img"
+                src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=80"
+                alt="Mobile habit tracker app interface"
+              />
+              <h4>Habit Tracker with Social Accountability</h4>
+              <p>Strong mobile UX project showing retention and behavior design.</p>
+              <ul>
+                <li>✔ Daily habits + streaks</li>
+                <li>✔ Peer accountability</li>
+                <li>✔ Notifications + reminders</li>
+                <li>✔ Build with Flutter or React Native</li>
+              </ul>
+            </article>
+          </div>
+
+          <div className="ci-lp__project-proof">
+            <h3 className="ci-lp__product-category">How to Present Every Project (Critical)</h3>
+            <ul className="ci-lp__proof-list">
+              <li>✅ GitHub repository with clean structure</li>
+              <li>✅ Proper README with setup + architecture diagram</li>
+              <li>✅ API documentation + screenshots + live URL</li>
+              <li>✅ Deployment with monitoring and production-ready configs</li>
+            </ul>
+            <p className="ci-lp__resume-example">
+              Resume Example: Built a scalable Job Application Tracking System
+              using React and Node.js, supporting 1K+ records with role-based
+              access, JWT authentication, and analytics dashboard.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. PRICING ─────────────────────────────────── */}
       <section className="ci-lp__section">
         <div className="ci-lp__wrap">
           <h2 className="ci-lp__h2">Simple, Honest Pricing</h2>
@@ -370,7 +642,7 @@ export default function LandingPage() {
                 ₹999<span>/month</span>
               </div>
               <ul>
-                <li>✔ Live daily classes</li>
+                <li>✔ Live daily classes in Hindi</li>
                 <li>✔ Doubt solving sessions</li>
                 <li>✔ Practice assignments</li>
                 <li>✔ Dashboard access</li>
@@ -394,7 +666,8 @@ export default function LandingPage() {
                 <li>✔ Everything in Starter</li>
                 <li>✔ Pair programming 1:1</li>
                 <li>✔ Real projects + portfolio</li>
-                <li>✔ Interview preparation</li>
+                <li>✔ Interview preparation + mock interviews in English</li>
+                <li>✔ Copilot/Cursor module after basics for 10x productivity</li>
                 <li>✔ Certificate of completion</li>
                 <li>✔ 7-day refund guarantee</li>
               </ul>
@@ -410,7 +683,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 8. FAQ ─────────────────────────────────────── */}
+      {/* ── 9. FAQ ─────────────────────────────────────── */}
       <section className="ci-lp__section ci-lp__section--soft">
         <div className="ci-lp__wrap ci-lp__faq-wrap">
           <h2 className="ci-lp__h2">Frequently Asked Questions</h2>
@@ -428,7 +701,15 @@ export default function LandingPage() {
           </details>
           <details className="ci-lp__faq">
             <summary>Will I get job support?</summary>
-            <p>Yes — interview preparation, mock interviews and guidance included.</p>
+            <p>Yes — interview preparation, mock interviews and guidance are included, and interviews are conducted in English.</p>
+          </details>
+          <details className="ci-lp__faq">
+            <summary>Are classes conducted in Hindi?</summary>
+            <p>Yes. Classes are taught in Hindi with practical coding and mentor support.</p>
+          </details>
+          <details className="ci-lp__faq">
+            <summary>When do we learn AI tools for coding?</summary>
+            <p>After basics are clear, we teach GitHub Copilot and Cursor workflows so you can build faster and work more productively.</p>
           </details>
           <details className="ci-lp__faq">
             <summary>What if I'm not satisfied?</summary>
@@ -437,7 +718,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── 9. FINAL CTA ───────────────────────────────── */}
+      {/* ── 10. FINAL CTA ──────────────────────────────── */}
       <section className="ci-lp__section ci-lp__section--cta">
         <div className="ci-lp__wrap ci-lp__final">
           <h2>Ready to Start Your Coding Journey?</h2>
