@@ -401,4 +401,260 @@ export const courses: Course[] = [
     ],
     createdAt: "2026-04-01",
   },
+  {
+    id: "c9",
+    title: "CCC - Course on Computer Concepts",
+    slug: "ccc-course-on-computer-concepts",
+    description:
+      "NIELIT-certified CCC program that builds digital literacy from the ground up — covering computer fundamentals, MS Office, internet, email, and digital financial tools required for government jobs and daily productivity.",
+    category: "Computer Basics",
+    thumbnail:
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+    instructor: "Neha Gupta",
+    duration: "80 hours (3 months)",
+    level: "Beginner",
+    rating: 4.4,
+    enrolledCount: 3150,
+    topics: [
+      "Computer Fundamentals",
+      "Operating System (Windows & Ubuntu)",
+      "MS Word, Excel, PowerPoint",
+      "Internet & Email",
+      "Digital Financial Tools",
+      "Cyber Safety",
+    ],
+    highlights: [
+      "Government-recognized NIELIT CCC certification",
+      "Hands-on training on MS Office 2019 / LibreOffice",
+      "Mock tests aligned with the latest NIELIT syllabus",
+      "Eligible for Group C & clerical government job applications",
+      "Bilingual study material (English & Hindi)",
+    ],
+    curriculum: [
+      {
+        section: "Introduction to Computer",
+        lessons: [
+          "What is a Computer?",
+          "Components: CPU, Memory, I/O Devices",
+          "Types of Software",
+          "Hardware vs Software",
+        ],
+      },
+      {
+        section: "Operating System",
+        lessons: [
+          "Introduction to Windows 10/11",
+          "File & Folder Management",
+          "Control Panel & Settings",
+          "Basics of Ubuntu Linux",
+        ],
+      },
+      {
+        section: "MS Office Suite",
+        lessons: [
+          "MS Word — Formatting, Tables, Mail Merge",
+          "MS Excel — Formulas, Charts, Pivot Tables",
+          "MS PowerPoint — Slides, Transitions, Animations",
+          "LibreOffice Alternatives",
+        ],
+      },
+      {
+        section: "Internet, Email & Digital Services",
+        lessons: [
+          "Browsing & Search Engines",
+          "Email Composition & Etiquette",
+          "Digital Locker, UMANG, e-Sign",
+          "UPI, BHIM, Internet Banking",
+        ],
+      },
+      {
+        section: "Cyber Security & Exam Prep",
+        lessons: [
+          "Password Hygiene & Phishing",
+          "Antivirus & Safe Browsing",
+          "NIELIT Mock Tests",
+          "Previous Year Question Practice",
+        ],
+      },
+    ],
+    prerequisites: [
+      "No prior computer knowledge required",
+      "10th pass recommended (not mandatory)",
+    ],
+    aiFeatures: [
+      "AI Doubt Solver (Hindi + English)",
+      "Adaptive Mock Tests",
+      "Smart Hints for MS Office Exercises",
+    ],
+    createdAt: "2026-04-15",
+  },
+  {
+    id: "c10",
+    title: "ADCA - Advanced Diploma in Computer Applications",
+    slug: "adca-advanced-diploma-in-computer-applications",
+    description:
+      "A 12-month advanced diploma covering office automation, programming (C, C++, Python), web development, Tally, DTP, and database management — designed to make you industry-ready for IT support, data entry, accounting, and junior developer roles.",
+    category: "Diploma",
+    thumbnail:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+    instructor: "Sandeep Yadav",
+    duration: "12 months (≈ 320 hours)",
+    level: "Beginner",
+    rating: 4.6,
+    enrolledCount: 2480,
+    topics: [
+      "Computer Fundamentals",
+      "MS Office Advanced",
+      "Tally Prime with GST",
+      "C & C++ Programming",
+      "Python Basics",
+      "HTML, CSS & JavaScript",
+      "DBMS & SQL",
+      "Photoshop & CorelDRAW",
+    ],
+    highlights: [
+      "Recognized diploma certificate on completion",
+      "Covers both programming and accounting (Tally + GST)",
+      "Real-world projects: Billing app, Portfolio site, Database system",
+      "Dedicated placement assistance for entry-level IT roles",
+      "Access to printed notes + video library for 2 years",
+    ],
+    curriculum: [
+      {
+        section: "Semester 1 — Foundations",
+        lessons: [
+          "Computer Fundamentals & OS",
+          "MS Word, Excel, PowerPoint (Advanced)",
+          "Internet, Email & Cloud Tools",
+          "Typing Practice (English & Hindi)",
+        ],
+      },
+      {
+        section: "Semester 2 — Programming",
+        lessons: [
+          "C Programming — Logic Building",
+          "C++ & Object-Oriented Concepts",
+          "Python Basics & Scripting",
+          "Intro to Data Structures",
+        ],
+      },
+      {
+        section: "Semester 3 — Web & Database",
+        lessons: [
+          "HTML5 & CSS3",
+          "JavaScript Fundamentals",
+          "DBMS Concepts",
+          "SQL with MySQL",
+        ],
+      },
+      {
+        section: "Semester 4 — Accounting & Design",
+        lessons: [
+          "Tally Prime with GST",
+          "Financial Accounting Basics",
+          "Adobe Photoshop",
+          "CorelDRAW & DTP",
+          "Capstone Project + Viva",
+        ],
+      },
+    ],
+    prerequisites: [
+      "10th / 12th pass",
+      "Basic English reading comprehension",
+    ],
+    aiFeatures: [
+      "AI Code Review for C / C++ / Python",
+      "Smart Resume Builder",
+      "Adaptive Practice Sets",
+      "Project Idea Generator",
+    ],
+    createdAt: "2026-04-15",
+  },
+  {
+    id: "c11",
+    title: "O Level - NIELIT Foundation Course in IT",
+    slug: "o-level-nielit-foundation-it",
+    description:
+      "Government-recognized NIELIT O Level certification — equivalent to a Foundation Level IT course and treated as a graduate-level qualification in computer applications by DoEACC. Covers IT tools, web designing, programming in Python, and internet technologies.",
+    category: "Certification",
+    thumbnail:
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+    instructor: "Dr. Anjali Mehta",
+    duration: "1 year (4 modules, ~ 480 hours)",
+    level: "Intermediate",
+    rating: 4.7,
+    enrolledCount: 1870,
+    topics: [
+      "IT Tools & Network Basics (M1-R5)",
+      "Web Designing & Publishing (M2-R5)",
+      "Programming & Problem Solving through Python (M3-R5)",
+      "Internet of Things & Applications (M4-R5)",
+      "Practical + Project Work",
+    ],
+    highlights: [
+      "NIELIT O Level certificate — valid for government jobs",
+      "Covers latest R5 syllabus including IoT & Python",
+      "Eligibility for A Level & higher NIELIT courses",
+      "Live exam-oriented practical labs",
+      "Doubt-clearing sessions with NIELIT-empanelled faculty",
+    ],
+    curriculum: [
+      {
+        section: "M1-R5: IT Tools and Network Basics",
+        lessons: [
+          "Computer Organization & OS",
+          "MS Office / LibreOffice Suite",
+          "Internet & WWW",
+          "Digital Financial Tools & Cyber Security",
+        ],
+      },
+      {
+        section: "M2-R5: Web Designing & Publishing",
+        lessons: [
+          "HTML5 & CSS3",
+          "Responsive Design with Bootstrap",
+          "JavaScript Basics",
+          "Publishing Web Pages & SEO Basics",
+        ],
+      },
+      {
+        section: "M3-R5: Programming & Problem Solving through Python",
+        lessons: [
+          "Problem Solving Approaches",
+          "Python Syntax, Data Types, Control Flow",
+          "Functions, Modules & File I/O",
+          "OOP in Python & Error Handling",
+        ],
+      },
+      {
+        section: "M4-R5: Internet of Things & Its Applications",
+        lessons: [
+          "IoT Architecture & Sensors",
+          "Microcontrollers (Arduino / Raspberry Pi)",
+          "Communication Protocols (MQTT, HTTP)",
+          "IoT Applications & Case Studies",
+        ],
+      },
+      {
+        section: "Practical & Project",
+        lessons: [
+          "Practical Lab Assignments",
+          "Mini Project (Web or Python)",
+          "Viva Voce Preparation",
+          "NIELIT Previous Year Papers",
+        ],
+      },
+    ],
+    prerequisites: [
+      "10+2 (Science / Commerce / Arts) or ITI with 2 years experience",
+      "Basic familiarity with computers recommended",
+    ],
+    aiFeatures: [
+      "AI-powered NIELIT Mock Tests",
+      "Python Code Review Assistant",
+      "Smart Revision Planner",
+      "Adaptive Learning Path per Module",
+    ],
+    createdAt: "2026-04-15",
+  },
 ];
