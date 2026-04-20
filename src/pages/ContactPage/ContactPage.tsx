@@ -140,11 +140,11 @@ export default function ContactPage() {
             </div>
             <div className="ci-contact__detail-item">
               <span className="ci-contact__detail-icon">📞</span>
-              <span>+91 98765 43210</span>
+              <span>+91 9140868839</span>
             </div>
             <div className="ci-contact__detail-item">
               <span className="ci-contact__detail-icon">📍</span>
-              <span>Hyderabad, India</span>
+              <span>Near Sports College Gudamba, Jankipuram, Lucknow, India</span>
             </div>
           </div>
         </div>
