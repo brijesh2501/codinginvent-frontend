@@ -328,8 +328,11 @@ export default function LandingPage() {
         <div className="ci-lp__wrap ci-lp__author">
           <div className="ci-lp__author-photo">
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
-              alt="Your mentor"
+              src="/images/trainers/profile.jpg"
+              alt="CodingInvent mentor profile"
+              onError={(e) => {
+                e.currentTarget.src = "/images/trainers/trainer-1.svg";
+              }}
             />
           </div>
           <div>
