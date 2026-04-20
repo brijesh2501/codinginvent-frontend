@@ -6,3 +6,4 @@ export { default as BlogsPage } from "./BlogsPage/BlogsPage";
 export { default as BlogDetailPage } from "./BlogDetailPage/BlogDetailPage";
 export { default as ContactPage } from "./ContactPage/ContactPage";
 export { default as DashboardPage } from "./DashboardPage/DashboardPage";
+export { default as LandingPage } from "./LandingPage/LandingPage";
