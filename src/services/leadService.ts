@@ -4,6 +4,7 @@
 // ============================================================
 import type { Lead, ApiResponse } from "../types";
 import { leads as mockLeads } from "../data/leads";
+import apiClient from "./apiClient";
 
 const useMock = import.meta.env.VITE_USE_MOCK_DATA === "true";
 
@@ -28,16 +29,8 @@ export async function submitLead(
     return { data: newLead, success: true, message: "Inquiry submitted successfully!" };
   }
 
-  // TODO: Replace JSON with API call
-  // const res = await apiClient.post<Lead>("/leads", lead);
-  // return { data: res.data, success: true };
-  const newLead: Lead = {
-    ...lead,
-    id: `lead-${Date.now()}`,
-    submittedAt: new Date().toISOString(),
-  };
-  mockLeads.push(newLead);
-  return { data: newLead, success: true, message: "Inquiry submitted successfully!" };
+  const res = await apiClient.post<Lead>("/leads", lead);
+  return { data: res.data, success: true, message: "Inquiry submitted successfully!" };
 }
 
 /**
@@ -50,6 +43,6 @@ export async function getLeads(): Promise<ApiResponse<Lead[]>> {
     return { data: [...mockLeads], success: true };
   }
 
-  // TODO: Replace JSON with API call
-  return { data: [...mockLeads], success: true };
+  const res = await apiClient.get<Lead[]>("/leads");
+  return { data: res.data, success: true };
 }
