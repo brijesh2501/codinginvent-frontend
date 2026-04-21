@@ -5,9 +5,7 @@
 // Renders WITHOUT the site Header/Footer (see App routing)
 // so the visitor has exactly one action to take.
 // ============================================================
-import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { submitLead } from "../../services";
 import "./LandingPage.css";
 
 /* WhatsApp number (same as Contact page) */
@@ -17,44 +15,7 @@ const WHATSAPP_MSG = encodeURIComponent(
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`;
 
-const emptyForm = { name: "", phone: "", email: "", goal: "" };
-
 export default function LandingPage() {
-  const [form, setForm] = useState(emptyForm);
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
-
-  const update = (field: keyof typeof emptyForm, value: string) =>
-    setForm((p) => ({ ...p, [field]: value }));
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!form.name || !form.phone) {
-      setError("Please enter your name and phone number.");
-      return;
-    }
-
-    try {
-      setSubmitting(true);
-      await submitLead({
-        name: form.name,
-        email: form.email || "not-provided@landing.local",
-        phone: form.phone,
-        selectedCourse: "Free Live Demo — Coding Program",
-        message: form.goal || "Requested free live demo class from ad landing page.",
-      });
-      setSuccess(true);
-      setForm(emptyForm);
-    } catch {
-      setError("Something went wrong. Please try again or WhatsApp us.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   const scrollToForm = () => {
     document
       .getElementById("ci-lp-form")
@@ -121,89 +82,20 @@ export default function LandingPage() {
           </div>
 
           {/* ── Hero-side form card ───────────────────── */}
-          <form
-            id="ci-lp-form"
-            className="ci-lp__form-card"
-            onSubmit={handleSubmit}
-            noValidate
-          >
-            {success ? (
-              <div className="ci-lp__success">
-                <span className="ci-lp__success-icon">✅</span>
-                <h3>You're In!</h3>
-                <p>
-                  We'll contact you on WhatsApp within a few minutes with your
-                  free demo class details.
-                </p>
-                <a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ci-lp__btn ci-lp__btn--whatsapp ci-lp__btn--block"
-                >
-                  💬 Message Us on WhatsApp
-                </a>
-              </div>
-            ) : (
-              <>
-                <h3 className="ci-lp__form-title">Book Your FREE Demo Class</h3>
-                <p className="ci-lp__form-sub">
-                  Fill this in — we'll call you within 10 minutes.
-                </p>
-
-                {error && <p className="ci-lp__error">{error}</p>}
-
-                <input
-                  type="text"
-                  className="ci-lp__input"
-                  placeholder="Your Full Name *"
-                  value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
-                  required
-                />
-                <input
-                  type="tel"
-                  className="ci-lp__input"
-                  placeholder="WhatsApp Number *"
-                  value={form.phone}
-                  onChange={(e) => update("phone", e.target.value)}
-                  required
-                />
-                <input
-                  type="email"
-                  className="ci-lp__input"
-                  placeholder="Email (optional)"
-                  value={form.email}
-                  onChange={(e) => update("email", e.target.value)}
-                />
-                <select
-                  className="ci-lp__input"
-                  value={form.goal}
-                  onChange={(e) => update("goal", e.target.value)}
-                >
-                  <option value="">What's your goal?</option>
-                  <option value="Get first IT job">Get my first IT job</option>
-                  <option value="Switch to coding career">Switch to coding career</option>
-                  <option value="Learn full-stack development">Learn full-stack development</option>
-                  <option value="Interview prep in English">Interview prep in English</option>
-                  <option value="Learn Copilot/Cursor for coding">Learn Copilot/Cursor for coding</option>
-                  <option value="Learn Generative AI">Learn Generative AI</option>
-                  <option value="Just exploring">Just exploring</option>
-                </select>
-
-                <button
-                  type="submit"
-                  className="ci-lp__btn ci-lp__btn--primary ci-lp__btn--block"
-                  disabled={submitting}
-                >
-                  {submitting ? "Reserving Your Seat…" : "Reserve My Free Seat"}
-                </button>
-                <p className="ci-lp__form-note">
-                  🔒 Your details are safe. No spam calls.
-                </p>
-              </>
-            )}
-          </form>
+          <div id="ci-lp-form" className="ci-lp__form-card">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdK3oOi1tgXijIXEMMaoTPuMLxI0l7TN86DQQJQFx1tWCAFfw/viewform?embedded=true"
+              width="640"
+              height="1301"
+              frameBorder="0"
+              marginHeight={0}
+              marginWidth={0}
+              className="ci-lp__form-embed"
+              title="Google Form"
+            >
+              Loading...
+            </iframe>
+          </div>
         </div>
       </section>
 
@@ -389,6 +281,9 @@ export default function LandingPage() {
           </div>
 
           <h3 className="ci-lp__product-category">1) Full-Stack Web Products</h3>
+          <p className="ci-lp__category-note">
+            Every full-stack project includes CI/CD pipeline setup and release workflow understanding.
+          </p>
           <div className="ci-lp__products-grid">
             <article className="ci-lp__product-card">
               <span className="ci-lp__product-icon">🧭</span>
@@ -404,6 +299,7 @@ export default function LandingPage() {
                 <li>✔ Applied → Interview → Offer flow</li>
                 <li>✔ Resume upload, tagging, dashboard</li>
                 <li>✔ Bonus: role-based Admin/HR panels</li>
+                <li>✔ CI/CD setup + deployment workflow understanding</li>
               </ul>
             </article>
 
@@ -421,6 +317,7 @@ export default function LandingPage() {
                 <li>✔ Progress tracking + quizzes + results</li>
                 <li>✔ Certificate generation</li>
                 <li>✔ Bonus: plagiarism-safe assessments</li>
+                <li>✔ CI/CD setup + release pipeline understanding</li>
               </ul>
             </article>
 
@@ -437,11 +334,15 @@ export default function LandingPage() {
                 <li>✔ Multi-user expense entries</li>
                 <li>✔ Approval workflow + admin controls</li>
                 <li>✔ Monthly reports + CSV export</li>
+                <li>✔ CI/CD setup + production deployment understanding</li>
               </ul>
             </article>
           </div>
 
           <h3 className="ci-lp__product-category">2) React / Frontend-Focused Products</h3>
+          <p className="ci-lp__category-note">
+            Every frontend project includes CI/CD setup for build, preview, and production releases.
+          </p>
           <div className="ci-lp__products-grid">
             <article className="ci-lp__product-card">
               <span className="ci-lp__product-icon">🧪</span>
@@ -457,6 +358,7 @@ export default function LandingPage() {
                 <li>✔ Monaco code editor + timed tests</li>
                 <li>✔ Progress analytics + bookmarks + notes</li>
                 <li>✔ Bonus: AI hints for code improvement</li>
+                <li>✔ CI/CD setup + frontend release workflow understanding</li>
               </ul>
             </article>
 
@@ -474,11 +376,15 @@ export default function LandingPage() {
                 <li>✔ Smart improvement suggestions</li>
                 <li>✔ Industry-based resume templates</li>
                 <li>✔ Bonus: parsing + scoring engine</li>
+                <li>✔ CI/CD setup + deployment and rollback understanding</li>
               </ul>
             </article>
           </div>
 
           <h3 className="ci-lp__product-category">3) Backend / System Design Products</h3>
+          <p className="ci-lp__category-note">
+            Every backend project includes CI/CD pipeline setup with test automation and deployment flow understanding.
+          </p>
           <div className="ci-lp__products-grid">
             <article className="ci-lp__product-card">
               <span className="ci-lp__product-icon">🔗</span>
@@ -494,6 +400,7 @@ export default function LandingPage() {
                 <li>✔ Analytics dashboard</li>
                 <li>✔ Redis caching + load testing</li>
                 <li>✔ Architecture explained in README</li>
+                <li>✔ CI/CD setup + backend release workflow understanding</li>
               </ul>
             </article>
 
@@ -511,6 +418,7 @@ export default function LandingPage() {
                 <li>✔ Email + SMS integrations</li>
                 <li>✔ Event-driven architecture</li>
                 <li>✔ Bonus: Kafka / RabbitMQ</li>
+                <li>✔ CI/CD setup + monitoring-aware deploy understanding</li>
               </ul>
             </article>
           </div>
@@ -519,6 +427,9 @@ export default function LandingPage() {
           <p className="ci-lp__category-note">
             Companies now demand LLM agent based automation that can handle daily
             repetitive workflows with minimal manual effort.
+          </p>
+          <p className="ci-lp__category-note">
+            Every AI/GenAI project includes CI/CD setup for model-aware app releases and pipeline understanding.
           </p>
           <div className="ci-lp__products-grid">
             <article className="ci-lp__product-card">
@@ -535,6 +446,7 @@ export default function LandingPage() {
                 <li>✔ Voice/text input with AI feedback</li>
                 <li>✔ Scorecard + improvement suggestions</li>
                 <li>✔ OpenAI/Azure OpenAI + prompt engineering</li>
+                <li>✔ CI/CD setup + AI service deployment understanding</li>
               </ul>
             </article>
 
@@ -551,6 +463,7 @@ export default function LandingPage() {
                 <li>✔ FAQ assistant with document upload</li>
                 <li>✔ Context-aware response system</li>
                 <li>✔ Admin training panel</li>
+                <li>✔ CI/CD setup + chatbot release workflow understanding</li>
               </ul>
             </article>
 
@@ -571,6 +484,7 @@ export default function LandingPage() {
                 <li>✔ Suggested replies with approval workflow</li>
                 <li>✔ Human-in-the-loop escalation</li>
                 <li>✔ SLA tracking dashboard</li>
+                <li>✔ CI/CD setup + safe rollout understanding</li>
               </ul>
             </article>
 
@@ -591,11 +505,15 @@ export default function LandingPage() {
                 <li>✔ Tool calling with Sheets/CRM APIs</li>
                 <li>✔ Daily summary + action recommendations</li>
                 <li>✔ Audit logs for enterprise use</li>
+                <li>✔ CI/CD setup + enterprise release process understanding</li>
               </ul>
             </article>
           </div>
 
           <h3 className="ci-lp__product-category">5) Optional Mobile Product</h3>
+          <p className="ci-lp__category-note">
+            The optional mobile project also includes CI/CD setup and app delivery workflow understanding.
+          </p>
           <div className="ci-lp__products-grid">
             <article className="ci-lp__product-card">
               <span className="ci-lp__product-icon">📱</span>
@@ -611,6 +529,7 @@ export default function LandingPage() {
                 <li>✔ Peer accountability</li>
                 <li>✔ Notifications + reminders</li>
                 <li>✔ Build with Flutter or React Native</li>
+                <li>✔ CI/CD setup + mobile release pipeline understanding</li>
               </ul>
             </article>
           </div>
@@ -622,6 +541,7 @@ export default function LandingPage() {
               <li>✅ Proper README with setup + architecture diagram</li>
               <li>✅ API documentation + screenshots + live URL</li>
               <li>✅ Deployment with monitoring and production-ready configs</li>
+              <li>✅ CI/CD setup with build, test, and deployment pipeline understanding</li>
             </ul>
             <p className="ci-lp__resume-example">
               Resume Example: Built a scalable Job Application Tracking System

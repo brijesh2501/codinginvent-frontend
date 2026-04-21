@@ -22,6 +22,16 @@ jobs:
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_APP_NAME: ${{ vars.VITE_APP_NAME }}
+          VITE_USE_MOCK_DATA: ${{ vars.VITE_USE_MOCK_DATA }}
+          VITE_GOOGLE_FORM_ACTION_URL: ${{ vars.VITE_GOOGLE_FORM_ACTION_URL }}
+          VITE_GOOGLE_FORM_FIELD_NAME: ${{ vars.VITE_GOOGLE_FORM_FIELD_NAME }}
+          VITE_GOOGLE_FORM_FIELD_EMAIL: ${{ vars.VITE_GOOGLE_FORM_FIELD_EMAIL }}
+          VITE_GOOGLE_FORM_FIELD_PHONE: ${{ vars.VITE_GOOGLE_FORM_FIELD_PHONE }}
+          VITE_GOOGLE_FORM_FIELD_EDUCATION: ${{ vars.VITE_GOOGLE_FORM_FIELD_EDUCATION }}
+          VITE_GOOGLE_FORM_FIELD_WORK_EXPERIENCE: ${{ vars.VITE_GOOGLE_FORM_FIELD_WORK_EXPERIENCE }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_GRASS_03393B410 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
@@ -29,7 +39,7 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
+          api_location: "api" # Api source code path - optional
           output_location: "dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 

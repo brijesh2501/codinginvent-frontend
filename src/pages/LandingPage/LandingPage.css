@@ -169,6 +169,14 @@
   scroll-margin-top: 1rem;
 }
 
+.ci-lp__form-embed {
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+}
+
 .ci-lp__form-title {
   font-size: 1.35rem;
   font-weight: 800;
