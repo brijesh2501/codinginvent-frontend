@@ -1299,6 +1299,460 @@ export const interviewQuestions: InterviewQuestion[] = [
     difficulty: "Medium",
     tags: ["system-design", "data-structures", "fundamentals"],
   },
+
+  // =====================================================
+  // HTML5
+  // =====================================================
+  {
+    id: "html-1",
+    category: "HTML5",
+    question: "What are Semantic HTML5 elements and why do they matter?",
+    answer: "Semantic elements clearly describe their meaning to both the browser and developer. Examples: <header>, <nav>, <main>, <article>, <section>, <aside>, <footer>, <figure>, <figcaption>, <time>, <mark>. Benefits: 1) Accessibility — screen readers interpret page structure correctly, 2) SEO — search engines weight content based on structure, 3) Maintainability — code is self-documenting, 4) Consistent cross-browser rendering. Non-semantic: <div>, <span> (no meaning). Rule: Always prefer semantic elements over generic divs.",
+    difficulty: "Easy",
+    tags: ["html5", "semantic", "accessibility"],
+    diagram: `flowchart TB
+  subgraph Page["HTML5 Page Structure"]
+    direction TB
+    H["<header> - Logo, Nav"]
+    N["<nav> - Navigation Links"]
+    M["<main> - Primary Content"]
+    subgraph Content["Inside Main"]
+      direction LR
+      A["<article> - Self-contained"]
+      S["<section> - Themed Group"]
+      AS["<aside> - Sidebar"]
+    end
+    F["<footer> - Copyright, Links"]
+  end
+  H --> N --> M --> Content --> F`,
+  },
+  {
+    id: "html-2",
+    category: "HTML5",
+    question: "HTML5 Storage — localStorage vs sessionStorage vs Cookies vs IndexedDB?",
+    answer: "localStorage: Key-value, ~5-10MB, persists until explicitly cleared, same-origin only, synchronous. sessionStorage: Key-value, ~5MB, cleared when tab/browser closes, per-tab isolation, synchronous. Cookies: Key-value, ~4KB, sent with every HTTP request (overhead), can be HTTP-only (safer), has expiry date, accessible server-side. IndexedDB: Full NoSQL database in browser, GBs of data, asynchronous, supports transactions, complex queries. Use: localStorage for user prefs, cookies for auth tokens (httpOnly), IndexedDB for offline apps.",
+    difficulty: "Medium",
+    tags: ["html5", "storage", "browser"],
+    diagram: `flowchart TB
+  subgraph Storage["Browser Storage Comparison"]
+    direction TB
+    LS["localStorage\n5-10MB | Persistent\nNo expiry | Sync"]
+    SS["sessionStorage\n5MB | Per-tab\nCleared on close | Sync"]
+    CK["Cookies\n4KB | Sent with requests\nServer-readable | Expiry"]
+    IDB["IndexedDB\nGBs | Async\nTransactions | Complex queries"]
+  end`,
+  },
+  {
+    id: "html-3",
+    category: "HTML5",
+    question: "What are HTML5 APIs? (Canvas, Web Workers, WebSockets, Geolocation, etc.)",
+    answer: "Canvas API: Draw 2D/3D graphics programmatically (`<canvas>` + getContext('2d')). Web Workers: Run JavaScript on background threads without blocking the UI (no DOM access). WebSockets: Full-duplex, real-time communication channel between client and server (`new WebSocket(url)`). Geolocation: `navigator.geolocation.getCurrentPosition()`. File API: Read local files via `<input type='file'>` + FileReader. Drag and Drop: Native HTML5 drag/drop events. Intersection Observer: Detect when elements enter/leave viewport (lazy loading).",
+    difficulty: "Medium",
+    tags: ["html5", "apis", "browser"],
+  },
+  {
+    id: "html-4",
+    category: "HTML5",
+    question: "Explain HTML5 Form enhancements — input types, validation, and attributes.",
+    answer: "New input types: email, url, number, range, date, time, color, search, tel. Built-in validation: required, min, max, minlength, maxlength, pattern (regex). Attributes: placeholder (hint text), autofocus, autocomplete, novalidate (skip validation). `<datalist>` provides autocomplete suggestions. `<output>` shows calculation results. `<progress>` and `<meter>` for progress bars. Form validation: `input.validity.valid`, `input.setCustomValidity('msg')`, `form.reportValidity()`. HTML5 validation runs before JavaScript submit handler.",
+    difficulty: "Easy",
+    tags: ["html5", "forms", "validation"],
+  },
+  {
+    id: "html-5",
+    category: "HTML5",
+    question: "What is the difference between defer and async script attributes?",
+    answer: "`<script>` (default): Blocks HTML parsing. Downloads + executes immediately. `<script async>`: Downloads in parallel with parsing. Executes AS SOON as downloaded (blocks parsing briefly). Execution order not guaranteed. Use for independent scripts (analytics). `<script defer>`: Downloads in parallel with parsing. Executes AFTER HTML is fully parsed, in order. Use for scripts that depend on the DOM or each other. Best practice: Put scripts at end of `<body>` or use defer for main scripts.",
+    difficulty: "Medium",
+    tags: ["html5", "performance", "scripts"],
+    diagram: `sequenceDiagram
+  participant H as HTML Parse
+  participant N as Network
+  participant E as JS Execute
+  Note over H,E: Normal script
+  H->>H: Parse HTML... BLOCKED
+  N->>E: Download + Execute
+  H->>H: Resume parse
+  Note over H,E: async
+  H->>H: Parse HTML (continuous)
+  N->>E: Download parallel → Execute (brief block)
+  Note over H,E: defer
+  H->>H: Parse HTML (continuous)
+  N->>N: Download parallel
+  H->>E: HTML done → Execute in order`,
+  },
+  {
+    id: "html-6",
+    category: "HTML5",
+    question: "What is the Shadow DOM and Web Components?",
+    answer: "Shadow DOM: Encapsulated DOM tree attached to an element. Styles inside Shadow DOM don't leak out, external styles don't leak in. Provides true style isolation. Web Components = 3 technologies: 1) Custom Elements: `customElements.define('my-card', MyCardClass)` — create custom HTML tags, 2) Shadow DOM: Style + markup encapsulation, 3) HTML Templates: `<template>` elements — inert markup cloned at runtime. Web Components are framework-agnostic and work natively in all modern browsers. Foundation for Angular's encapsulation strategy.",
+    difficulty: "Hard",
+    tags: ["html5", "web-components", "shadow-dom"],
+  },
+
+  // =====================================================
+  // CSS3
+  // =====================================================
+  {
+    id: "css-1",
+    category: "CSS3",
+    question: "Flexbox vs CSS Grid — what are the differences and when to use each?",
+    answer: "Flexbox: One-dimensional layout (row OR column). Best for: navigation bars, centering, aligning items in a row/column, flex-grow for equal spacing. Grid: Two-dimensional layout (rows AND columns simultaneously). Best for: page layouts, card grids, overlapping content. Overlap: Both can solve similar problems but Grid is more powerful for complex layouts. Use Flexbox for components; Grid for page/section layout. They can be nested — Grid for outer layout, Flexbox for inner items.",
+    difficulty: "Medium",
+    tags: ["css3", "flexbox", "grid", "layout"],
+    diagram: `flowchart TB
+  subgraph Flex["Flexbox - 1D"]
+    direction LR
+    F1["Item A"] --- F2["Item B"] --- F3["Item C"]
+  end
+  subgraph Grid["CSS Grid - 2D"]
+    direction TB
+    G1["Header"] 
+    G2["Sidebar"] --- G3["Content"] --- G4["Aside"]
+    G5["Footer"]
+  end`,
+  },
+  {
+    id: "css-2",
+    category: "CSS3",
+    question: "What is CSS Specificity and the Cascade?",
+    answer: "Specificity determines which CSS rule wins when multiple rules target the same element. Calculated as (a, b, c, d): a = inline styles (1000), b = IDs (100), c = classes/attributes/pseudo-classes (10), d = elements/pseudo-elements (1). Higher specificity wins. Equal specificity = last rule wins (cascade). !important overrides everything (avoid). Cascade order: Browser defaults → External stylesheets → Internal → Inline → !important. Inheritance: Some properties (color, font) inherit from parents; others (margin, padding) don't.",
+    difficulty: "Medium",
+    tags: ["css3", "specificity", "cascade"],
+    diagram: `flowchart LR
+  A["Inline style\n1000 points"] --> B["ID selector\n#id = 100 pts"]
+  B --> C["Class / Attribute\n.class = 10 pts"]
+  C --> D["Element selector\ndiv = 1 pt"]
+  D --> E["Universal selector\n* = 0 pts"]`,
+  },
+  {
+    id: "css-3",
+    category: "CSS3",
+    question: "Explain Responsive Design and Mobile-First approach.",
+    answer: "Responsive design adapts layout to different screen sizes using fluid grids, flexible images, and media queries. Mobile-first: Write base CSS for mobile, then use `min-width` media queries to progressively enhance for larger screens. Opposite of desktop-first (starts big, uses `max-width`). Mobile-first is better: loads minimal CSS by default, forces content prioritization, aligns with Google's mobile-first indexing. Breakpoints: 320px (small mobile), 768px (tablet), 1024px (laptop), 1280px (desktop).",
+    difficulty: "Easy",
+    tags: ["css3", "responsive", "mobile-first"],
+    diagram: `flowchart LR
+  subgraph MF["Mobile First"]
+    direction TB
+    BASE["Base CSS - Mobile\n(no media query)"]
+    T["@media (min-width: 768px)\nTablet styles"]
+    D["@media (min-width: 1024px)\nDesktop styles"]
+    BASE --> T --> D
+  end`,
+  },
+  {
+    id: "css-4",
+    category: "CSS3",
+    question: "What are CSS Custom Properties (Variables)?",
+    answer: "CSS variables (custom properties) store reusable values. Declared with `--` prefix, accessed with `var()`. `--primary-color: #6366f1; color: var(--primary-color, fallback);`. Scope: Variables declared on `:root` are global; on a specific element they're scoped to that subtree. Unlike Sass variables (compiled away), CSS variables are live — they can be changed with JavaScript (`el.style.setProperty('--color', 'red')`) and respond to media queries. Essential for theming (light/dark mode).",
+    difficulty: "Easy",
+    tags: ["css3", "variables", "theming"],
+  },
+  {
+    id: "css-5",
+    category: "CSS3",
+    question: "CSS Animations vs Transitions — what's the difference?",
+    answer: "Transitions: Animate between two states triggered by a change (hover, class add). `transition: property duration easing delay`. Only animates start→end. `transition: all 0.3s ease-in-out`. Animations: Self-running, multi-step, keyframe-based. `@keyframes` defines steps; `animation` applies them. Can loop, alternate, delay. `animation: spin 2s linear infinite`. Use transitions for simple hover effects; animations for continuous motion, complex sequences. Both use GPU compositing for smooth performance when animating `transform` and `opacity`.",
+    difficulty: "Medium",
+    tags: ["css3", "animations", "transitions"],
+  },
+  {
+    id: "css-6",
+    category: "CSS3",
+    question: "What is BEM methodology in CSS?",
+    answer: "BEM (Block Element Modifier) is a CSS naming convention for scalable, maintainable code. Block: Standalone component (`card`, `header`, `nav`). Element: Part of a block, denoted with `__` (`card__title`, `card__image`). Modifier: Variation/state, denoted with `--` (`card--featured`, `button--disabled`). Example: `<div class='card card--featured'><h2 class='card__title'>...</h2></div>`. Benefits: No specificity conflicts, clear relationships, reusable, self-documenting. Widely used in component libraries and design systems.",
+    difficulty: "Easy",
+    tags: ["css3", "bem", "methodology"],
+  },
+  {
+    id: "css-7",
+    category: "CSS3",
+    question: "What is CSS `position`? Explain static, relative, absolute, fixed, sticky.",
+    answer: "static: Default. Normal document flow. top/left/right/bottom have no effect. relative: Positioned relative to its normal position. Creates a positioning context for children. Doesn't remove from flow. absolute: Positioned relative to nearest non-static ancestor. Removed from normal flow (other elements ignore it). fixed: Positioned relative to the viewport. Stays in place during scroll. Removed from flow. sticky: Hybrid — behaves like relative until scroll threshold, then sticks like fixed. Stays within parent's bounds.",
+    difficulty: "Medium",
+    tags: ["css3", "positioning", "layout"],
+  },
+  {
+    id: "css-8",
+    category: "CSS3",
+    question: "What are CSS Preprocessors (Sass/LESS) and what features do they add?",
+    answer: "CSS preprocessors extend CSS with programming features, compiled to plain CSS. Sass features: Variables (`$primary: #333`), Nesting (`.parent { .child { } }`), Mixins (reusable blocks with `@mixin`/`@include`), Functions (`lighten()`, `darken()`), Partials (`_variables.scss` imported with `@use`), `@extend` for inheritance. LESS: Similar features with different syntax. Modern alternative: PostCSS (plugin-based transforms) + CSS custom properties now cover many preprocessor use cases. Sass (SCSS syntax) is most popular.",
+    difficulty: "Medium",
+    tags: ["css3", "sass", "preprocessors"],
+  },
+
+  // =====================================================
+  // AEM (Adobe Experience Manager)
+  // =====================================================
+  {
+    id: "aem-1",
+    category: "AEM",
+    question: "What is AEM and explain its architecture?",
+    answer: "Adobe Experience Manager (AEM) is an enterprise CMS built on Apache Sling, OSGi (Felix), and JCR (Java Content Repository — based on Apache Jackrabbit Oak). Author instance: Content editors create/manage content. Publish instance: Serves content to end users. Dispatcher: Caching layer (Apache httpd module) in front of publish. Content is stored as nodes in the JCR at /content/. Components live at /apps/. AEM as a Cloud Service (AEMaaCS): Cloud-native version on Azure/AWS with auto-scaling, always-on updates, and built-in CDN.",
+    difficulty: "Medium",
+    tags: ["aem", "architecture", "cms"],
+    diagram: `flowchart LR
+  ED["Content Editor"] -->|creates content| AU["AEM Author\n(localhost:4502)"]
+  AU -->|replication| PU["AEM Publish\n(localhost:4503)"]
+  PU -->|cached by| DS["Dispatcher\n(Apache httpd)"]
+  DS -->|serves to| US["End Users"]
+  subgraph JCR["JCR Repository"]
+    direction TB
+    CO["/content/ - Pages"]
+    AP["/apps/ - Components"]
+    CF["/conf/ - Templates"]
+    DA["/dam/ - Assets"]
+  end
+  AU --- JCR`,
+  },
+  {
+    id: "aem-2",
+    category: "AEM",
+    question: "What are AEM Core Components and how do they differ from custom components?",
+    answer: "Core Components are a standardized library of production-ready AEM components provided by Adobe (open-sourced). They include: Text, Title, Image, Teaser, Button, Navigation, Breadcrumb, List, Carousel, Accordion, Tabs, Form components, etc. Built following AEM best practices: HTL templates, Sling Models for business logic, editable via Touch UI dialogs, Style System-enabled. Custom components: built under /apps/myproject/components/ for project-specific requirements. Best practice: Extend or delegate to Core Components (using delegation pattern) rather than building from scratch.",
+    difficulty: "Medium",
+    tags: ["aem", "core-components", "development"],
+    diagram: `flowchart TB
+  subgraph CC["AEM Core Components"]
+    T["Text"] --- I["Image"] --- TL["Title"]
+    BT["Button"] --- TS["Teaser"] --- NA["Navigation"]
+  end
+  subgraph CS["Custom Components"]
+    PR["ProductCard"] --- HB["HeroBanner"] --- QA["QuizWidget"]
+  end
+  CS -->|extends / delegates to| CC`,
+  },
+  {
+    id: "aem-3",
+    category: "AEM",
+    question: "What is the difference between Content Fragments and Experience Fragments in AEM?",
+    answer: "Content Fragments: Pure structured content — no presentation/layout. Text, rich text, numbers, references. Stored in /content/dam/. Consumed via GraphQL API or Content Services REST API. Perfect for headless/omnichannel delivery (same content → website, app, kiosk). Experience Fragments: Content WITH layout and styling — a reusable component/section. Like a mini-page. Can be exported to Target for personalization. Rendered as HTML. Used for: hero sections, promo banners, footers reused across pages. Use CF for headless; XF for reusable styled blocks.",
+    difficulty: "Medium",
+    tags: ["aem", "content-fragments", "experience-fragments"],
+    diagram: `flowchart TB
+  subgraph CF["Content Fragment"]
+    direction TB
+    ST["title: 'React Course'"]
+    SB["body: 'Learn React...'"]
+    SI["image: /dam/react.jpg"]
+    note1["No layout. Pure data.\nDelivered via GraphQL/REST"]
+  end
+  subgraph XF["Experience Fragment"]
+    direction TB
+    XH["<h1>React Course</h1>"]
+    XI["<img src='react.jpg'>"]
+    XB["<p>Learn React...</p>"]
+    note2["Has HTML + styles.\nReusable UI block"]
+  end`,
+  },
+  {
+    id: "aem-4",
+    category: "AEM",
+    question: "How do AEM Client Libraries (clientlibs) work?",
+    answer: "Client Libraries manage CSS and JavaScript assets in AEM. A clientlib is a JCR node of type `cq:ClientLibraryFolder` at /apps/myproject/clientlibs/. Key properties: `categories` (unique name like `myproject.site`), `dependencies` (other clientlibs to include first), `embed` (merge other libs into this one). Files: css.txt and js.txt list the included files. Included in HTML via HTL: `<sly data-sly-use.clientlib='...' data-sly-call='${clientlib.css @ categories=\"myproject.site\"}' />`. AEM merges, minifies, and versions them automatically.",
+    difficulty: "Medium",
+    tags: ["aem", "clientlibs", "frontend"],
+  },
+  {
+    id: "aem-5",
+    category: "AEM",
+    question: "How does AEM headless work with React (SPA / Content Fragments)?",
+    answer: "AEM Headless delivers content via APIs consumed by React: 1) GraphQL API: AEM exposes Content Fragment models as a GraphQL schema. Query with `fetch('/api/graphql/execute.json/myproject/query')`. 2) Content Services REST: Delivers page content as JSON. 3) AEM SPA Editor: Full React integration where AEM page structure maps to React components — editors can author in AEM, React renders. Packages: @adobe/aem-headless-client-js, @adobe/aem-react-editable-components. For pure headless, prefer GraphQL persisted queries for security (no arbitrary queries from client).",
+    difficulty: "Hard",
+    tags: ["aem", "headless", "react", "graphql"],
+    diagram: `flowchart LR
+  subgraph AEM["AEM Backend"]
+    CF["Content Fragments\n(Structured Data)"]
+    GQL["GraphQL API\n/api/graphql/..."]
+    CF --> GQL
+  end
+  subgraph React["React Frontend"]
+    Hook["useEffect / AEM Client"]
+    Comp["Components\n(HeroBanner, CourseCard)"]
+    Hook --> Comp
+  end
+  GQL -->|JSON response| Hook`,
+  },
+  {
+    id: "aem-6",
+    category: "AEM",
+    question: "What is HTL (HTML Template Language / Sightly) in AEM?",
+    answer: "HTL (formerly Sightly) is AEM's recommended server-side templating language. It's HTML-based with special data-sly-* attributes, replacing JSP for component templates. Key expressions: `${properties.title}` (access component properties), `data-sly-test` (conditional rendering), `data-sly-list` (loops), `data-sly-use` (bind a Java/JS Use-class or Sling Model), `data-sly-resource` (include another resource). HTL is security-first (auto-escapes output by default), separation of concerns (logic in Sling Models, not templates), and XSS-safe.",
+    difficulty: "Hard",
+    tags: ["aem", "htl", "sightly", "templating"],
+  },
+  {
+    id: "aem-7",
+    category: "AEM",
+    question: "What is the AEM Style System?",
+    answer: "The Style System allows content authors to choose visual variations of a component without developer involvement. Developers define CSS classes as 'styles' in the component's policy. Authors select styles from the component toolbar in the page editor. Architecture: 1) Developer adds `cq:styleGroups` to the component definition, 2) Template editor assigns allowed styles in component policy, 3) Author picks a style → AEM applies the CSS class to the component wrapper, 4) CSS controls the visual change. Enables design system variations (card layout: default, horizontal, featured) without new components.",
+    difficulty: "Medium",
+    tags: ["aem", "style-system", "authoring"],
+  },
+  {
+    id: "aem-8",
+    category: "AEM",
+    question: "What is AEM as a Cloud Service (AEMaaCS) and how does it differ from AEM 6.x?",
+    answer: "AEMaaCS is Adobe's cloud-native SaaS version of AEM (vs AEM 6.5 which is on-premise/managed). Key differences: 1) Always up-to-date: Adobe pushes updates automatically — no manual version upgrades, 2) Auto-scaling: Cloud infrastructure scales with traffic, 3) Immutable infrastructure: Content and code are separate — code deployed via Cloud Manager (CI/CD), content in JCR, 4) Built-in CDN (Fastly), 5) Asset microservices replace traditional DAM workflows, 6) No SSH access to servers, 7) Requires migration of custom code to be cloud-compatible (no /etc modifications, use /conf).",
+    difficulty: "Hard",
+    tags: ["aem", "aemaacs", "cloud"],
+  },
+  {
+    id: "aem-9",
+    category: "AEM",
+    question: "What are Sling Models in AEM and how are they used with React?",
+    answer: "Sling Models are Java POJOs annotated with @Model, used to adapt Sling Resources or Requests to a typed Java object. They encapsulate business logic for AEM components. Example: `@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL) public class CourseModel { @ValueMapValue String title; @ValueMapValue String description; }`. In headless/React integration: Sling Models power the Content Services JSON API (GET /content/mypage.model.json), returning structured data that React consumes. Replaces script-heavy JSPs with clean, testable Java classes.",
+    difficulty: "Hard",
+    tags: ["aem", "sling-models", "java"],
+  },
+  {
+    id: "aem-10",
+    category: "AEM",
+    question: "What is AEM Dispatcher and how does it help performance?",
+    answer: "Dispatcher is AEM's caching and load-balancing tool implemented as an Apache httpd or IIS module. It sits in front of AEM Publish. How it works: 1) First request hits Dispatcher → forwarded to Publish → response cached as static files on disk, 2) Subsequent requests served from cache (fast — no AEM involved). Cache invalidation: When authors publish content, AEM sends flush requests to Dispatcher invalidating relevant cached files. Rules in dispatcher.any control what to cache (HTML, JSON) vs not cache (POST requests, personalized content). Critical for performance at scale.",
+    difficulty: "Medium",
+    tags: ["aem", "dispatcher", "performance", "caching"],
+  },
+
+  // =====================================================
+  // TYPESCRIPT (Additional)
+  // =====================================================
+  {
+    id: "ts-4",
+    category: "TypeScript",
+    question: "What are TypeScript Utility Types? (Partial, Pick, Omit, Required, Record)",
+    answer: "Built-in generic types for common transformations. `Partial<T>`: All properties optional. `Required<T>`: All properties required. `Readonly<T>`: All properties read-only. `Pick<T, K>`: Subset with only keys K. `Omit<T, K>`: All keys except K. `Record<K, V>`: Object with keys K and values V. `Exclude<T, U>`: Exclude types from union. `Extract<T, U>`: Extract matching types. `NonNullable<T>`: Remove null/undefined. `ReturnType<T>`: Infer function return type. `Parameters<T>`: Infer function parameter types as tuple.",
+    difficulty: "Medium",
+    tags: ["typescript", "utility-types", "generics"],
+  },
+  {
+    id: "ts-5",
+    category: "TypeScript",
+    question: "What are Type Guards in TypeScript?",
+    answer: "Type guards narrow a broad type to a specific type within a conditional block. Methods: 1) `typeof`: `if (typeof x === 'string')` narrows to string. 2) `instanceof`: `if (err instanceof HttpError)` narrows to HttpError. 3) `in` operator: `if ('title' in obj)` checks property existence. 4) Custom type guard function: `function isUser(obj: any): obj is User { return 'id' in obj && 'name' in obj; }` — the `obj is User` return type tells TS to narrow inside the if block. 5) Discriminated unions: Common `type` property used as discriminant.",
+    difficulty: "Medium",
+    tags: ["typescript", "type-guards", "narrowing"],
+  },
+  {
+    id: "ts-6",
+    category: "TypeScript",
+    question: "Explain TypeScript Generics with constraints.",
+    answer: "Generics with constraints restrict what types can be passed. `function getLength<T extends { length: number }>(arg: T): number { return arg.length; }` — T must have length property, so strings/arrays work but numbers don't. Multiple constraints: `<T extends Serializable & Loggable>`. Keyof constraint: `function getProperty<T, K extends keyof T>(obj: T, key: K): T[K]` — ensures key exists on the object. Default generics: `function create<T = string>()` — T defaults to string. Conditional types: `type IsArray<T> = T extends any[] ? true : false`.",
+    difficulty: "Hard",
+    tags: ["typescript", "generics", "constraints"],
+  },
+  {
+    id: "ts-7",
+    category: "TypeScript",
+    question: "What are TypeScript Enums and when should you avoid them?",
+    answer: "Enums group named constants. Numeric enum: `enum Direction { Up = 0, Down, Left, Right }`. String enum: `enum Status { Active = 'ACTIVE', Inactive = 'INACTIVE' }`. Const enum: Inlined at compile time (no runtime object). Problems with enums: 1) Numeric enums allow any number — no type safety, 2) String enums are verbose, 3) They generate extra JavaScript (runtime object), 4) Hard to tree-shake. Modern alternative: `const Status = { Active: 'ACTIVE', Inactive: 'INACTIVE' } as const; type Status = typeof Status[keyof typeof Status];` — zero runtime cost, full type safety.",
+    difficulty: "Medium",
+    tags: ["typescript", "enums", "best-practices"],
+  },
+  {
+    id: "ts-8",
+    category: "TypeScript",
+    question: "What is the difference between unknown and any in TypeScript?",
+    answer: "`any`: Disables type checking entirely. You can perform any operation on an `any` type variable — it's an escape hatch but erases TypeScript's benefits. `unknown`: Type-safe counterpart of any. You CAN assign anything to `unknown`, but you CANNOT perform operations on it until you narrow the type. Forces you to check the type first: `if (typeof x === 'string') { x.toUpperCase(); }`. Best practice: Use `unknown` instead of `any` for values from external sources (API responses, JSON.parse, error objects in catch blocks). `never`: Represents values that never occur (empty union, unreachable code).",
+    difficulty: "Medium",
+    tags: ["typescript", "any", "unknown", "types"],
+  },
+
+  // =====================================================
+  // ACCESSIBILITY (WCAG)
+  // =====================================================
+  {
+    id: "a11y-1",
+    category: "Accessibility",
+    question: "What is WCAG and what are its core principles?",
+    answer: "WCAG (Web Content Accessibility Guidelines) is an international standard for web accessibility. Current version: WCAG 2.1 (with 2.2 updates). Four principles (POUR): Perceivable — content can be perceived by all users (alt text, captions, sufficient contrast). Operable — UI can be operated (keyboard accessible, no seizure-inducing content). Understandable — content and UI are understandable (clear language, error messages). Robust — content works with assistive technologies (screen readers, braille displays). Three conformance levels: A (minimum), AA (standard target), AAA (enhanced).",
+    difficulty: "Medium",
+    tags: ["accessibility", "wcag", "standards"],
+    diagram: `flowchart TB
+  WCAG["WCAG 2.1 - POUR Principles"] --> P["Perceivable\nalt text, captions, contrast 4.5:1"]
+  WCAG --> O["Operable\nKeyboard nav, no traps, skip links"]
+  WCAG --> U["Understandable\nClear labels, predictable UI, error help"]
+  WCAG --> R["Robust\nValid HTML, ARIA, screen reader compat"]
+  subgraph Levels["Conformance Levels"]
+    LA["A - Minimum"] --> LAA["AA - Target"] --> LAAA["AAA - Enhanced"]
+  end`,
+  },
+  {
+    id: "a11y-2",
+    category: "Accessibility",
+    question: "What are ARIA attributes and when should you use them?",
+    answer: "ARIA (Accessible Rich Internet Applications) attributes provide semantic meaning to HTML elements for assistive technologies. Key attributes: `role` (overrides element semantics: `role='button'`, `role='dialog'`, `role='alert'`), `aria-label` (accessible name when no visible text), `aria-labelledby` (points to another element's text), `aria-describedby` (additional description), `aria-expanded` (for accordions/dropdowns), `aria-live` (announce dynamic content changes: `polite` or `assertive`), `aria-hidden='true'` (hide from screen readers). Rule: First use semantic HTML. Only use ARIA when HTML semantics are insufficient.",
+    difficulty: "Medium",
+    tags: ["accessibility", "aria", "screen-readers"],
+  },
+  {
+    id: "a11y-3",
+    category: "Accessibility",
+    question: "How do you implement keyboard navigation in a React application?",
+    answer: "Key requirements: 1) Focus management: Use `tabIndex=0` for interactive elements, `tabIndex=-1` to programmatically focus without tab order. 2) Trap focus in modals: When modal opens, focus moves to it; Tab cycles only within modal; Escape closes it. 3) Skip links: `<a href='#main' className='skip-link'>Skip to main content</a>` — visible on focus. 4) Focus after actions: After deleting an item, move focus to next item. 5) Never remove `:focus-visible` styles. 6) Use `onKeyDown` for custom interactions. 7) Avoid `div onClick` without proper role/tabIndex. Test with keyboard-only navigation.",
+    difficulty: "Medium",
+    tags: ["accessibility", "keyboard", "focus-management"],
+  },
+  {
+    id: "a11y-4",
+    category: "Accessibility",
+    question: "How do you ensure color contrast and visual accessibility?",
+    answer: "WCAG AA requires: Normal text (< 18pt) — 4.5:1 contrast ratio. Large text (≥ 18pt or 14pt bold) — 3:1 ratio. UI components/graphics — 3:1. Tools: Chrome DevTools accessibility panel, axe DevTools extension, WebAIM Contrast Checker. Beyond contrast: 1) Never use color alone to convey information (color-blind users) — add icons, patterns, or text, 2) Provide text alternatives for charts, 3) Ensure focus indicators are visible, 4) Support prefers-reduced-motion media query for animations, 5) Support prefers-color-scheme for dark/light mode. Test with screen readers (NVDA, VoiceOver).",
+    difficulty: "Medium",
+    tags: ["accessibility", "color-contrast", "visual"],
+  },
+
+  // =====================================================
+  // PERFORMANCE / CORE WEB VITALS
+  // =====================================================
+  {
+    id: "perf-1",
+    category: "Performance",
+    question: "What are Core Web Vitals and how do you improve them?",
+    answer: "Core Web Vitals are Google's metrics for page experience: LCP (Largest Contentful Paint): Time to render the largest visible element. Target < 2.5s. Improve: Preload hero image (`<link rel='preload'>`), use CDN, optimize image size (WebP/AVIF), remove render-blocking resources. INP (Interaction to Next Paint): Response time to user input. Target < 200ms. Improve: Break up long tasks (< 50ms), use web workers, reduce JS bundle size. CLS (Cumulative Layout Shift): Layout stability. Target < 0.1. Improve: Always set `width` and `height` on images/videos, avoid dynamic content insertion above existing content, reserve space for ads/embeds.",
+    difficulty: "Hard",
+    tags: ["performance", "core-web-vitals", "lighthouse"],
+    diagram: `flowchart TB
+  subgraph CWV["Core Web Vitals"]
+    direction TB
+    LCP["LCP - Largest Contentful Paint\nTarget: < 2.5s\nFix: CDN, preload, WebP images"]
+    INP["INP - Interaction to Next Paint\nTarget: < 200ms\nFix: Split tasks, Web Workers"]
+    CLS["CLS - Cumulative Layout Shift\nTarget: < 0.1\nFix: Image dimensions, no dynamic inserts"]
+  end`,
+  },
+  {
+    id: "perf-2",
+    category: "Performance",
+    question: "How do you optimize a React application's bundle size?",
+    answer: "1) Code Splitting: `React.lazy(() => import('./Page'))` with Suspense — routes load on demand. 2) Tree Shaking: Use ES modules so bundlers (Webpack/Vite) remove unused exports. 3) Analyze bundle: `vite-bundle-visualizer` or `webpack-bundle-analyzer` to find large dependencies. 4) Dynamic imports: `const chart = await import('recharts')` when needed. 5) Replace heavy libs: Moment.js → date-fns (smaller). Lodash named imports `import debounce from 'lodash/debounce'`. 6) Compress: Gzip/Brotli compression on server. 7) CDN: Serve static assets from edge. 8) HTTP/2: Multiplexed requests.",
+    difficulty: "Hard",
+    tags: ["performance", "bundle-size", "optimization"],
+  },
+  {
+    id: "perf-3",
+    category: "Performance",
+    question: "Explain the Browser Rendering Pipeline (Critical Rendering Path).",
+    answer: "Steps from HTML to pixels: 1) HTML parsing → DOM tree. 2) CSS parsing → CSSOM tree. 3) DOM + CSSOM → Render Tree (only visible elements). 4) Layout (Reflow): Calculate position and size of each element. 5) Paint: Fill in pixels (color, shadows, text). 6) Composite: Combine layers, GPU renders. Optimization: 1) Minimize DOM size, 2) Avoid forced reflow (reading layout properties after writes: offsetTop, getBoundingClientRect), 3) Use CSS `transform`/`opacity` for animations (compositor-only, no reflow), 4) Use `will-change: transform` to promote elements to their own layer, 5) Reduce paint complexity.",
+    difficulty: "Hard",
+    tags: ["performance", "browser", "rendering"],
+    diagram: `flowchart LR
+  HTML["HTML"] -->|parse| DOM["DOM Tree"]
+  CSS["CSS"] -->|parse| CSSOM["CSSOM Tree"]
+  DOM & CSSOM -->|combine| RT["Render Tree\n(visible only)"]
+  RT -->|calculate positions| LY["Layout / Reflow"]
+  LY -->|fill pixels| PT["Paint"]
+  PT -->|GPU layers| CP["Composite"]
+  CP --> SC["Screen"]`,
+  },
+  {
+    id: "perf-4",
+    category: "Performance",
+    question: "What is lazy loading and how do you implement it in React?",
+    answer: "Lazy loading defers loading of non-critical resources until needed. In React: 1) Route-based code splitting: `const Dashboard = React.lazy(() => import('./DashboardPage')); <Suspense fallback={<Loader />}><Dashboard /></Suspense>`. 2) Images: `<img loading='lazy' src='...' />` (native browser lazy loading) or Intersection Observer for custom behavior. 3) Components: Lazy load below-the-fold components with dynamic import. 4) Data: Pagination or infinite scroll instead of loading all data. React.lazy + Suspense is the primary pattern — it splits the bundle and loads the chunk only when the component is rendered.",
+    difficulty: "Medium",
+    tags: ["performance", "lazy-loading", "react"],
+  },
 ];
 
 /** Get unique question categories */
