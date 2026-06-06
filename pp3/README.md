@@ -1,4 +1,4 @@
-# PowerPresent 3 - Frontend Architecture
+﻿# PowerPresent 3 - Frontend Architecture
 
 **Prepared by:** Agarwal, Pulkit
 
@@ -207,6 +207,247 @@ powerpresent3-addin
 
 - **v0.1**: Boilerplate, manifest, task pane shell, ribbon commands.
 - **v0.2**: MSAL integration (popup), API client wiring, feature flags.
+
+## 16. Limitations of Office.js – Office.js PowerPoint: Shapes and Master Slide Limitations
+
+### 1. Shapes API – Capabilities & Limitations
+
+#### ✅ What Office.js Can Do
+
+The PowerPoint JavaScript API allows limited shape manipulation on slides, layouts, and masters, but far less than VSTO. Supported capabilities include:
+
+- Insert and retrieve shapes (rectangles, ovals, lines, text boxes)
+- Access shape properties (height, width, left, top, rotation, name)
+- Read and modify text in shapes
+- Delete shapes
+- Apply basic text formatting (color, size, bold, italic)
+
+#### ❌ What Office.js Cannot Do
+
+- No advanced shape formatting (fill color, shadow, gradient)
+- No grouping or ungrouping of shapes
+- No z-order control (bring forward, send backward)
+- No connectors or animation control
+- No events or interaction listeners
+- Limited positioning and no snapping
+
+### 2. Master Slides and Layouts – Limitations
+
+#### ✅ What Office.js Can Do
+
+- Access active presentation and slides
+- Retrieve or insert slides using existing layouts
+- Duplicate slides
+
+#### ❌ What Office.js Cannot Do
+
+- Cannot access or modify master slides (Slide Master, Layout Master)
+- Cannot add or edit placeholders
+- Cannot edit master-level styles (background, title fonts, logo)
+- Cannot create or delete master layouts
+- Cannot access theme elements (colors, fonts)
+
+### 3. Comparison: Office.js vs VSTO
+
+| Feature | Office.js | VSTO (COM Add-in) |
+|---------|-----------|------------------|
+| Create & delete shapes | ✅ | ✅ |
+| Format shape (color, line, shadow) | ❌ | ✅ |
+| Group/ungroup shapes | ❌ | ✅ |
+| Read/write text | ✅ | ✅ |
+| Access master slides | ❌ | ✅ |
+| Modify placeholders/layouts | ❌ | ✅ |
+| Apply slide layouts | ⚠️ Limited | ✅ |
+| Add images | ✅ | ✅ |
+| Animations | ❌ | ✅ |
+
+### 4. Future Enhancements (Microsoft Roadmap)
+
+Microsoft continues to expand the PowerPoint JavaScript API, but as of 2025:
+
+- Shape formatting, themes, and master slide access are still not supported.
+- Newer APIs allow shape enumeration, slide duplication, and rich text manipulation.
+
+### 5. Summary
+
+| Area | Status | Notes |
+|-------|--------|-------|
+| Shape creation & text | ✅ Supported | Basic geometry + text only |
+| Shape formatting | ❌ Not supported | No color, fill, effects |
+| Master slide access | ❌ Not supported | Cannot edit or read |
+| Layout application | ⚠️ Partially supported | Only apply predefined layouts |
+| Animations, placeholders, events | ❌ Not supported | Requires VSTO or manual UI |
+
+---
+
+## 17. Project Challenges & Mitigation
+
+### Challenge 1: EMF File Format Not Supported in Office.js
+
+| Field | Details |
+|-------|---------|
+| **Solution** | Convert EMF files into SVG format for compatibility. |
+| **Status** | Pending |
+| **Comments** | SVG is widely supported and scalable. |
+| **Workaround** | Use vector editing tools to export EMF as SVG. |
+| **Mitigation Recommendation** | Standardize all image assets to SVG during design phase. |
+
+### Challenge 2: Office.js API Does Not Support Master Slides
+
+| Field | Details |
+|-------|---------|
+| **Solution** | Use a predefined template presentation and insert slides via Base64. |
+| **Status** | In Progress |
+| **Comments** | Office.js cannot modify master slides directly. |
+| **Workaround** | Import PPTX with embedded master, use hidden objects, swatch mapping, and layout-specific PPTX files. |
+| **Mitigation Recommendation** | Design master slides with embedded logic and hidden elements to simulate theme control. |
+
+### Challenge 3: Office.js Has Limited API Support for Shapes
+
+| Field | Details |
+|-------|---------|
+| **Solution** | Limited shape manipulation available. |
+| **Status** | In Progress |
+| **Comments** | Complex shapes may not be supported. |
+| **Workaround** | Use basic shapes or pre-rendered images. |
+| **Mitigation Recommendation** | Design slides using supported shape types and avoid complex vector graphics. |
+
+### Challenge 4: Office.js Ribbon Icons Must Be SVG or PNG
+
+| Field | Details |
+|-------|---------|
+| **Solution** | Client must provide icons in supported formats. |
+| **Status** | Pending |
+| **Comments** | Only SVG and PNG are supported for ribbon customization. |
+| **Workaround** | Request assets from client in correct format. |
+| **Mitigation Recommendation** | Include icon format requirements in design guidelines. |
+
+---
+
+### Office.js Technical Considerations & Limitations
+
+#### Limitations
+
+- Office.js cannot directly import POTX files (PowerPoint template files).
+- It cannot interact with master layouts, theme swatches, or native PowerPoint tools relying on master slide configurations.
+- Office.js can only access objects present in the active slide canvas, even if they originate from the master slide.
+- Interaction with the file structure is limited to what is exposed via Custom XML parts.
+
+#### Mitigation Strategies
+
+- Importing a PPTX file brings in master slides and theme data. Hidden objects with embedded logic can be duplicated onto live slides.
+- Use hidden objects in master slides to create a mapping system for swatch colors and positions.
+- Package specific slide layouts as separate PPTX files and hard-code dropdown menu to import them as layout substitutes.
+- Use dual-object mapping for theme swatch synchronization: one object tied to native swatch, another hard-coded to hex color.
+
+---
+
+## 18. Architecture Diagram
+
+### Figure 1: High-Level Frontend Architecture
+
+```mermaid
+graph TD
+    User["User"]
+    PPT["PowerPoint Host (Windows / macOS / Web)"]
+    TaskPane["Task Pane (WebView2 / WebKit)"]
+    SPA["React SPA (TypeScript + Fluent UI v9)"]
+    OfficeJS["Office.js API (SharedRuntime 1.1)"]
+    PPTDoc["PowerPoint Document (Slides, Shapes, Masters)"]
+    MSAL["MSAL Browser (PKCE / Popup)"]
+    AzureAD["Azure AD (Authorization Server)"]
+    BackendAPI["Backend API (HTTPS + Bearer Token)"]
+    SWA["Azure Static Web Apps (Hosting)"]
+    AppInsights["Azure Application Insights (Telemetry)"]
+
+    User -->|Opens Add-in| PPT
+    PPT -->|Loads task pane| TaskPane
+    TaskPane -->|Renders| SPA
+    SPA -->|Office.onReady| OfficeJS
+    OfficeJS -->|Read / Write| PPTDoc
+    SPA -->|loginPopup / acquireTokenSilent| MSAL
+    MSAL -->|Auth Code + PKCE| AzureAD
+    AzureAD -->|Access Token| MSAL
+    MSAL -->|Bearer Token| SPA
+    SPA -->|HTTPS API calls| BackendAPI
+    SWA -->|Serves static assets| TaskPane
+    SPA -->|Events / Exceptions| AppInsights
+```
+
+### Figure 2: Authentication Sequence
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant SPA as React SPA
+    participant MSAL as MSAL Browser
+    participant AAD as Azure AD
+    participant API as Backend API
+
+    User->>SPA: Opens task pane (Office.onReady)
+    SPA->>MSAL: Initialize PublicClientApplication
+    User->>SPA: Triggers protected action
+    SPA->>MSAL: loginPopup(loginRequest)
+    MSAL->>AAD: Authorization Code + PKCE (code_challenge)
+    AAD-->>MSAL: Authorization Code
+    MSAL->>AAD: Token Request (code_verifier)
+    AAD-->>MSAL: Access Token + ID Token
+    MSAL-->>SPA: Tokens cached in sessionStorage
+    SPA->>MSAL: acquireTokenSilent(tokenRequest)
+    MSAL-->>SPA: Access Token
+    SPA->>API: HTTPS request (Authorization: Bearer token)
+    API-->>SPA: API Response
+```
+
+### Figure 3: CI/CD Pipeline
+
+```mermaid
+flowchart LR
+    Dev["Developer Push / PR"]
+    GHA["GitHub Actions"]
+    Lint["Lint + Unit Tests"]
+    ManifestVal["Manifest Validation"]
+    Build["Webpack Build (Production)"]
+    KV["Azure Key Vault (Secrets)"]
+    SWA["Azure Static Web Apps (Deploy)"]
+
+    Dev -->|PR to dev| GHA
+    GHA --> Lint
+    GHA --> ManifestVal
+    Lint --> Build
+    ManifestVal --> Build
+    Build -->|AZURE_STATIC_WEB_APPS_API_TOKEN| KV
+    KV --> SWA
+```
+
+### Figure 4: Frontend Layer Architecture
+
+```mermaid
+graph TB
+    subgraph SPA["React SPA"]
+        Routes["routes/ - Page-level composition"]
+        Components["components/ - Pure UI (props/hooks)"]
+        Controllers["controllers/ - Orchestration layer"]
+        Services["services/ - Business logic + Office.js wrappers"]
+        Types["types/ - Shared TypeScript interfaces"]
+    end
+
+    subgraph External["External Integrations"]
+        OfficeJS["Office.js (PowerPoint API)"]
+        BackendAPI["Backend API (Bearer Token)"]
+        MSAL["MSAL Browser (Azure AD)"]
+    end
+
+    Routes --> Components
+    Components --> Controllers
+    Controllers --> Services
+    Services --> OfficeJS
+    Services --> BackendAPI
+    Services --> MSAL
+    Types -.->|Used across all layers| Services
+    Types -.-> Controllers
+    Types -.-> Components
+```
 
 ---
 
