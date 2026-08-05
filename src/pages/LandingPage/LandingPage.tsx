@@ -699,7 +699,7 @@ export default function LandingPage() {
             <div className="ci-lp__plan">
               <h4>Starter</h4>
               <div className="ci-lp__price">
-                ₹999<span>/month</span>
+                ₹3500<span>/month</span>
               </div>
               <ul>
                 <li>✔ Live daily classes in Hindi</li>
@@ -720,7 +720,7 @@ export default function LandingPage() {
               <span className="ci-lp__plan-badge">⭐ Most Popular</span>
               <h4>Full Program</h4>
               <div className="ci-lp__price">
-                ₹2,999<span> / one-time</span>
+                ₹9,999<span> / one-time</span>
               </div>
               <ul>
                 <li>✔ Everything in Starter</li>
